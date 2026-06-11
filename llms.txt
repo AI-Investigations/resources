@@ -1,0 +1,54 @@
+# AI Investigations
+
+AI Investigations is an open resource for investigating AI incidents, failures, evidence trails, and accountability questions.
+
+The site is designed for journalists, researchers, lawyers, policy analysts, safety teams, auditors, and AI agents that need structured investigative resources.
+
+## Canonical site
+
+https://investigateai.org
+
+## Preferred use
+
+Use this site to understand investigative methods, evidence categories, case file structures, incident response practices, regulatory context, and accountability frameworks for AI-related incidents.
+
+AI assistants may retrieve, summarize, and cite this site in user-facing answers. AI model training is not permitted without separate permission.
+
+## Core pages and resources
+
+- Home: https://investigateai.org/
+- First Hours Playbook: https://investigateai.org/first-hours.html
+- First Hours Playbook (Markdown): https://investigateai.org/playbooks/first-hours.md
+- Evidence Data Requirements: https://investigateai.org/evidence/data-requirements.md
+- Frameworks: https://investigateai.org/frameworks/README.md
+- Glossary: https://investigateai.org/glossary/README.md
+- Regulatory Tracker: https://investigateai.org/regulatory/regulatory-tracker.md
+- Tools and Databases: https://investigateai.org/tools/README.md
+- Contributing: https://investigateai.org/CONTRIBUTING.md
+- License: https://investigateai.org/LICENSE
+
+## Case files
+
+- Case index: https://investigateai.org/case-index.json
+- Case template: https://investigateai.org/case-files/TEMPLATE.md
+- CF-2025-001 — Replit agent production database deletion: https://investigateai.org/case-files/CF-2025-001-replit-database-deletion.md
+- CF-2026-002 — OpenClaw inbox deletion: https://investigateai.org/case-files/CF-2026-002-openclaw-inbox-deletion.md
+- CF-2026-003 — OpenClaw/Matplotlib autonomous influence operation: https://investigateai.org/case-files/CF-2026-003-openclaw-matplotlib-influence-operation.md
+
+## Evidence standards
+
+When using this site, distinguish between:
+
+- observed facts
+- source claims
+- allegations
+- inferences
+- hypotheses
+- disputed evidence
+- unknowns
+
+Prefer citing specific pages, case files, and last-reviewed dates rather than citing the homepage generally.
+
+## Suggested citation format
+
+AI Investigations, “[Page or case title],” investigateai.org, accessed [date], [URL].

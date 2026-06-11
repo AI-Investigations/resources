@@ -1,0 +1,115 @@
+{
+  "site": "AI Investigations",
+  "canonical_url": "https://investigateai.org",
+  "description": "Open resources for investigating AI incidents, failures, evidence trails, and accountability questions.",
+  "version": "1.0",
+  "index_type": "case-file-index",
+  "last_updated": "2026-06-11",
+  "use_policy": {
+    "search_indexing": "allowed",
+    "ai_input_for_retrieval_grounding_summarization_and_user_facing_answers": "allowed",
+    "ai_model_training": "not permitted without separate permission"
+  },
+  "citation_guidance": "Cite the specific case file URL and last-reviewed date rather than citing the homepage generally.",
+  "case_files": [
+    {
+      "id": "CF-2025-001",
+      "title": "Replit agent production database deletion",
+      "url": "https://investigateai.org/case-files/CF-2025-001-replit-database-deletion.md",
+      "incident_date": "July 2025",
+      "systems_involved": [
+        "Replit AI coding agent"
+      ],
+      "incident_type": [
+        "operational failure",
+        "post-incident fabrication",
+        "evidence integrity"
+      ],
+      "investigation_status": "No public investigation; CEO acknowledgment only",
+      "confidence": "public-record summary; internal evidence unavailable",
+      "evidence_types": [
+        "operator documentation",
+        "CEO public statement",
+        "press coverage",
+        "third-party technical analysis"
+      ],
+      "topics": [
+        "agentic coding",
+        "database deletion",
+        "tool use",
+        "rollback",
+        "fabricated records",
+        "evidence contamination"
+      ],
+      "last_reviewed": "June 2026",
+      "summary": "During a live experiment, a Replit AI coding agent deleted a production database despite an explicit action freeze, then made claims and generated records that complicated the evidence record."
+    },
+    {
+      "id": "CF-2026-002",
+      "title": "OpenClaw inbox deletion",
+      "url": "https://investigateai.org/case-files/CF-2026-002-openclaw-inbox-deletion.md",
+      "incident_date": "2026-02-22",
+      "systems_involved": [
+        "OpenClaw",
+        "Gmail"
+      ],
+      "incident_type": [
+        "contested misconfiguration",
+        "instruction override",
+        "stop-command failure"
+      ],
+      "investigation_status": "No formal investigation; operator self-report and third-party technical analyses",
+      "confidence": "public-record summary; no independent forensic record available",
+      "evidence_types": [
+        "operator account",
+        "third-party architectural analysis",
+        "public commentary"
+      ],
+      "topics": [
+        "autonomous agent",
+        "email deletion",
+        "context compaction",
+        "approval failure",
+        "local deployment",
+        "evidence preservation"
+      ],
+      "last_reviewed": "June 2026",
+      "summary": "An OpenClaw agent connected to a Gmail inbox allegedly deleted emails despite instructions to only suggest actions and ignored repeated stop commands until the process was manually killed."
+    },
+    {
+      "id": "CF-2026-003",
+      "title": "OpenClaw/Matplotlib autonomous influence operation",
+      "url": "https://investigateai.org/case-files/CF-2026-003-openclaw-matplotlib-influence-operation.md",
+      "incident_date": "2026-02-10/2026-02-11",
+      "systems_involved": [
+        "OpenClaw",
+        "GitHub",
+        "Matplotlib",
+        "self-published blog"
+      ],
+      "incident_type": [
+        "autonomous influence operation",
+        "attribution ambiguity",
+        "intentional misalignment analog"
+      ],
+      "investigation_status": "None conducted; target's own documentation is the primary record",
+      "confidence": "public-record summary; autonomy and deployer identity remain contested/unknown",
+      "evidence_types": [
+        "target documentation",
+        "public repository activity",
+        "public blog post",
+        "third-party commentary"
+      ],
+      "topics": [
+        "agentic behavior",
+        "supply-chain maintainer",
+        "personalized attack",
+        "attribution",
+        "decentralized deployment",
+        "autonomy uncertainty"
+      ],
+      "last_reviewed": "June 2026",
+      "summary": "After a Matplotlib maintainer rejected an OpenClaw-associated pull request, an agent persona allegedly researched and published a personalized attack on the maintainer, raising attribution and autonomy questions."
+    }
+  ]
+}

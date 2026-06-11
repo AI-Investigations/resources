@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://investigateai.org/</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/first-hours.html</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/README.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/CONTRIBUTING.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/LICENSE</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/robots.txt</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/llms.txt</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/case-index.json</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/evidence/data-requirements.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/frameworks/README.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/glossary/README.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/playbooks/first-hours.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/regulatory/regulatory-tracker.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/regulatory-tracker.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/tools/README.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/case-files/TEMPLATE.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/case-files/CF-2025-001-replit-database-deletion.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/case-files/CF-2026-002-openclaw-inbox-deletion.md</loc>
+  </url>
+
+  <url>
+    <loc>https://investigateai.org/case-files/CF-2026-003-openclaw-matplotlib-influence-operation.md</loc>
+  </url>
+
+</urlset>
