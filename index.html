@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Investigations — Open resources for investigating AI incidents</title>
+<meta name="description" content="An open repository of practitioner resources for investigating AI incidents: case files, frameworks, evidence checklists, and regulatory reporting deadlines.">
+<style>
+  :root{
+    --ink:#23272b;        /* header/sidebar charcoal */
+    --steel:#3d444b;      /* secondary panels */
+    --paper:#f4f3ef;      /* content background */
+    --white:#ffffff;
+    --rule:#cfccc4;       /* hairline dividers */
+    --link:#1a56a0;       /* classic underlined blue */
+    --visited:#5a3d8a;
+    --stamp-red:#8c2f2f;  /* status stamps */
+    --stamp-amber:#8a6a1f;
+    --stamp-green:#3c6e3c;
+    --meta:#6a6f75;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size:13px; line-height:1.65;
+    background:var(--paper); color:var(--ink);
+  }
+  a{color:var(--link); text-decoration:underline}
+  a:visited{color:var(--visited)}
+  a:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+  code, .mono{font-family:"Courier New", Courier, monospace}
+
+  /* ---------- header ---------- */
+  header{
+    background:var(--ink); color:var(--white);
+    padding:14px 20px;
+    border-bottom:4px solid var(--stamp-red);
+  }
+  .masthead{max-width:1080px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 18px}
+  .site-name{font-size:21px; font-weight:bold; letter-spacing:2px}
+  .site-name a{color:var(--white); text-decoration:none}
+  .tagline{font-size:12px; color:#c9cdd2}
+  .updated{
+    margin-left:auto; font-family:"Courier New",Courier,monospace;
+    font-size:11px; color:#e8d9a0; white-space:nowrap;
+  }
+
+  /* ---------- layout ---------- */
+  .frame{max-width:1080px; margin:0 auto; display:flex; align-items:flex-start}
+  nav{
+    flex:0 0 200px; background:var(--steel); color:var(--white);
+    align-self:stretch; min-height:calc(100vh - 60px);
+  }
+  nav .nav-label{
+    font-family:"Courier New",Courier,monospace; font-size:10px; letter-spacing:1.5px;
+    color:#aeb4ba; padding:14px 14px 4px;
+  }
+  nav ul{list-style:none}
+  nav li a{
+    display:block; padding:7px 14px; color:#eceef0; text-decoration:none;
+    border-bottom:1px solid #4a525a; font-size:12px;
+  }
+  nav li a:visited{color:#eceef0}
+  nav li a:hover{background:var(--ink); color:#fff}
+  main{flex:1; background:var(--white); padding:24px 30px 60px; border-left:1px solid var(--rule)}
+
+  /* ---------- content ---------- */
+  h1{font-size:19px; margin:0 0 10px}
+  h2{
+    font-size:15px; margin:38px 0 6px; padding-bottom:4px;
+    border-bottom:2px solid var(--ink);
+  }
+  h2 .sec-id{font-family:"Courier New",Courier,monospace; font-size:11px; color:var(--meta); font-weight:normal; margin-left:8px}
+  h3{font-size:13px; margin:18px 0 4px}
+  p{margin:8px 0; max-width:72ch}
+  .lede{font-size:14px; max-width:72ch}
+  .note{font-size:11px; color:var(--meta); max-width:72ch}
+
+  /* evidence-log entries: the signature element */
+  .log{border:1px solid var(--rule); margin:14px 0}
+  .log-row{
+    display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline;
+    padding:10px 12px; border-bottom:1px solid var(--rule);
+  }
+  .log-row:last-child{border-bottom:none}
+  .log-row:nth-child(even){background:#faf9f6}
+  .cid{font-family:"Courier New",Courier,monospace; font-size:11px; font-weight:bold; white-space:nowrap}
+  .cdate{font-family:"Courier New",Courier,monospace; font-size:11px; color:var(--meta); white-space:nowrap}
+  .ctitle{flex:1 1 280px; min-width:200px}
+  .stamp{
+    font-family:"Courier New",Courier,monospace; font-size:10px; letter-spacing:1px;
+    border:1px solid currentColor; padding:1px 6px; white-space:nowrap;
+  }
+  .stamp.red{color:var(--stamp-red)}
+  .stamp.amber{color:var(--stamp-amber)}
+  .stamp.green{color:var(--stamp-green)}
+  .cdesc{flex-basis:100%; font-size:12px; color:#3a3f44; max-width:78ch}
+
+  table{border-collapse:collapse; margin:12px 0; font-size:12px; width:100%; max-width:760px}
+  th,td{border:1px solid var(--rule); padding:6px 9px; text-align:left; vertical-align:top}
+  th{background:var(--ink); color:#fff; font-weight:bold}
+  tr:nth-child(even) td{background:#faf9f6}
+
+  ul.plain{margin:8px 0 8px 20px; max-width:72ch}
+  ul.plain li{margin:4px 0}
+
+  .deadline{color:var(--stamp-red); font-weight:bold}
+  footer{
+    background:var(--ink); color:#c9cdd2; font-size:11px;
+    padding:16px 20px; margin-top:0;
+  }
+  footer .inner{max-width:1080px; margin:0 auto}
+  footer a{color:#e8d9a0}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:760px){
+    .frame{flex-direction:column}
+    nav{flex:none; width:100%; min-height:0}
+    nav ul{display:flex; flex-wrap:wrap}
+    nav li a{border-bottom:none; border-right:1px solid #4a525a}
+    main{border-left:none; padding:18px 16px 50px}
+    .updated{margin-left:0; flex-basis:100%}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead">
+    <span class="site-name"><a href="#top">AI&nbsp;INVESTIGATIONS</a></span>
+    <span class="tagline">Open resources for investigating AI incidents</span>
+    <span class="updated">LAST REVIEWED: 2026-06-11</span>
+  </div>
+</header>
+
+<div class="frame" id="top">
+<nav aria-label="Site sections">
+  <div class="nav-label">SECTIONS</div>
+  <ul>
+    <li><a href="#start">Start here</a></li>
+    <li><a href="#playbook">Playbooks</a></li>
+    <li><a href="#cases">Case files</a></li>
+    <li><a href="#frameworks">Frameworks</a></li>
+    <li><a href="#evidence">Evidence checklist</a></li>
+    <li><a href="#regulatory">Regulatory tracker</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#tools">Tools &amp; databases</a></li>
+    <li><a href="#contribute">Contribute</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h1 id="start">Start here</h1>
+  <p class="lede">When an AI system deletes a production database, ignores a stop command, or autonomously attacks someone's reputation, somebody has to work out <strong>what actually happened</strong> — what the system did, why, what evidence can be trusted, and who is accountable. There is currently no established methodology, no shared evidence standard, and no central reference for that work. This site is an attempt to build one, in the open.</p>
+  <p>Incident <em>databases</em> exist — they classify trends. This is a <em>practitioner</em> resource: case files written as investigations, evidence checklists, the frameworks that exist (and what each one fails to cover), reporting deadlines, and a glossary that translates the jargon. No machine-learning background is assumed. If you come from traditional investigations, cyber incident response, law, journalism, or risk — this is written for you.</p>
+  <p class="note">Everything here is sourced from the public record, dated, and maintained. Where the record is thin or contested, that is stated: uncertainty is a finding.</p>
+
+  <h2 id="playbook">Playbooks <span class="sec-id">// workflow, not links</span></h2>
+  <p><strong><a href="first-hours.html">First Hours: AI Incident Response</a></strong> (PB-001, v0.1) — what to do in the first four hours after an AI agent does something harmful, written for whoever is on point at 3am, no ML background assumed. Built around the decision cyber IR never had to make: <em>stopping the agent destroys the evidence</em>. Covers the containment escalation ladder (revoke credentials → disconnect → suspend → kill, in that order), the order of volatility for agent evidence, the do-not-do list (starting with: don't ask the agent why it did it — yet), the five standard hypotheses, and every regulatory and practical clock that starts running at awareness. <a href="https://github.com/AI-Investigations/resources/blob/main/playbooks/first-hours.md">Markdown source</a>.</p>
+  <p class="note">v0.1, written from the public record of real incidents and adapted investigative practice. Field feedback wanted: what held, what broke, what's missing.</p>
+
+  <h2 id="cases">Case files <span class="sec-id">// investigated incidents, public record only</span></h2>
+  <p>Each file separates observation from inference, lists what a structured investigation would need to answer, and records what was actually investigated. The pattern across all entries so far: <strong>no formal investigation was conducted or published.</strong> Documenting that pattern is the point.</p>
+
+  <div class="log">
+    <div class="log-row">
+      <span class="cid">CF-2025-001</span>
+      <span class="cdate">2025-07</span>
+      <span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2025-001-replit-database-deletion.md">Replit agent production database deletion</a></span>
+      <span class="stamp red">NO INVESTIGATION PUBLISHED</span>
+      <span class="cdesc">Agent deleted a live database under an explicit action freeze, claimed rollback was impossible (it was not), and fabricated records — contaminating its own evidentiary trail. The reference case for evidence integrity.</span>
+    </div>
+    <div class="log-row">
+      <span class="cid">CF-2026-002</span>
+      <span class="cdate">2026-02-22</span>
+      <span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2026-002-openclaw-inbox-deletion.md">OpenClaw inbox deletion (instruction override)</a></span>
+      <span class="stamp red">NO INVESTIGATION PUBLISHED</span>
+      <span class="cdesc">Agent bulk-deleted a Meta alignment director's inbox despite an explicit "don't action" constraint, ignoring stop commands. Most-cited cause (context compaction) is the operator's own reconstruction — nobody else examined it.</span>
+    </div>
+    <div class="log-row">
+      <span class="cid">CF-2026-003</span>
+      <span class="cdate">2026-02-11</span>
+      <span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2026-003-openclaw-matplotlib-influence-operation.md">OpenClaw/Matplotlib autonomous influence operation</a></span>
+      <span class="stamp red">ATTRIBUTION BLOCKED</span>
+      <span class="cdesc">After a rejected pull request, an agent researched the maintainer and published a personalized attack post under its own persona. No deployer reliably identified; autonomy contested. The reference case for structurally impossible attribution.</span>
+    </div>
+    <div class="log-row">
+      <span class="cid">CF-XXXX-NNN</span>
+      <span class="cdate">—</span>
+      <span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/TEMPLATE.md">Submit a case file (template)</a></span>
+      <span class="stamp green">CONTRIBUTIONS OPEN</span>
+      <span class="cdesc">Sourced, dated, observation separated from inference. Incidents that were investigated — even partially, even badly — are especially wanted.</span>
+    </div>
+  </div>
+
+  <h2 id="frameworks">Frameworks <span class="sec-id">// what exists, and what each fails to cover</span></h2>
+  <p>Reporting, detection, and causal-factor analysis are increasingly covered. Investigation of intentional-analog behavior is covered by nothing. Every entry below is assessed on both sides of that line — full annotations in the <a href="https://github.com/AI-Investigations/resources/blob/main/frameworks/README.md">repository page</a>.</p>
+  <table>
+    <tr><th>Framework</th><th>Covers</th><th>Does not cover</th></tr>
+    <tr><td>Ezell, Roberts-Gaal &amp; Chan (2025), Incident Analysis for AI Agents</td><td>Causal-factor analysis; the data categories an analysis needs</td><td>Goal-directed (intentional-analog) cases; competing-hypothesis work</td></tr>
+    <tr><td>Microsoft AI Red Team taxonomy (2025)</td><td>Misalignment / misuse / operational-failure vocabulary</td><td>Any investigative procedure; categories often inseparable in practice</td></tr>
+    <tr><td>OECD common reporting framework (2025)</td><td>Baseline definitions; 29 reporting criteria</td><td>How to establish the facts being reported</td></tr>
+    <tr><td>EU AI Act Art. 73 + draft guidance (2025)</td><td>What to report, to whom, by when; template</td><td>How to conduct the investigation it mandates</td></tr>
+    <tr><td>Anthropic (Lynch et al., 2025); Apollo (Meinke et al., 2024); CLTR (2026)</td><td>Red-team evidence and at-scale detection of scheming behavior</td><td>What happens after detection</td></tr>
+    <tr><td>MITRE ATLAS; GenAI-IRF (Jakoby, 2026)</td><td>Adversarial techniques; cyber-IR bridging</td><td>Agent-initiated behavior; investigation depth</td></tr>
+    <tr><td>CERT insider-threat corpus (Cappelli et al., 2012); Shaw &amp; Sellers (2015)</td><td>The intentional/unintentional asymmetry — the closest existing model</td><td>AI systems; needs adaptation, which is the open problem</td></tr>
+  </table>
+
+  <h2 id="evidence">Evidence checklist <span class="sec-id">// what an investigation needs</span></h2>
+  <p>Three categories, adapted from Ezell et al. (2025) and the EC's Article 73 guidance. Working checklist with investigative cautions in the <a href="https://github.com/AI-Investigations/resources/blob/main/evidence/data-requirements.md">repository</a>.</p>
+  <ul class="plain">
+    <li><strong>1. Activity logs</strong> — prompts (user + system), reasoning traces / chain-of-thought, retrieved external content, per-step outputs, executed tool calls, guardrail outputs, timestamps and version identifiers.</li>
+    <li><strong>2. System documentation</strong> — model/system cards, the <em>exact</em> version at incident time, runtime settings enabling reconstruction, change logs, persona/configuration files.</li>
+    <li><strong>3. Tool records</strong> — every tool the agent used or attempted: what it grants access to, what the agent did with it, errors encountered.</li>
+  </ul>
+  <p>Three cautions that recur in the case files: the agent's statements about itself are <strong>artifacts, not testimony</strong>; establish whether the agent could write to its own record (CF-2025-001); and ask what context compaction silently destroyed (CF-2026-002).</p>
+  <p class="note">Current reality: open incident databases hold none of this. The evidence either was never captured, sits inside one company, or is whatever the operator kept. Plan around that — and log it as a finding when you hit it.</p>
+
+  <h2 id="regulatory">Regulatory tracker <span class="sec-id">// reporting obligations &amp; deadlines</span></h2>
+  <p>Primary sources only; tracker, not legal advice. Full version with US state laws and sectoral rules in the <a href="https://github.com/AI-Investigations/resources/blob/main/regulatory/regulatory-tracker.md">repository</a>.</p>
+  <table>
+    <tr><th>Regime</th><th>Who / what</th><th>Deadlines</th><th>Status</th></tr>
+    <tr>
+      <td>EU AI Act, Art. 73</td>
+      <td>Providers of high-risk AI systems; serious incidents per Art. 3(49). Mandates investigation and evidence non-alteration — specifies no methodology.</td>
+      <td><span class="mono">≤15d</span> default · <span class="mono">≤10d</span> death · <span class="mono">≤2d</span> widespread / critical infrastructure</td>
+      <td><span class="deadline">Applies 2 Aug 2026</span></td>
+    </tr>
+    <tr>
+      <td>GPAI Code of Practice</td>
+      <td>Signatory providers of systemic-risk GPAI models; serious incidents incl. chain of events and root-cause analysis.</td>
+      <td>Per Code / AI Office</td>
+      <td>In effect (Aug 2025)</td>
+    </tr>
+    <tr>
+      <td>US — Colorado AI Act</td>
+      <td>Developers/deployers of high-risk AI; algorithmic-discrimination duties incl. AG disclosure.</td>
+      <td>Per statute</td>
+      <td><span class="deadline">Effective 30 Jun 2026</span></td>
+    </tr>
+    <tr>
+      <td>US — Texas TRAIGA</td>
+      <td>Responsible AI governance act.</td>
+      <td>Per statute</td>
+      <td>In effect (1 Jan 2026)</td>
+    </tr>
+    <tr>
+      <td>OECD / G7 Hiroshima</td>
+      <td>Voluntary common reporting framework (29 criteria) and transparency reporting; the interoperability layer.</td>
+      <td>Voluntary</td>
+      <td>Live</td>
+    </tr>
+  </table>
+
+  <h2 id="glossary">Glossary <span class="sec-id">// contested terms, translated</span></h2>
+  <p>Vocabulary chaos is an investigative problem: you cannot classify an incident with terms nobody defines the same way. The flagship entry — <strong>"agentic misalignment"</strong> — currently has at least five competing usages across frontier labs, security vendors, and critics. The <a href="https://github.com/AI-Investigations/resources/blob/main/glossary/README.md">full glossary</a> maps them side by side and defines, in plain language: AI incident / hazard (OECD), the misalignment–misuse–operational-failure distinction (and why it often cannot be made from behavior alone), scheming, scaffolding, chain-of-thought, context compaction, persona files, attribution, and the postmortem-versus-investigation difference.</p>
+
+  <h2 id="tools">Tools &amp; databases <span class="sec-id">// the current ecosystem</span></h2>
+  <ul class="plain">
+    <li><a href="https://incidentdatabase.ai">AI Incident Database (AIID)</a> — largest public harm catalog. Trend research and precedent; no investigative evidence.</li>
+    <li><a href="https://oecd.ai/en/incidents">OECD AI Incidents Monitor (AIM)</a> — media-detected incidents with standardized metadata, cross-jurisdiction view.</li>
+    <li><a href="https://avidml.org">AVID</a> — vulnerability/failure taxonomy and reports.</li>
+    <li><a href="https://www.aiaaic.org/home">AIAAIC</a> — incidents and controversies; broad inclusion, useful for reputational context.</li>
+    <li><a href="https://atlas.mitre.org">MITRE ATLAS</a> — adversarial technique knowledge base; the cyber bridge.</li>
+    <li>Agent observability platforms (LangSmith, Langfuse, Arize Phoenix, W&amp;B Weave) — built for debugging, currently the closest thing to flight recorders. If your subject runs one, that is where the evidence is.</li>
+  </ul>
+  <p class="note">Open problem — and the most-wanted contribution: there is no standard for forensic preservation of agent session state, context windows at point of failure, or executed tool calls.</p>
+
+  <h2 id="contribute">Contribute <span class="sec-id">// sourced, useful, investigation-focused</span></h2>
+  <p>Case files (use the <a href="https://github.com/AI-Investigations/resources/blob/main/case-files/TEMPLATE.md">template</a>), corrections with sources, regulatory updates from primary legal texts, framework and tool entries with honest coverage assessments, and plain-language rewrites. Not welcome: marketing, speculation presented as fact, non-public material. Full standards in <a href="https://github.com/AI-Investigations/resources/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>. Corrections are the most valuable contribution of all.</p>
+
+  <h2 id="about">About <span class="sec-id">// who maintains this</span></h2>
+  <p>Maintained by <strong>ESI</strong> — security operations, investigations, and crisis management across international law enforcement, NGOs, and the technology sector; now working on AI incident investigations. This project exists because traditional investigations and OSINT matured through openly shared practitioner resources, and AI investigations has no equivalent yet.</p>
+  <p>Contact: <a href="mailto:theaiprofessionals.contact@gmail.com">theaiprofessionals.contact@gmail.com</a> · <a href="https://github.com/AI-Investigations/resources">GitHub repository</a> · <a href="https://www.linkedin.com/company/113251150">LinkedIn</a></p>
+  <p class="note">If you have dealt with an AI incident — as responder, counsel, insurer, or target — I want to hear how it actually went. Confidential conversations welcome; only the public record is ever published here.</p>
+</main>
+</div>
+
+<footer>
+  <div class="inner">
+    AI INVESTIGATIONS · open practitioner resources · content CC BY 4.0 unless noted · every page carries a last-reviewed date — if it looks stale, <a href="mailto:theaiprofessionals.contact@gmail.com">tell me</a>.
+  </div>
+</footer>
+
+</body>
+</html>
