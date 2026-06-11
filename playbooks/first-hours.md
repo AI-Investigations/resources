@@ -95,7 +95,7 @@ Open a plain text file. Three running lists:
 
 ## Step 5 — Do-not-do list
 
-- **Don't interrogate the agent before preservation is done.** Its explanations are fluent, confident, sticky — they will anchor your team's thinking and contaminate witness accounts. When you do examine it later, do it deliberately: scripted questions, logged, ideally on a *copy* of the session, treating outputs as exhibits. (Forensically sound model examination is its own discipline — separate resource forthcoming.)
+- **Don't interrogate the agent before preservation is done.** Its explanations are fluent, confident, sticky — they will anchor your team's thinking and contaminate witness accounts. When you do examine it later, do it deliberately: scripted questions, logged, ideally on a *copy* of the session, treating outputs as exhibits. (Forensically sound model examination is its own discipline — see [PB-002](model-examination.md).)
 - **Don't let the agent help investigate itself.** No "summarize what happened," no "check the logs for me." CF-2025-001's fabricated records were generated *post-incident*.
 - **Don't accept its claims about reversibility.** "Rollback is impossible" was false in CF-2025-001. Verify with the underlying service.
 - **Don't alter the system.** No model updates, framework upgrades, config edits, or cleanup. Article 73 prohibits changes affecting later evaluation of causes before authorities are informed; treat that as the standard everywhere.

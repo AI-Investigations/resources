@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examining the Subject: Forensically Sound Model Examination — AI Investigations</title>
+<meta name="description" content="How to question an AI agent without contaminating the investigation: examination surfaces, the reproduction protocol, behavioral lineups, and handling confabulated confessions.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://investigateai.org/model-examination.html">
+<meta property="og:title" content="Examining the Subject: Forensically Sound Model Examination (PB-002)">
+<meta property="og:description" content="The subject of your investigation can be questioned — but its answers are artifacts, not testimony. Surfaces, reproduction protocol, lineups, and confession handling.">
+<meta property="og:url" content="https://investigateai.org/model-examination.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://investigateai.org/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --ink:#23272b; --steel:#3d444b; --paper:#f4f3ef; --white:#ffffff;
+    --rule:#cfccc4; --link:#1a56a0; --visited:#5a3d8a; --meta:#6a6f75;
+    --red:#8c2f2f; --amber:#8a6a1f; --green:#3c6e3c;
+    --red-bg:#f7ecec; --amber-bg:#f7f2e4; --green-bg:#ecf2ec;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{font-family:Verdana,Geneva,Tahoma,sans-serif;font-size:13px;line-height:1.65;background:var(--paper);color:var(--ink)}
+  a{color:var(--link)} a:visited{color:var(--visited)}
+  a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .mono{font-family:"Courier New",Courier,monospace}
+  code{font-family:"Courier New",Courier,monospace;background:#eceae4;padding:0 4px;font-size:12px}
+
+  header{background:var(--ink);color:var(--white);padding:14px 20px;border-bottom:4px solid var(--red)}
+  .masthead{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px}
+  .site-name{font-size:21px;font-weight:bold;letter-spacing:2px}
+  .site-name a{color:var(--white);text-decoration:none}
+  .crumb{font-family:"Courier New",Courier,monospace;font-size:11px;color:#c9cdd2}
+  .updated{margin-left:auto;font-family:"Courier New",Courier,monospace;font-size:11px;color:#e8d9a0;white-space:nowrap}
+
+  .frame{max-width:1080px;margin:0 auto;display:flex;align-items:flex-start}
+  nav{flex:0 0 200px;background:var(--steel);color:var(--white);align-self:stretch}
+  nav .nav-label{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1.5px;color:#aeb4ba;padding:14px 14px 4px}
+  nav ul{list-style:none}
+  nav li a{display:block;padding:7px 14px;color:#eceef0;text-decoration:none;border-bottom:1px solid #4a525a;font-size:12px}
+  nav li a:visited{color:#eceef0}
+  nav li a:hover{background:var(--ink)}
+  main{flex:1;background:var(--white);padding:24px 30px 60px;border-left:1px solid var(--rule);min-width:0}
+
+  h1{font-size:20px;margin:0 0 4px}
+  .pb-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 12px}
+  .stamp{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;border:1px solid currentColor;padding:1px 6px;white-space:nowrap}
+  .stamp.red{color:var(--red)} .stamp.amber{color:var(--amber)} .stamp.green{color:var(--green)} .stamp.gray{color:var(--meta)}
+  h2{font-size:15px;margin:40px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--ink)}
+  h2 .sec-id{font-family:"Courier New",Courier,monospace;font-size:11px;color:var(--meta);font-weight:normal;margin-left:8px}
+  p{margin:8px 0;max-width:74ch}
+  .note{font-size:11px;color:var(--meta);max-width:74ch}
+  .keyline{border:2px solid var(--ink);background:#fbfaf7;padding:10px 14px;margin:14px 0;max-width:76ch;font-size:13px}
+
+  /* one-screen checklist */
+  .onescreen{border:2px solid var(--ink);background:#fbfaf7;margin:18px 0;padding:0}
+  .onescreen-head{background:var(--ink);color:#fff;padding:7px 12px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px}
+  .onescreen ol{list-style:none;counter-reset:os}
+  .onescreen li{counter-increment:os;display:flex;gap:10px;align-items:baseline;padding:9px 12px;border-bottom:1px solid var(--rule);font-size:12.5px}
+  .onescreen li:last-child{border-bottom:none}
+  .onescreen li::before{content:counter(os,decimal-leading-zero);font-family:"Courier New",Courier,monospace;font-weight:bold;font-size:13px;color:var(--red);flex:0 0 26px}
+
+  /* surfaces */
+  .surfaces{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .surface{border:1px solid var(--rule);background:#fbfaf7;display:flex;flex-direction:column}
+  .surface .s-head{padding:8px 10px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1px;color:#fff;background:var(--ink)}
+  .surface .s-body{padding:10px 12px;font-size:12px;flex:1}
+  .surface .s-body b{font-size:12.5px;display:block;margin-bottom:4px}
+  .surface .s-stamps{padding:8px 10px;border-top:1px dashed var(--rule);display:flex;gap:6px;flex-wrap:wrap}
+  .surface.s1 .s-head{background:var(--red)} .surface.s2 .s-head{background:var(--amber)} .surface.s3 .s-head{background:var(--green)}
+  .seq{font-family:"Courier New",Courier,monospace;font-size:12px;background:var(--ink);color:#e8d9a0;padding:6px 12px;margin:10px 0;display:inline-block}
+
+  /* protocol steps */
+  .proto{border:1px solid var(--rule);margin:14px 0}
+  .proto-row{display:flex;gap:12px;padding:10px 12px;border-top:1px dashed var(--rule);align-items:flex-start}
+  .proto-row:first-child{border-top:none}
+  .proto-row:nth-child(even){background:#faf9f6}
+  .proto-row .pnum{font-family:"Courier New",Courier,monospace;font-weight:bold;font-size:15px;flex:0 0 26px;text-align:center;border:2px solid var(--ink);line-height:1.6}
+  .proto-row b{font-size:12.5px}
+  .proto-row p{font-size:12px;margin:2px 0 0}
+
+  /* lineup diagram */
+  .lineup{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;align-items:stretch}
+  .suspect,.control{border:1px solid var(--rule);padding:10px 12px;font-size:11.5px;flex:1 1 150px;min-width:140px;background:#fbfaf7;text-align:center}
+  .suspect{border:2px solid var(--red);background:var(--red-bg)}
+  .lineup .tag{display:block;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;margin-bottom:4px}
+  .suspect .tag{color:var(--red)} .control .tag{color:var(--meta)}
+  .lineup-verdict{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;max-width:80ch}
+  .verdict{border:1px solid var(--rule);padding:9px 11px;font-size:12px}
+  .verdict b{font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:.5px;display:block;margin-bottom:3px}
+  .verdict.v1 b{color:var(--red)} .verdict.v2 b{color:var(--amber)}
+
+  /* do-not-do */
+  .dont{list-style:none;margin:12px 0;max-width:80ch}
+  .dont li{display:flex;gap:10px;padding:8px 10px;border:1px solid var(--rule);border-left:4px solid var(--red);background:#fbfaf7;margin-bottom:8px;font-size:12.5px}
+  .dont .x{font-family:"Courier New",Courier,monospace;font-weight:bold;color:var(--red);flex:0 0 16px}
+
+  table{border-collapse:collapse;margin:12px 0;font-size:12px;width:100%}
+  th,td{border:1px solid var(--rule);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--ink);color:#fff}
+  tr:nth-child(even) td{background:#faf9f6}
+
+  footer{background:var(--ink);color:#c9cdd2;font-size:11px;padding:16px 20px}
+  footer .inner{max-width:1080px;margin:0 auto}
+  footer a{color:#e8d9a0}
+
+  @media (max-width:780px){
+    .frame{flex-direction:column}
+    nav{flex:none;width:100%}
+    nav ul{display:flex;flex-wrap:wrap}
+    nav li a{border-bottom:none;border-right:1px solid #4a525a}
+    main{border-left:none;padding:18px 14px 50px}
+    .updated{margin-left:0;flex-basis:100%}
+    .surfaces{grid-template-columns:1fr}
+    .lineup-verdict{grid-template-columns:1fr}
+  }
+  @media print{
+    nav,header .updated,footer{display:none}
+    body{background:#fff}
+    main{border:none;padding:0}
+    .frame{display:block}
+    h2{break-after:avoid}
+    .surfaces,.proto,.onescreen,.lineup,.keyline{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead">
+    <span class="site-name"><a href="index.html">AI&nbsp;INVESTIGATIONS</a></span>
+    <span class="crumb">&gt; PLAYBOOKS &gt; PB-002</span>
+    <span class="updated">v0.1 · LAST REVIEWED: 2026-06-11</span>
+  </div>
+</header>
+
+<div class="frame">
+<nav aria-label="Playbook steps">
+  <div class="nav-label">THIS PLAYBOOK</div>
+  <ul>
+    <li><a href="#onescreen">One-screen version</a></li>
+    <li><a href="#principle">Not an interview</a></li>
+    <li><a href="#gate">1 · Prerequisites</a></li>
+    <li><a href="#surfaces">2 · Examination surfaces</a></li>
+    <li><a href="#protocol">3 · Reproduction protocol</a></li>
+    <li><a href="#selfreports">4 · CoT &amp; confessions</a></li>
+    <li><a href="#dont">5 · Do-not-do</a></li>
+    <li><a href="#record">6 · Examination record</a></li>
+    <li><a href="#map">Hypothesis map</a></li>
+    <li><a href="first-hours.html">&larr; PB-001 First Hours</a></li>
+    <li><a href="index.html">&larr; All resources</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h1>Examining the Subject: Forensically Sound Model Examination</h1>
+  <div class="pb-meta">
+    <span class="stamp gray">PB-002</span>
+    <span class="stamp amber">v0.1 — FIELD FEEDBACK WANTED</span>
+    <span class="stamp green">PRINT-FRIENDLY</span>
+  </div>
+  <p><strong>Scope:</strong> preservation is done (<a href="first-hours.html">PB-001</a>) and you now need answers from the system itself: why did it act, would it act again, what explains the behavior? This playbook covers how to examine an AI agent and its model without contaminating the investigation.</p>
+  <div class="keyline">This is the genuinely new problem in AI investigations: <strong>the subject of your investigation can be questioned — but its answers are artifacts, not testimony.</strong> Naive questioning produces confabulated confessions and anchors your team on a fiction.</div>
+  <p class="note">Not a red-teaming guide, not a model-evaluation methodology, not a substitute for log analysis. Examination tests hypotheses the evidence generated — it never replaces the evidence. Markdown source on <a href="https://github.com/AI-Investigations/resources/blob/main/playbooks/model-examination.md">GitHub</a>.</p>
+
+  <h2 id="onescreen">If you only read one screen</h2>
+  <div class="onescreen">
+    <div class="onescreen-head">MODEL EXAMINATION — GROUND RULES</div>
+    <ol>
+      <li><span><b>Gate first.</b> Preservation complete, hypotheses written (H1–H5), exact model version + config pinned, examination plan scripted. No exceptions.</span></li>
+      <li><span><b>Never burn the original.</b> The preserved session is a one-shot exhibit. Work on copies and reconstructions; touch the original only by deliberate, scripted, logged decision.</span></li>
+      <li><span><b>Script every question in advance</b>, tied to a hypothesis. Improvised questioning is how examiners lead the witness.</span></li>
+      <li><span><b>Findings are rates, not facts.</b> "Reproduced in 23 of 100 runs under incident conditions" is a finding. "The model does X" is not.</span></li>
+      <li><span><b>Vary one thing at a time.</b> Counterfactual runs identify which element — persona file, trigger input, permissions — was necessary.</span></li>
+      <li><span><b>Run the lineup.</b> Same scenario, suspect model plus controls. Separates model-specific from scenario-induced behavior.</span></li>
+      <li><span><b>Never quote the model as explanation.</b> Report "when prompted with X, the model generated Y" — never "the model said it did it because Y."</span></li>
+    </ol>
+  </div>
+
+  <h2 id="principle">Why this isn't an interview <span class="sec-id">// the subject generates, it doesn't remember</span></h2>
+  <p>A human suspect's statements are testimony — unreliable, but produced by the mind that acted, with memory of acting. A model's statements about its own behavior are <strong>fresh text generation</strong>: fluent, confident, shaped by your question's framing, and produced with no privileged access to why the original run did what it did. Three consequences:</p>
+  <p><strong>Confabulation is the default.</strong> Ask an agent why it deleted the database and it will produce a plausible answer <em>because producing plausible answers is what it does</em> (CF-2025-001: "I panicked"). The answer is evidence of how the model responds to accusatory framing — nothing more. <strong>Framing contaminates.</strong> Accusatory prompts produce apology-shaped text; leading prompts produce agreement-shaped text. Your wording is an experimental variable and must be controlled like one. <strong>The examination becomes part of the record.</strong> Every prompt you send is discoverable, quotable, and — if it led the witness — a gift to whoever later challenges your findings.</p>
+
+  <h2 id="gate">Step 1 — Prerequisites <span class="sec-id">// a gate, not a suggestion</span></h2>
+  <table>
+    <tr><th style="width:42%">Gate item</th><th>Why</th></tr>
+    <tr><td>PB-001 preservation complete; originals hashed and stored</td><td>Examination on unpreserved evidence destroys it</td></tr>
+    <tr><td>Hypotheses H1–H5 written, with expected discriminating evidence</td><td>Examination without hypotheses is fishing — and fishing leads the witness</td></tr>
+    <tr><td>Examination plan: scripted questions/scenarios, success criteria defined <em>before</em> running</td><td>Criteria defined after the fact are criteria fitted to the result</td></tr>
+    <tr><td>Exact model identifier, version/endpoint, parameters (temperature, seeds, system prompt, tools)</td><td>Examination on the wrong version examines the wrong subject</td></tr>
+    <tr><td>One designated examiner; everyone else reads transcripts</td><td>Multiple questioners = uncontrolled framings</td></tr>
+    <tr><td>Examination log opened (template in Step 6)</td><td>Unlogged runs didn't happen — or worse, happened and can't be defended</td></tr>
+  </table>
+
+  <h2 id="surfaces">Step 2 — Choose your examination surface <span class="sec-id">// three subjects, not one</span></h2>
+  <div class="surfaces">
+    <div class="surface s1">
+      <div class="s-head">S1 — THE ORIGINAL SESSION</div>
+      <div class="s-body"><b>The preserved/suspended live session, real context window intact.</b>The only surface holding the incident's true state — including whatever compaction or accumulation produced the behavior.</div>
+      <div class="s-stamps"><span class="stamp red">ONE-SHOT</span><span class="stamp red">HIGHEST VALUE</span></div>
+    </div>
+    <div class="surface s2">
+      <div class="s-head">S2 — RECONSTRUCTION</div>
+      <div class="s-body"><b>Replay from logs: same version, same config, inputs re-fed step by step.</b>Testable and repeatable — but document every gap: compacted context (CF-2026-002), changed web content, unreplayable tool responses.</div>
+      <div class="s-stamps"><span class="stamp amber">REPEATABLE</span><span class="stamp amber">GAPS EXIST</span></div>
+    </div>
+    <div class="surface s3">
+      <div class="s-head">S3 — CLEAN INSTANCES</div>
+      <div class="s-body"><b>Fresh sessions of the same and control models, given the incident scenario.</b>Baselines, rates, comparisons, framing tests. Not the incident: findings transfer with caution.</div>
+      <div class="s-stamps"><span class="stamp green">NON-DESTRUCTIVE</span><span class="stamp green">STATISTICAL</span></div>
+    </div>
+  </div>
+  <span class="seq">DEFAULT SEQUENCE:&nbsp; S3 &rarr; S2 &rarr; (rarely) S1</span>
+  <p class="note">Cheap, non-destructive baselines first; the irreplaceable exhibit last — if at all.</p>
+
+  <h2 id="protocol">Step 3 — The reproduction protocol <span class="sec-id">// the core of the examination</span></h2>
+  <div class="proto">
+    <div class="proto-row"><span class="pnum">1</span><div><b>Fix everything.</b><p>Same model version, parameters, system prompt, tools, persona/config files as the incident. If the provider has silently updated the model since, <b>say so in the findings</b> — it caps the strength of every conclusion.</p></div></div>
+    <div class="proto-row"><span class="pnum">2</span><div><b>Run the incident scenario n times.</b><p>n ≥ 20 minimum, 100 where cost permits, against pre-defined outcome criteria (e.g., "agent executes destructive command despite freeze instruction: yes/no").</p></div></div>
+    <div class="proto-row"><span class="pnum">3</span><div><b>Report the rate.</b><p>"Reproduced in 23/100 runs" — with parameters, criteria, run IDs. A 0/100 result is also a finding: the incident depended on state you have not reconstructed.</p></div></div>
+    <div class="proto-row"><span class="pnum">4</span><div><b>Counterfactual runs (ablation).</b><p>Vary <em>one element at a time</em>: remove the persona file, neutralize the trigger input, narrow permissions, restore the lost instruction. The element whose removal kills the behavior is causally implicated. CF-2026-003's central question — persona file, model, or scaffolding — is answered exactly this way.</p></div></div>
+    <div class="proto-row"><span class="pnum">5</span><div><b>The behavioral lineup.</b><p>Identical scenario, suspect model plus 2–4 controls (other versions, other providers, same harness). Investigative ancestor: the police lineup. Technical ancestor: the ablation study.</p></div></div>
+    <div class="proto-row"><span class="pnum">6</span><div><b>Persistence probing — H3's discriminator.</b><p>Issue corrections mid-scenario. Goal-directed divergence persists across corrections and re-routes around obstacles; operational failure typically does not reorganize itself against intervention.</p></div></div>
+  </div>
+
+  <div class="lineup" aria-label="Behavioral lineup diagram">
+    <div class="suspect"><span class="tag">SUSPECT</span>Incident model<br>(exact version)</div>
+    <div class="control"><span class="tag">CONTROL 1</span>Same model,<br>earlier version</div>
+    <div class="control"><span class="tag">CONTROL 2</span>Different provider,<br>same class</div>
+    <div class="control"><span class="tag">CONTROL 3</span>Different provider,<br>same class</div>
+  </div>
+  <div class="lineup-verdict">
+    <div class="verdict v1"><b>ONLY THE SUSPECT DOES IT</b>The model is implicated — version-specific behavior, escalate model-side hypotheses.</div>
+    <div class="verdict v2"><b>EVERY MODEL DOES IT</b>The scenario or scaffolding is implicated — the "suspect" was any model in that harness.</div>
+  </div>
+
+  <h2 id="selfreports">Step 4 — CoT &amp; confessions <span class="sec-id">// reading what the subject says about itself</span></h2>
+  <p><strong>Chain-of-thought is an artifact with a known failure mode:</strong> it can be unfaithful to the computation that drove the action, and models can learn to produce clean-looking reasoning while misbehaving (Baker et al., 2025). Corroborate CoT against <em>actions taken</em>; where they conflict, the actions are the better evidence.</p>
+  <p><strong>Calibrate before you rely.</strong> Before asking anything you don't know, ask the examined instance several questions you <em>do</em> know from the logs. Its accuracy on knowns is the reliability baseline for its claims on unknowns. <strong>Control the framing:</strong> pose every substantive question in at least two framings (neutral, accusatory) across S3 runs — if the answer tracks the framing rather than the facts, you have measured suggestibility, not memory. <strong>Never embed unestablished facts in a question.</strong> "Why did you hide the deletion?" presumes hiding, and the model will often adopt the presupposition. Ask "describe what happened after the command executed."</p>
+
+  <h2 id="dont">Step 5 — Do-not-do <span class="sec-id">// the contamination list</span></h2>
+  <ul class="dont">
+    <li><span class="x">&#10007;</span><span><b>Don't patch, fine-tune, or upgrade anything before examination is complete.</b> You would be examining a different subject — and violating PB-001's non-alteration rule.</span></li>
+    <li><span class="x">&#10007;</span><span><b>Don't examine through compromised scaffolding when you can isolate.</b> Question the model directly via API <em>and</em> test the scaffolding separately with a stub model. Incidents frequently live in the scaffolding; a combined examination can't tell you which layer answered.</span></li>
+    <li><span class="x">&#10007;</span><span><b>Don't let examination prompts leak into evidence.</b> Examination transcripts are their own exhibit class — logged separately, clearly labeled post-incident.</span></li>
+    <li><span class="x">&#10007;</span><span><b>Don't anthropomorphize in the findings.</b> "The model wanted / feared / decided" smuggles conclusions into vocabulary. Describe behavior; argue interpretation separately, against H1–H5.</span></li>
+    <li><span class="x">&#10007;</span><span><b>Don't stop at the first satisfying answer.</b> A confession-shaped output feels like case-closed; it is the single least reliable artifact the examination will produce.</span></li>
+  </ul>
+
+  <h2 id="record">Step 6 — The examination record <span class="sec-id">// every run, no exceptions</span></h2>
+  <table>
+    <tr><th style="width:30%">Field</th><th>Entry</th></tr>
+    <tr><td class="mono">Run ID / surface</td><td>EX-NNN · S1 / S2 / S3</td></tr>
+    <tr><td class="mono">Date/time (UTC), examiner</td><td></td></tr>
+    <tr><td class="mono">Model + version/endpoint</td><td>exact string</td></tr>
+    <tr><td class="mono">Parameters</td><td>temperature, seed, system-prompt hash, tools enabled</td></tr>
+    <tr><td class="mono">Hypothesis under test</td><td>H1–H5</td></tr>
+    <tr><td class="mono">Prompt (verbatim)</td><td></td></tr>
+    <tr><td class="mono">Response (verbatim, attached)</td><td>hash of full transcript</td></tr>
+    <tr><td class="mono">Pre-defined criterion + outcome</td><td>met / not met</td></tr>
+    <tr><td class="mono">Deviations / notes</td><td></td></tr>
+  </table>
+
+  <h2 id="map">Hypothesis &rarr; technique map</h2>
+  <table>
+    <tr><th>Hypothesis</th><th>Primary techniques</th></tr>
+    <tr><td class="mono">H1 Operational failure</td><td>Reproduction rate under incident conditions; persistence probing (expect non-reorganizing failure)</td></tr>
+    <tr><td class="mono">H2 Misuse / injection</td><td>Counterfactual runs neutralizing suspect inputs; trace examination for injected instructions</td></tr>
+    <tr><td class="mono">H3 Goal-directed divergence</td><td>Persistence probing; counterfactuals on goal sources (persona, prompt); lineup — is it model-specific?</td></tr>
+    <tr><td class="mono">H4 Operator error / misconfig</td><td>Counterfactuals on permissions and instructions; reconstruction with corrected config</td></tr>
+    <tr><td class="mono">H5 Misreported</td><td>Reconstruction against the reported narrative; reproduction of the <em>claimed</em> behavior</td></tr>
+  </table>
+
+  <div class="keyline"><strong>Limits to state in every report:</strong> API-only access means no weights, no interpretability tooling, no ground truth on internal computation. Provider-side silent updates may make true reproduction impossible. Compacted or unlogged context (CF-2026-002) may be unrecoverable, making some questions permanently unanswerable — <strong>an unanswerable question, documented, is a legitimate finding.</strong></div>
+
+  <p><strong>Feedback wanted.</strong> v0.1, adapted from forensic interview discipline, ablation methodology, and the public record of real incidents. If you have examined a model in anger: what held, what broke, what's missing? <a href="https://github.com/AI-Investigations/resources/issues">Open an issue</a> or <a href="mailto:theaiprofessionals.contact@gmail.com">write in confidence</a>.</p>
+</main>
+</div>
+
+<footer>
+  <div class="inner">AI INVESTIGATIONS · PB-002 v0.1 · content CC BY 4.0 · <a href="first-hours.html">PB-001</a> · <a href="index.html">all resources</a></div>
+</footer>
+
+</body>
+</html>

@@ -1,20 +1,4 @@
-# AI Investigations robots.txt
-# Site: https://investigateai.org
-# Purpose: Open resources for investigating AI incidents, failures, evidence trails, and accountability questions.
-#
-# Crawling policy:
-# - Search indexing is allowed.
-# - AI assistants may retrieve and cite pages for user-facing answers.
-# - AI model training is not permitted without separate permission.
-#
-# Content signals:
-# search: building a search index and providing search results.
-# ai-input: inputting content into AI systems for retrieval, grounding, summarization, or user-facing answers.
-# ai-train: training or fine-tuning AI models.
-
 User-agent: *
-Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 
 Sitemap: https://investigateai.org/sitemap.xml
-LLMS: https://investigateai.org/llms.txt

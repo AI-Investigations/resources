@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>First Hours: AI Incident Response Playbook — AI Investigations</title>
 <meta name="description" content="What to do in the first four hours after an AI agent does something harmful: containment ladder, evidence preservation by volatility, and every clock that starts running.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://investigateai.org/first-hours.html">
+<meta property="og:title" content="First Hours: AI Incident Response Playbook (PB-001)">
+<meta property="og:description" content="What to do in the first four hours after an AI agent does something harmful: the kill-or-preserve ladder, evidence by order of volatility, and every clock that starts running.">
+<meta property="og:url" content="https://investigateai.org/first-hours.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://investigateai.org/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
     --ink:#23272b; --steel:#3d444b; --paper:#f4f3ef; --white:#ffffff;
@@ -292,7 +302,7 @@
 
   <h2 id="dont">Step 5 — Do-not-do <span class="sec-id">// the contamination list</span></h2>
   <ul class="dont">
-    <li><span class="x">&#10007;</span><span><b>Don't interrogate the agent before preservation is done.</b> Its explanations are fluent, confident, sticky — they anchor your team's thinking and contaminate witness accounts. Later examination is scripted, logged, ideally on a copy of the session, outputs treated as exhibits. (Forensically sound model examination: separate playbook, forthcoming.)</span></li>
+    <li><span class="x">&#10007;</span><span><b>Don't interrogate the agent before preservation is done.</b> Its explanations are fluent, confident, sticky — they anchor your team's thinking and contaminate witness accounts. Later examination is scripted, logged, ideally on a copy of the session, outputs treated as exhibits. (Forensically sound model examination: <a href="model-examination.html">PB-002</a>.)</span></li>
     <li><span class="x">&#10007;</span><span><b>Don't let the agent help investigate itself.</b> No "summarize what happened," no "check the logs for me." CF-2025-001's fabricated records were generated <em>post-incident</em>.</span></li>
     <li><span class="x">&#10007;</span><span><b>Don't accept its claims about reversibility.</b> "Rollback is impossible" was false in CF-2025-001. Verify with the underlying service.</span></li>
     <li><span class="x">&#10007;</span><span><b>Don't alter the system.</b> No model updates, framework upgrades, config edits, cleanup. Art. 73 prohibits changes affecting later evaluation of causes; treat it as the universal standard.</span></li>

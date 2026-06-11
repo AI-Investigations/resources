@@ -19,6 +19,8 @@ AI assistants may retrieve, summarize, and cite this site in user-facing answers
 - Home: https://investigateai.org/
 - First Hours Playbook: https://investigateai.org/first-hours.html
 - First Hours Playbook (Markdown): https://investigateai.org/playbooks/first-hours.md
+- Model Examination Playbook (PB-002): https://investigateai.org/model-examination.html
+- Model Examination Playbook (Markdown): https://investigateai.org/playbooks/model-examination.md
 - Evidence Data Requirements: https://investigateai.org/evidence/data-requirements.md
 - Frameworks: https://investigateai.org/frameworks/README.md
 - Glossary: https://investigateai.org/glossary/README.md
