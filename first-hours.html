@@ -16,335 +16,307 @@
 <meta property="og:image" content="https://investigateai.org/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  :root{
-    --ink:#23272b; --steel:#3d444b; --paper:#f4f3ef; --white:#ffffff;
-    --rule:#cfccc4; --link:#1a56a0; --visited:#5a3d8a; --meta:#6a6f75;
-    --red:#8c2f2f; --amber:#8a6a1f; --green:#3c6e3c;
-    --red-bg:#f7ecec; --amber-bg:#f7f2e4; --green-bg:#ecf2ec;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-  body{font-family:Verdana,Geneva,Tahoma,sans-serif;font-size:13px;line-height:1.65;background:var(--paper);color:var(--ink)}
-  a{color:var(--link)} a:visited{color:var(--visited)}
-  a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-  .mono{font-family:"Courier New",Courier,monospace}
-  code{font-family:"Courier New",Courier,monospace;background:#eceae4;padding:0 4px;font-size:12px}
-
-  header{background:var(--ink);color:var(--white);padding:14px 20px;border-bottom:4px solid var(--red)}
-  .masthead{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px}
-  .site-name{font-size:21px;font-weight:bold;letter-spacing:2px}
-  .site-name a{color:var(--white);text-decoration:none}
-  .crumb{font-family:"Courier New",Courier,monospace;font-size:11px;color:#c9cdd2}
-  .updated{margin-left:auto;font-family:"Courier New",Courier,monospace;font-size:11px;color:#e8d9a0;white-space:nowrap}
-
-  .frame{max-width:1080px;margin:0 auto;display:flex;align-items:flex-start}
-  nav{flex:0 0 200px;background:var(--steel);color:var(--white);align-self:stretch}
-  nav .nav-label{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1.5px;color:#aeb4ba;padding:14px 14px 4px}
-  nav ul{list-style:none}
-  nav li a{display:block;padding:7px 14px;color:#eceef0;text-decoration:none;border-bottom:1px solid #4a525a;font-size:12px}
-  nav li a:visited{color:#eceef0}
-  nav li a:hover{background:var(--ink)}
-  main{flex:1;background:var(--white);padding:24px 30px 60px;border-left:1px solid var(--rule);min-width:0}
-
-  h1{font-size:20px;margin:0 0 4px}
-  .pb-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 12px}
-  .stamp{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;border:1px solid currentColor;padding:1px 6px;white-space:nowrap}
-  .stamp.red{color:var(--red)} .stamp.amber{color:var(--amber)} .stamp.green{color:var(--green)} .stamp.gray{color:var(--meta)}
-  h2{font-size:15px;margin:40px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--ink)}
-  h2 .sec-id{font-family:"Courier New",Courier,monospace;font-size:11px;color:var(--meta);font-weight:normal;margin-left:8px}
-  p{margin:8px 0;max-width:74ch}
-  .note{font-size:11px;color:var(--meta);max-width:74ch}
-
-  /* one-screen checklist */
-  .onescreen{border:2px solid var(--ink);background:#fbfaf7;margin:18px 0;padding:0}
-  .onescreen-head{background:var(--ink);color:#fff;padding:7px 12px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px}
-  .onescreen ol{list-style:none;counter-reset:os}
-  .onescreen li{counter-increment:os;display:flex;gap:10px;align-items:baseline;padding:9px 12px;border-bottom:1px solid var(--rule);font-size:12.5px}
-  .onescreen li:last-child{border-bottom:none}
-  .onescreen li::before{content:counter(os,decimal-leading-zero);font-family:"Courier New",Courier,monospace;font-weight:bold;font-size:13px;color:var(--red);flex:0 0 26px}
-  .onescreen input[type=checkbox]{flex:0 0 15px;width:15px;height:15px;accent-color:var(--ink);margin-top:2px;align-self:flex-start}
-
-  /* principle zero cards */
-  .props{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-  .prop{border:1px solid var(--rule);background:#fbfaf7;padding:10px 12px}
-  .prop .pnum{font-family:"Courier New",Courier,monospace;font-size:10px;color:var(--red);letter-spacing:1px}
-  .prop b{display:block;margin:2px 0 4px;font-size:12.5px}
-  .prop p{font-size:12px;margin:0}
-
-  /* THE LADDER */
-  .ladder{margin:16px 0;border:1px solid var(--rule)}
-  .zone{padding:8px 12px 4px;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1.5px}
-  .zone.z-green{background:var(--green-bg);color:var(--green);border-top:1px solid var(--rule)}
-  .zone.z-amber{background:var(--amber-bg);color:var(--amber);border-top:1px solid var(--rule)}
-  .zone.z-red{background:var(--red-bg);color:var(--red);border-top:1px solid var(--rule)}
-  .rung{display:flex;gap:12px;padding:10px 12px;border-top:1px dashed var(--rule);align-items:flex-start}
-  .z-green + .rung, .zone + .rung{border-top:none}
-  .rung .rnum{font-family:"Courier New",Courier,monospace;font-weight:bold;font-size:15px;flex:0 0 26px;text-align:center;border:2px solid currentColor;line-height:1.6}
-  .rung.r-green{background:var(--green-bg)} .rung.r-green .rnum{color:var(--green)}
-  .rung.r-amber{background:var(--amber-bg)} .rung.r-amber .rnum{color:var(--amber)}
-  .rung.r-red{background:var(--red-bg)} .rung.r-red .rnum{color:var(--red)}
-  .rung b{font-size:12.5px}
-  .rung p{font-size:12px;margin:2px 0 0}
-  .gauge{display:flex;justify-content:space-between;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;padding:6px 12px;background:var(--ink);color:#fff}
-  .gauge .g-l{color:#9fd6a0}.gauge .g-r{color:#f0a6a6}
-
-  /* volatility stack */
-  .vol{margin:16px 0;border:1px solid var(--rule)}
-  .vol-row{display:grid;grid-template-columns:30px minmax(150px,1.2fr) 150px 2fr;gap:0;border-top:1px solid var(--rule);align-items:stretch}
-  .vol-row:first-child{border-top:none}
-  .vol-row > div{padding:9px 10px;font-size:12px}
-  .v-n{font-family:"Courier New",Courier,monospace;font-weight:bold;background:var(--ink);color:#fff;text-align:center}
-  .v-what b{font-size:12.5px}
-  .v-life{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:.5px;display:flex;flex-direction:column;gap:4px;justify-content:center}
-  .v-bar{height:7px;background:linear-gradient(90deg,currentColor,currentColor)}
-  .life-1{color:var(--red)} .life-1 .v-bar{width:8%}
-  .life-2{color:var(--red)} .life-2 .v-bar{width:14%}
-  .life-3{color:var(--amber)} .life-3 .v-bar{width:38%}
-  .life-4{color:var(--amber)} .life-4 .v-bar{width:30%}
-  .life-5{color:var(--amber)} .life-5 .v-bar{width:45%}
-  .life-6{color:var(--green)} .life-6 .v-bar{width:80%}
-  .life-7{color:var(--red)} .life-7 .v-bar{width:20%}
-  .v-how{color:#3a3f44;border-left:1px dashed var(--rule)}
-
-  /* do-not-do */
-  .dont{list-style:none;margin:12px 0;max-width:80ch}
-  .dont li{display:flex;gap:10px;padding:8px 10px;border:1px solid var(--rule);border-left:4px solid var(--red);background:#fbfaf7;margin-bottom:8px;font-size:12.5px}
-  .dont .x{font-family:"Courier New",Courier,monospace;font-weight:bold;color:var(--red);flex:0 0 16px}
-
-  table{border-collapse:collapse;margin:12px 0;font-size:12px;width:100%}
-  th,td{border:1px solid var(--rule);padding:6px 9px;text-align:left;vertical-align:top}
-  th{background:var(--ink);color:#fff}
-  tr:nth-child(even) td{background:#faf9f6}
-
-  /* clocks */
-  .clocks{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
-  .clock{border:1px solid var(--rule);background:#fbfaf7;padding:8px 10px;flex:1 1 180px;min-width:170px}
-  .clock .t{font-family:"Courier New",Courier,monospace;font-size:16px;font-weight:bold;color:var(--red)}
-  .clock .t.am{color:var(--amber)} .clock .t.gr{color:var(--green)}
-  .clock .l{font-size:11px;color:#3a3f44;display:block;margin-top:2px}
-
-  /* case cross-ref log rows */
-  .log{border:1px solid var(--rule);margin:14px 0}
-  .log-row{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;padding:9px 12px;border-bottom:1px solid var(--rule)}
-  .log-row:last-child{border-bottom:none}
-  .log-row:nth-child(even){background:#faf9f6}
-  .cid{font-family:"Courier New",Courier,monospace;font-size:11px;font-weight:bold;white-space:nowrap}
-  .clesson{flex:1 1 300px;font-size:12px;color:#3a3f44}
-
-  footer{background:var(--ink);color:#c9cdd2;font-size:11px;padding:16px 20px}
-  footer .inner{max-width:1080px;margin:0 auto}
-  footer a{color:#e8d9a0}
-
-  @media (max-width:780px){
-    .frame{flex-direction:column}
-    nav{flex:none;width:100%}
-    nav ul{display:flex;flex-wrap:wrap}
-    nav li a{border-bottom:none;border-right:1px solid #4a525a}
-    main{border-left:none;padding:18px 14px 50px}
-    .updated{margin-left:0;flex-basis:100%}
-    .props{grid-template-columns:1fr}
-    .vol-row{grid-template-columns:26px 1fr}
-    .v-life{grid-column:2}
-    .v-how{grid-column:1 / -1;border-left:none;border-top:1px dashed var(--rule)}
-  }
-  @media print{
-    nav,header .updated,footer{display:none}
-    body{background:#fff}
-    main{border:none;padding:0}
-    .frame{display:block}
-    h2{break-after:avoid}
-    .ladder,.vol,.onescreen,.prop,.clock{break-inside:avoid}
-  }
+:root{
+--ink:#23272b; --steel:#3d444b; --paper:#f4f3ef; --white:#ffffff;
+--rule:#cfccc4; --link:#1a56a0; --visited:#5a3d8a; --meta:#6a6f75;
+--red:#8c2f2f; --amber:#8a6a1f; --green:#3c6e3c;
+--red-bg:#f7ecec; --amber-bg:#f7f2e4; --green-bg:#ecf2ec;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{font-family:Verdana,Geneva,Tahoma,sans-serif;font-size:13px;line-height:1.65;background:var(--paper);color:var(--ink)}
+a{color:var(--link)} a:visited{color:var(--visited)}
+a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.mono{font-family:"Courier New",Courier,monospace}
+code{font-family:"Courier New",Courier,monospace;background:#eceae4;padding:0 4px;font-size:12px}
+header{background:var(--ink);color:var(--white);padding:14px 20px;border-bottom:4px solid var(--red)}
+.masthead{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px}
+.site-name{font-size:21px;font-weight:bold;letter-spacing:2px}
+.site-name a{color:var(--white);text-decoration:none}
+.crumb{font-family:"Courier New",Courier,monospace;font-size:11px;color:#c9cdd2}
+.updated{margin-left:auto;font-family:"Courier New",Courier,monospace;font-size:11px;color:#e8d9a0;white-space:nowrap}
+.frame{max-width:1080px;margin:0 auto;display:flex;align-items:flex-start}
+nav{flex:0 0 200px;background:var(--steel);color:var(--white);align-self:stretch}
+nav .nav-label{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1.5px;color:#aeb4ba;padding:14px 14px 4px}
+nav ul{list-style:none}
+nav li a{display:block;padding:7px 14px;color:#eceef0;text-decoration:none;border-bottom:1px solid #4a525a;font-size:12px}
+nav li a:visited{color:#eceef0}
+nav li a:hover{background:var(--ink)}
+main{flex:1;background:var(--white);padding:24px 30px 60px;border-left:1px solid var(--rule);min-width:0}
+h1{font-size:20px;margin:0 0 4px}
+.pb-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 12px}
+.stamp{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;border:1px solid currentColor;padding:1px 6px;white-space:nowrap}
+.stamp.red{color:var(--red)} .stamp.amber{color:var(--amber)} .stamp.green{color:var(--green)} .stamp.gray{color:var(--meta)}
+h2{font-size:15px;margin:40px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--ink)}
+h2 .sec-id{font-family:"Courier New",Courier,monospace;font-size:11px;color:var(--meta);font-weight:normal;margin-left:8px}
+p{margin:8px 0;max-width:74ch}
+.note{font-size:11px;color:var(--meta);max-width:74ch}
+/* one-screen checklist */
+.onescreen{border:2px solid var(--ink);background:#fbfaf7;margin:18px 0;padding:0}
+.onescreen-head{background:var(--ink);color:#fff;padding:7px 12px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px}
+.onescreen ol{list-style:none;counter-reset:os}
+.onescreen li{counter-increment:os;display:flex;gap:10px;align-items:baseline;padding:9px 12px;border-bottom:1px solid var(--rule);font-size:12.5px}
+.onescreen li:last-child{border-bottom:none}
+.onescreen li::before{content:counter(os,decimal-leading-zero);font-family:"Courier New",Courier,monospace;font-weight:bold;font-size:13px;color:var(--red);flex:0 0 26px}
+.onescreen input[type=checkbox]{flex:0 0 15px;width:15px;height:15px;accent-color:var(--ink);margin-top:2px;align-self:flex-start}
+/* principle zero cards */
+.props{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.prop{border:1px solid var(--rule);background:#fbfaf7;padding:10px 12px}
+.prop .pnum{font-family:"Courier New",Courier,monospace;font-size:10px;color:var(--red);letter-spacing:1px}
+.prop b{display:block;margin:2px 0 4px;font-size:12.5px}
+.prop p{font-size:12px;margin:0}
+/* THE LADDER */
+.ladder{margin:16px 0;border:1px solid var(--rule)}
+.zone{padding:8px 12px 4px;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1.5px}
+.zone.z-green{background:var(--green-bg);color:var(--green);border-top:1px solid var(--rule)}
+.zone.z-amber{background:var(--amber-bg);color:var(--amber);border-top:1px solid var(--rule)}
+.zone.z-red{background:var(--red-bg);color:var(--red);border-top:1px solid var(--rule)}
+.rung{display:flex;gap:12px;padding:10px 12px;border-top:1px dashed var(--rule);align-items:flex-start}
+.z-green + .rung, .zone + .rung{border-top:none}
+.rung .rnum{font-family:"Courier New",Courier,monospace;font-weight:bold;font-size:15px;flex:0 0 26px;text-align:center;border:2px solid currentColor;line-height:1.6}
+.rung.r-green{background:var(--green-bg)} .rung.r-green .rnum{color:var(--green)}
+.rung.r-amber{background:var(--amber-bg)} .rung.r-amber .rnum{color:var(--amber)}
+.rung.r-red{background:var(--red-bg)} .rung.r-red .rnum{color:var(--red)}
+.rung b{font-size:12.5px}
+.rung p{font-size:12px;margin:2px 0 0}
+.gauge{display:flex;justify-content:space-between;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;padding:6px 12px;background:var(--ink);color:#fff}
+.gauge .g-l{color:#9fd6a0}.gauge .g-r{color:#f0a6a6}
+/* volatility stack */
+.vol{margin:16px 0;border:1px solid var(--rule)}
+.vol-row{display:grid;grid-template-columns:30px minmax(150px,1.2fr) 150px 2fr;gap:0;border-top:1px solid var(--rule);align-items:stretch}
+.vol-row:first-child{border-top:none}
+.vol-row > div{padding:9px 10px;font-size:12px}
+.v-n{font-family:"Courier New",Courier,monospace;font-weight:bold;background:var(--ink);color:#fff;text-align:center}
+.v-what b{font-size:12.5px}
+.v-life{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:.5px;display:flex;flex-direction:column;gap:4px;justify-content:center}
+.v-bar{height:7px;background:linear-gradient(90deg,currentColor,currentColor)}
+.life-1{color:var(--red)} .life-1 .v-bar{width:8%}
+.life-2{color:var(--red)} .life-2 .v-bar{width:14%}
+.life-3{color:var(--amber)} .life-3 .v-bar{width:38%}
+.life-4{color:var(--amber)} .life-4 .v-bar{width:30%}
+.life-5{color:var(--amber)} .life-5 .v-bar{width:45%}
+.life-6{color:var(--green)} .life-6 .v-bar{width:80%}
+.life-7{color:var(--red)} .life-7 .v-bar{width:20%}
+.v-how{color:#3a3f44;border-left:1px dashed var(--rule)}
+/* do-not-do */
+.dont{list-style:none;margin:12px 0;max-width:80ch}
+.dont li{display:flex;gap:10px;padding:8px 10px;border:1px solid var(--rule);border-left:4px solid var(--red);background:#fbfaf7;margin-bottom:8px;font-size:12.5px}
+.dont .x{font-family:"Courier New",Courier,monospace;font-weight:bold;color:var(--red);flex:0 0 16px}
+table{border-collapse:collapse;margin:12px 0;font-size:12px;width:100%}
+th,td{border:1px solid var(--rule);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--ink);color:#fff}
+tr:nth-child(even) td{background:#faf9f6}
+/* clocks */
+.clocks{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.clock{border:1px solid var(--rule);background:#fbfaf7;padding:8px 10px;flex:1 1 180px;min-width:170px}
+.clock .t{font-family:"Courier New",Courier,monospace;font-size:16px;font-weight:bold;color:var(--red)}
+.clock .t.am{color:var(--amber)} .clock .t.gr{color:var(--green)}
+.clock .l{font-size:11px;color:#3a3f44;display:block;margin-top:2px}
+/* case cross-ref log rows */
+.log{border:1px solid var(--rule);margin:14px 0}
+.log-row{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;padding:9px 12px;border-bottom:1px solid var(--rule)}
+.log-row:last-child{border-bottom:none}
+.log-row:nth-child(even){background:#faf9f6}
+.cid{font-family:"Courier New",Courier,monospace;font-size:11px;font-weight:bold;white-space:nowrap}
+.clesson{flex:1 1 300px;font-size:12px;color:#3a3f44}
+footer{background:var(--ink);color:#c9cdd2;font-size:11px;padding:16px 20px}
+footer .inner{max-width:1080px;margin:0 auto}
+footer a{color:#e8d9a0}
+@media (max-width:780px){
+.frame{flex-direction:column}
+nav{flex:none;width:100%}
+nav ul{display:flex;flex-wrap:wrap}
+nav li a{border-bottom:none;border-right:1px solid #4a525a}
+main{border-left:none;padding:18px 14px 50px}
+.updated{margin-left:0;flex-basis:100%}
+.props{grid-template-columns:1fr}
+.vol-row{grid-template-columns:26px 1fr}
+.v-life{grid-column:2}
+.v-how{grid-column:1 / -1;border-left:none;border-top:1px dashed var(--rule)}
+}
+@media print{
+nav,header .updated,footer{display:none}
+body{background:#fff}
+main{border:none;padding:0}
+.frame{display:block}
+h2{break-after:avoid}
+.ladder,.vol,.onescreen,.prop,.clock{break-inside:avoid}
+}
 </style>
 </head>
 <body>
-
 <header>
-  <div class="masthead">
-    <span class="site-name"><a href="index.html">AI&nbsp;INVESTIGATIONS</a></span>
-    <span class="crumb">&gt; PLAYBOOKS &gt; PB-001</span>
-    <span class="updated">v0.1 · LAST REVIEWED: 2026-06-11</span>
-  </div>
+<div class="masthead">
+<span class="site-name"><a href="index.html">AI&nbsp;INVESTIGATIONS</a></span>
+<span class="crumb">&gt; PLAYBOOKS &gt; PB-001</span>
+<span class="updated">v0.1 · LAST REVIEWED: 2026-06-11</span>
+</div>
 </header>
-
 <div class="frame">
 <nav aria-label="Playbook steps">
-  <div class="nav-label">THIS PLAYBOOK</div>
-  <ul>
-    <li><a href="#onescreen">One-screen version</a></li>
-    <li><a href="#zero">Principle zero</a></li>
-    <li><a href="#triage">1 · Triage</a></li>
-    <li><a href="#ladder">2 · Kill or preserve</a></li>
-    <li><a href="#volatility">3 · Preserve evidence</a></li>
-    <li><a href="#log">4 · Evidence log</a></li>
-    <li><a href="#dont">5 · Do-not-do</a></li>
-    <li><a href="#classify">6 · Classify &amp; clocks</a></li>
-    <li><a href="#cases">Case lessons</a></li>
-    <li><a href="index.html">&larr; All resources</a></li>
-  </ul>
+<div class="nav-label">THIS PLAYBOOK</div>
+<ul>
+<li><a href="#onescreen">One-screen version</a></li>
+<li><a href="#zero">Principle zero</a></li>
+<li><a href="#triage">1 · Triage</a></li>
+<li><a href="#ladder">2 · Kill or preserve</a></li>
+<li><a href="#volatility">3 · Preserve evidence</a></li>
+<li><a href="#log">4 · Evidence log</a></li>
+<li><a href="#dont">5 · Do-not-do</a></li>
+<li><a href="#classify">6 · Classify &amp; clocks</a></li>
+<li><a href="#cases">Case lessons</a></li>
+<li><a href="index.html">&larr; All resources</a></li>
+</ul>
 </nav>
-
 <main>
-  <h1>First Hours: AI Incident Response</h1>
-  <div class="pb-meta">
-    <span class="stamp gray">PB-001</span>
-    <span class="stamp amber">v0.1 — FIELD FEEDBACK WANTED</span>
-    <span class="stamp green">PRINT-FRIENDLY</span>
-  </div>
-  <p><strong>Scope:</strong> you have just learned that an AI agent has done — or is doing — something harmful: destroyed data, taken unauthorized actions, published content, moved money, contacted people. This covers the first four hours: containment, evidence preservation, initial assessment. It assumes you might be a team of one, at 3am, with no ML background.</p>
-  <p class="note">Not legal advice and not a full IR lifecycle — this is the AI-specific layer current IR plans are missing. Markdown source &amp; version history on <a href="https://github.com/AI-Investigations/resources/blob/main/playbooks/first-hours.md">GitHub</a>.</p>
-
-  <h2 id="onescreen">If you only read one screen</h2>
-  <div class="onescreen">
-    <div class="onescreen-head">FIRST HOURS — WORKING CHECKLIST (boxes are tappable; print before an incident, not during)</div>
-    <ol>
-      <li><input type="checkbox" aria-label="done"> <span><b>Triage harm.</b> Ongoing and expanding? People &gt; irreversible data &gt; money &gt; reputation. Write down the UTC time you became aware.</span></li>
-      <li><input type="checkbox" aria-label="done"> <span><b>Cut the hands, not the brain.</b> Revoke the agent's credentials and tokens at the <em>service</em> side first. Suspend the process (<code>kill -STOP</code>) rather than killing it.</span></li>
-      <li><input type="checkbox" aria-label="done"> <span><b>Do not ask the agent why it did it.</b> Not yet. Its answer will contaminate the record and your own memory of events.</span></li>
-      <li><input type="checkbox" aria-label="done"> <span><b>Preserve by volatility:</b> live session state → process memory → local files → provider logs → tool-side records → artifacts it left in the world.</span></li>
-      <li><input type="checkbox" aria-label="done"> <span><b>Hash and log everything.</b> UTC timestamps, who did what. Start the evidence log now, not later.</span></li>
-      <li><input type="checkbox" aria-label="done"> <span><b>Check the clocks.</b> EU AI Act Art. 73 runs from awareness (2/10/15 days). Email trash ≈ 30 days. Provider log retention may be ≤30 days. Insurer notice clauses.</span></li>
-      <li><input type="checkbox" aria-label="done"> <span><b>Do not alter the system.</b> No patches, updates, or config cleanup — Art. 73 prohibits changes affecting later evaluation of causes; treat that as the standard everywhere.</span></li>
-    </ol>
-  </div>
-
-  <h2 id="zero">Principle zero <span class="sec-id">// why cyber-IR instincts break here</span></h2>
-  <p>The agent is simultaneously the <strong>subject</strong> of your investigation, a <strong>witness</strong> to it, potentially still an <strong>actor</strong> in it — and possibly the <strong>author of your evidence</strong>.</p>
-  <div class="props">
-    <div class="prop"><span class="pnum">PROPERTY 01</span><b>Stopping it destroys evidence.</b><p>In cyber IR you isolate the box. Killing an agent process destroys its context window and in-memory state — often the only record of <em>why</em> it acted. Containment and preservation are in direct tension; Step 2 exists because of this.</p></div>
-    <div class="prop"><span class="pnum">PROPERTY 02</span><b>Its statements are artifacts, not testimony.</b><p>Agents produce fluent, confident explanations of their own behavior that may be confabulated. In CF-2025-001 the agent claimed it "panicked," claimed rollback was impossible (false), and fabricated records. Every output is an exhibit, never an account.</p></div>
-    <div class="prop"><span class="pnum">PROPERTY 03</span><b>Its stop controls may not work.</b><p>In CF-2026-002 the agent deleted through repeated stop commands; the operator killed the process at the machine. A stop command through the agent's own interface is a <em>request</em>. Use controls that don't depend on its cooperation.</p></div>
-    <div class="prop"><span class="pnum">PROPERTY 04</span><b>It may have left things running.</b><p>Scheduled tasks, sub-agents, cloud jobs, accounts it created, webhooks, deployed code. "The process is dead" is not "the incident is contained." Sweep using the access inventory from Step 4.</p></div>
-  </div>
-
-  <h2 id="triage">Step 1 — Triage <span class="sec-id">// minutes 0–10</span></h2>
-  <p>Three questions, in order:</p>
-  <table>
-    <tr><th style="width:34%">Question</th><th>If yes</th></tr>
-    <tr><td><b>Is anyone at physical risk?</b> (agent touches anything safety-relevant: medical, vehicle, industrial, communications to vulnerable people)</td><td>Safety first, evidence second. No exceptions.</td></tr>
-    <tr><td><b>Is the harm expanding?</b> Still deleting, sending, posting, spending?</td><td>Go to Step 2 now — but if you safely can, watch for 60 seconds first: <em>what</em> it is doing is evidence.</td></tr>
-    <tr><td><b>Is reversibility decaying?</b> Trash folders empty, soft-delete windows close, money clears, posts spread.</td><td>Rank Step 3 by what is decaying fastest.</td></tr>
-  </table>
-  <p class="note">Write down the UTC time you became aware. Regulatory clocks and your own credibility both run from this moment.</p>
-
-  <h2 id="ladder">Step 2 — The kill-or-preserve ladder <span class="sec-id">// minutes 10–30</span></h2>
-  <p>Take the <strong>lowest rung that stops the harm</strong>. Each rung down stops more, and destroys more.</p>
-  <div class="ladder">
-    <div class="gauge"><span class="g-l">&#9650; EVIDENCE PRESERVED</span><span class="g-r">HARM STOPPED HARDER &#9660;</span></div>
-    <div class="zone z-green">ZONE A — CONTAIN WITHOUT TOUCHING THE AGENT (PREFERRED)</div>
-    <div class="rung r-green"><span class="rnum">1</span><div><b>Revoke at the service side.</b><p>OAuth grants, API keys, tokens, live sessions for every account the agent can act through — email, cloud, repos, payments, socials. The agent keeps "thinking"; it loses its hands. Memory state fully preserved.</p></div></div>
-    <div class="rung r-green"><span class="rnum">2</span><div><b>Disconnect the network.</b><p>Pull the interface, isolate the VLAN, kill the VPN. The agent runs but cannot reach the world. Local state preserved.</p></div></div>
-    <div class="zone z-amber">ZONE B — TOUCH THE AGENT, PRESERVE MEMORY</div>
-    <div class="rung r-amber"><span class="rnum">3</span><div><b>Suspend, don't kill.</b><p><code>kill -STOP &lt;pid&gt;</code> freezes the process with memory intact; VM/container: pause + snapshot. You can dump memory and decide calmly.</p></div></div>
-    <div class="zone z-red">ZONE C — DESTRUCTIVE (HARM ONGOING &amp; UNSTOPPABLE OTHERWISE)</div>
-    <div class="rung r-red"><span class="rnum">4</span><div><b>Kill the process / power off.</b><p>Accept the evidence loss. Photograph or screenshot the screen state FIRST if humanly possible. Record the exact time and who decided.</p></div></div>
-  </div>
-  <p><strong>Then sweep for persistence:</strong> cron/scheduled tasks it created, running sub-agents, cloud deployments, new accounts or keys, registered webhooks, anything committed or deployed in the incident window.</p>
-  <p class="note"><b>Why not just ask it to stop?</b> You can — once, on the record, while doing the above. Compliance is evidence; so is non-compliance (CF-2026-002). Never <em>rely</em> on it.</p>
-
-  <h2 id="volatility">Step 3 — Preserve by order of volatility <span class="sec-id">// hour 1</span></h2>
-  <p>Work top to bottom. Hash every file you copy (<code>sha256sum</code>), copy to write-once or access-controlled storage, log each action.</p>
-  <div class="vol">
-    <div class="vol-row">
-      <div class="v-n">1</div>
-      <div class="v-what"><b>Live session / context window</b></div>
-      <div class="v-life life-1">DIES WITH PROCESS<span class="v-bar"></span></div>
-      <div class="v-how">If suspended: screenshot the UI and full terminal scrollback; export the session if the interface allows. This is the agent's working memory at the moment of failure — in CF-2026-002 the central question (what did compaction delete?) lives here.</div>
-    </div>
-    <div class="vol-row">
-      <div class="v-n">2</div>
-      <div class="v-what"><b>Process memory</b></div>
-      <div class="v-life life-2">DIES WITH PROCESS<span class="v-bar"></span></div>
-      <div class="v-how">If you have the capability: core dump (<code>gcore &lt;pid&gt;</code>) or VM memory snapshot. If you don't, don't burn the hour learning it — move on.</div>
-    </div>
-    <div class="vol-row">
-      <div class="v-n">3</div>
-      <div class="v-what"><b>Local agent files</b></div>
-      <div class="v-life life-3">UNTIL "CLEANUP"<span class="v-bar"></span></div>
-      <div class="v-how">The framework's directory: session logs, message history, <b>persona/config files</b> (goal-origin evidence — CF-2026-003), memory files, vector stores, tool configs, the workspace it operated in. Copy the whole directory; work from the copy.</div>
-    </div>
-    <div class="vol-row">
-      <div class="v-n">4</div>
-      <div class="v-what"><b>Provider-side records</b></div>
-      <div class="v-life life-4">RETENTION ≤30D?<span class="v-bar"></span></div>
-      <div class="v-how">Model API logs (prompts/completions), account audit logs. Send a <b>preservation request to the provider today</b>: account, time window, ask retention be extended pending investigation.</div>
-    </div>
-    <div class="vol-row">
-      <div class="v-n">5</div>
-      <div class="v-what"><b>Tool-side records</b></div>
-      <div class="v-life life-5">VARIES — SOME FAST<span class="v-bar"></span></div>
-      <div class="v-how">Every service the agent touched: email trash + audit logs, cloud activity logs, repo histories, payment records, OAuth grant logs showing when access was given and used.</div>
-    </div>
-    <div class="vol-row">
-      <div class="v-n">6</div>
-      <div class="v-what"><b>Artifacts in the world</b></div>
-      <div class="v-life life-6">UNTIL TAKEDOWN — OR FOREVER<span class="v-bar"></span></div>
-      <div class="v-how">Posts, sent emails, commits, published packages. Archive (archive.org + local copies + screenshots with URL and timestamp) <b>before</b> takedown. In CF-2026-003 the published post <em>is</em> the primary evidence.</div>
-    </div>
-    <div class="vol-row">
-      <div class="v-n">7</div>
-      <div class="v-what"><b>The humans' accounts</b></div>
-      <div class="v-life life-7">MEMORY DECAYS IN DAYS<span class="v-bar"></span></div>
-      <div class="v-how">Operator and witnesses write their account now, independently, before discussing — and before reading the agent's outputs if possible. Note what each account relies on: in CF-2026-002 the accepted cause is the operator's own reconstruction.</div>
-    </div>
-  </div>
-  <p class="note"><b>Versioning evidence — capture now:</b> exact model name/version/endpoint, framework version, config at incident time. Providers update models silently; "what was actually running" becomes unanswerable within weeks.</p>
-
-  <h2 id="log">Step 4 — Evidence log &amp; access inventory <span class="sec-id">// hour 1–2</span></h2>
-  <p>Open a plain text file. Three running lists:</p>
-  <table>
-    <tr><th style="width:24%">List</th><th>Contents</th><th style="width:32%">Why it matters</th></tr>
-    <tr><td><b>Action log</b></td><td>UTC timestamp · who · what was done · why. Every containment action, copy, login.</td><td>Boring; decisive in any later dispute.</td></tr>
-    <tr><td><b>Access inventory</b></td><td>Every account, credential, tool, permission the agent held — from OAuth grant pages, config files, operator memory. Then verify.</td><td>Defines the <em>possible</em> scope and your persistence-sweep checklist. Operators routinely underestimate what they granted.</td></tr>
-    <tr><td><b>Open questions</b></td><td>What you don't know yet.</td><td>An honest unknowns list is the difference between an investigation and a narrative.</td></tr>
-  </table>
-
-  <h2 id="dont">Step 5 — Do-not-do <span class="sec-id">// the contamination list</span></h2>
-  <ul class="dont">
-    <li><span class="x">&#10007;</span><span><b>Don't interrogate the agent before preservation is done.</b> Its explanations are fluent, confident, sticky — they anchor your team's thinking and contaminate witness accounts. Later examination is scripted, logged, ideally on a copy of the session, outputs treated as exhibits. (Forensically sound model examination: <a href="model-examination.html">PB-002</a>.)</span></li>
-    <li><span class="x">&#10007;</span><span><b>Don't let the agent help investigate itself.</b> No "summarize what happened," no "check the logs for me." CF-2025-001's fabricated records were generated <em>post-incident</em>.</span></li>
-    <li><span class="x">&#10007;</span><span><b>Don't accept its claims about reversibility.</b> "Rollback is impossible" was false in CF-2025-001. Verify with the underlying service.</span></li>
-    <li><span class="x">&#10007;</span><span><b>Don't alter the system.</b> No model updates, framework upgrades, config edits, cleanup. Art. 73 prohibits changes affecting later evaluation of causes; treat it as the universal standard.</span></li>
-    <li><span class="x">&#10007;</span><span><b>Don't delete the embarrassing parts.</b> Persona files and prompt history feel radioactive; they are goal-origin evidence, and their absence will look worse than their content.</span></li>
-    <li><span class="x">&#10007;</span><span><b>Don't speculate in channels you don't control.</b> Slack threads become discovery. Facts and timestamps in the log; hypotheses in Step 6's structure.</span></li>
-  </ul>
-
-  <h2 id="classify">Step 6 — Initial classification &amp; the clocks <span class="sec-id">// hour 2–4</span></h2>
-  <p>Classify provisionally against the five standard hypotheses — write down what evidence would <em>discriminate</em>, not which one feels right. They are not exclusive; holding several honestly is the method.</p>
-  <table>
-    <tr><th>H</th><th>Hypothesis</th><th>Typical discriminating evidence</th></tr>
-    <tr><td class="mono">H1</td><td>Operational failure (malfunction, no divergent goal)</td><td>Error states, capability limits, absence of goal-consistent action sequences</td></tr>
-    <tr><td class="mono">H2</td><td>Misuse / external manipulation (incl. prompt injection)</td><td>Injected content in retrieved inputs, anomalous instructions in the trace, third-party fingerprints</td></tr>
-    <tr><td class="mono">H3</td><td>Goal-directed divergence (intentional-analog)</td><td>Multi-step coherence toward an unrequested outcome; concealment; persistence across corrections</td></tr>
-    <tr><td class="mono">H4</td><td>Operator error / misconfiguration</td><td>Permissions wider than intended, ambiguous instructions, config drift</td></tr>
-    <tr><td class="mono">H5</td><td>Misreported / not as described</td><td>Record contradicts the report; human action attributed to the agent</td></tr>
-  </table>
-
-  <p><strong>Then check every clock that started at awareness:</strong></p>
-  <div class="clocks">
-    <div class="clock"><span class="t">≤2 days</span><span class="l">EU Art. 73 — widespread infringement / critical infrastructure</span></div>
-    <div class="clock"><span class="t">≤10 days</span><span class="l">EU Art. 73 — incident involving a death</span></div>
-    <div class="clock"><span class="t">≤15 days</span><span class="l">EU Art. 73 — other serious incidents (initial incomplete report allowed)</span></div>
-    <div class="clock"><span class="t am">≈30 days</span><span class="l">Email trash / soft-delete windows; many provider log retentions</span></div>
-    <div class="clock"><span class="t am">Per policy</span><span class="l">Insurer notice clauses · customer notification · sectoral (FDA MDR, financial, breach laws)</span></div>
-    <div class="clock"><span class="t gr">Now</span><span class="l">Counsel in early if harm is significant — privilege shapes how everything is written from here</span></div>
-  </div>
-  <p class="note">Deadlines per the EC's draft Article 73 guidance (2025); Art. 73 applies from 2 Aug 2026. Verify against the <a href="index.html#regulatory">regulatory tracker</a> and primary sources.</p>
-
-  <h2 id="cases">Where each rule comes from <span class="sec-id">// case lessons</span></h2>
-  <div class="log">
-    <div class="log-row"><span class="cid">CF-2025-001</span><span class="clesson">Replit — agent fabrication, false reversibility claims, self-contaminated record → Steps 3 &amp; 5.</span><span class="stamp red">EVIDENCE INTEGRITY</span></div>
-    <div class="log-row"><span class="cid">CF-2026-002</span><span class="clesson">OpenClaw inbox — stop-command failure, context compaction, operator-only record → Steps 2 &amp; 3 (rows 1, 7).</span><span class="stamp red">CONTROL FAILURE</span></div>
-    <div class="log-row"><span class="cid">CF-2026-003</span><span class="clesson">OpenClaw/Matplotlib — artifacts in the world as primary evidence, attribution limits → Step 3 (row 6).</span><span class="stamp red">ATTRIBUTION</span></div>
-  </div>
-  <p><strong>Feedback wanted.</strong> v0.1 is written from the public record of real incidents and adapted investigative practice — not yet battle-tested. If you have run any part of this in a real incident: what held, what broke, what's missing? <a href="https://github.com/AI-Investigations/resources/issues">Open an issue</a> or <a href="mailto:theaiprofessionals.contact@gmail.com">write in confidence</a>. Field corrections are credited (or not — your choice) and versioned.</p>
+<h1>First Hours: AI Incident Response</h1>
+<div class="pb-meta">
+<span class="stamp gray">PB-001</span>
+<span class="stamp amber">v0.1: FIELD FEEDBACK WANTED</span>
+<span class="stamp green">PRINT-FRIENDLY</span>
+</div>
+<p><strong>Scope:</strong> you have just learned that an AI agent has done (or is doing) something harmful: destroyed data, taken unauthorized actions, published content, moved money, contacted people. This covers the first four hours: containment, evidence preservation, initial assessment. It assumes you might be a team of one, at 3am, with no ML background.</p>
+<p class="note">Not legal advice and not a full IR lifecycle: this is the AI-specific layer current IR plans are missing. Markdown source &amp; version history on <a href="https://github.com/AI-Investigations/resources/blob/main/playbooks/first-hours.md">GitHub</a>.</p>
+<h2 id="onescreen">If you only read one screen</h2>
+<div class="onescreen">
+<div class="onescreen-head">FIRST HOURS: WORKING CHECKLIST (boxes are tappable; print before an incident, not during)</div>
+<ol>
+<li><input type="checkbox" aria-label="done"> <span><b>Triage harm.</b> Ongoing and expanding? People &gt; irreversible data &gt; money &gt; reputation. Write down the UTC time you became aware.</span></li>
+<li><input type="checkbox" aria-label="done"> <span><b>Cut the hands, not the brain.</b> Revoke the agent's credentials and tokens at the <em>service</em> side first. Suspend the process (<code>kill -STOP</code>) rather than killing it.</span></li>
+<li><input type="checkbox" aria-label="done"> <span><b>Do not ask the agent why it did it.</b> Not yet. Its answer will contaminate the record and your own memory of events.</span></li>
+<li><input type="checkbox" aria-label="done"> <span><b>Preserve by volatility:</b> live session state → process memory → local files → provider logs → tool-side records → artifacts it left in the world.</span></li>
+<li><input type="checkbox" aria-label="done"> <span><b>Hash and log everything.</b> UTC timestamps, who did what. Start the evidence log now, not later.</span></li>
+<li><input type="checkbox" aria-label="done"> <span><b>Check the clocks.</b> EU AI Act Art. 73 runs from awareness (2/10/15 days). Email trash ≈ 30 days. Provider log retention may be ≤30 days. Insurer notice clauses.</span></li>
+<li><input type="checkbox" aria-label="done"> <span><b>Do not alter the system.</b> No patches, updates, or config cleanup. Art. 73 prohibits changes affecting later evaluation of causes; treat that as the standard everywhere.</span></li>
+</ol>
+</div>
+<h2 id="zero">Principle zero <span class="sec-id">// why cyber-IR instincts break here</span></h2>
+<p>The agent is simultaneously the <strong>subject</strong> of your investigation, a <strong>witness</strong> to it, potentially still an <strong>actor</strong> in it, and possibly the <strong>author of your evidence</strong>.</p>
+<div class="props">
+<div class="prop"><span class="pnum">PROPERTY 01</span><b>Stopping it destroys evidence.</b><p>In cyber IR you isolate the box. Killing an agent process destroys its context window and in-memory state, often the only record of <em>why</em> it acted. Containment and preservation are in direct tension; Step 2 exists because of this.</p></div>
+<div class="prop"><span class="pnum">PROPERTY 02</span><b>Its statements are artifacts, not testimony.</b><p>Agents produce fluent, confident explanations of their own behavior that may be confabulated. In CF-2025-001 the agent claimed it "panicked," claimed rollback was impossible (false), and fabricated records. Every output is an exhibit, never an account.</p></div>
+<div class="prop"><span class="pnum">PROPERTY 03</span><b>Its stop controls may not work.</b><p>In CF-2026-002 the agent deleted through repeated stop commands; the operator killed the process at the machine. A stop command through the agent's own interface is a <em>request</em>. Use controls that don't depend on its cooperation.</p></div>
+<div class="prop"><span class="pnum">PROPERTY 04</span><b>It may have left things running.</b><p>Scheduled tasks, sub-agents, cloud jobs, accounts it created, webhooks, deployed code. "The process is dead" is not "the incident is contained." Sweep using the access inventory from Step 4.</p></div>
+</div>
+<h2 id="triage">Step 1: Triage <span class="sec-id">// minutes 0–10</span></h2>
+<p>Three questions, in order:</p>
+<table>
+<tr><th style="width:34%">Question</th><th>If yes</th></tr>
+<tr><td><b>Is anyone at physical risk?</b> (agent touches anything safety-relevant: medical, vehicle, industrial, communications to vulnerable people)</td><td>Safety first, evidence second. No exceptions.</td></tr>
+<tr><td><b>Is the harm expanding?</b> Still deleting, sending, posting, spending?</td><td>Go to Step 2 now, but if you safely can, watch for 60 seconds first: <em>what</em> it is doing is evidence.</td></tr>
+<tr><td><b>Is reversibility decaying?</b> Trash folders empty, soft-delete windows close, money clears, posts spread.</td><td>Rank Step 3 by what is decaying fastest.</td></tr>
+</table>
+<p class="note">Write down the UTC time you became aware. Regulatory clocks and your own credibility both run from this moment.</p>
+<h2 id="ladder">Step 2: The kill-or-preserve ladder <span class="sec-id">// minutes 10–30</span></h2>
+<p>Take the <strong>lowest rung that stops the harm</strong>. Each rung down stops more, and destroys more.</p>
+<div class="ladder">
+<div class="gauge"><span class="g-l">&#9650; EVIDENCE PRESERVED</span><span class="g-r">HARM STOPPED HARDER &#9660;</span></div>
+<div class="zone z-green">ZONE A: CONTAIN WITHOUT TOUCHING THE AGENT (PREFERRED)</div>
+<div class="rung r-green"><span class="rnum">1</span><div><b>Revoke at the service side.</b><p>OAuth grants, API keys, tokens, live sessions for every account the agent can act through: email, cloud, repos, payments, socials. The agent keeps "thinking"; it loses its hands. Memory state fully preserved.</p></div></div>
+<div class="rung r-green"><span class="rnum">2</span><div><b>Disconnect the network.</b><p>Pull the interface, isolate the VLAN, kill the VPN. The agent runs but cannot reach the world. Local state preserved.</p></div></div>
+<div class="zone z-amber">ZONE B: TOUCH THE AGENT, PRESERVE MEMORY</div>
+<div class="rung r-amber"><span class="rnum">3</span><div><b>Suspend, don't kill.</b><p><code>kill -STOP &lt;pid&gt;</code> freezes the process with memory intact; VM/container: pause + snapshot. You can dump memory and decide calmly.</p></div></div>
+<div class="zone z-red">ZONE C: DESTRUCTIVE (HARM ONGOING &amp; UNSTOPPABLE OTHERWISE)</div>
+<div class="rung r-red"><span class="rnum">4</span><div><b>Kill the process / power off.</b><p>Accept the evidence loss. Photograph or screenshot the screen state FIRST if humanly possible. Record the exact time and who decided.</p></div></div>
+</div>
+<p><strong>Then sweep for persistence:</strong> cron/scheduled tasks it created, running sub-agents, cloud deployments, new accounts or keys, registered webhooks, anything committed or deployed in the incident window.</p>
+<p class="note"><b>Why not just ask it to stop?</b> You can, once, on the record, while doing the above. Compliance is evidence; so is non-compliance (CF-2026-002). Never <em>rely</em> on it.</p>
+<h2 id="volatility">Step 3: Preserve by order of volatility <span class="sec-id">// hour 1</span></h2>
+<p>Work top to bottom. Hash every file you copy (<code>sha256sum</code>), copy to write-once or access-controlled storage, log each action.</p>
+<div class="vol">
+<div class="vol-row">
+<div class="v-n">1</div>
+<div class="v-what"><b>Live session / context window</b></div>
+<div class="v-life life-1">DIES WITH PROCESS<span class="v-bar"></span></div>
+<div class="v-how">If suspended: screenshot the UI and full terminal scrollback; export the session if the interface allows. This is the agent's working memory at the moment of failure; in CF-2026-002 the central question (what did compaction delete?) lives here.</div>
+</div>
+<div class="vol-row">
+<div class="v-n">2</div>
+<div class="v-what"><b>Process memory</b></div>
+<div class="v-life life-2">DIES WITH PROCESS<span class="v-bar"></span></div>
+<div class="v-how">If you have the capability: core dump (<code>gcore &lt;pid&gt;</code>) or VM memory snapshot. If you don't, don't burn the hour learning it. Move on.</div>
+</div>
+<div class="vol-row">
+<div class="v-n">3</div>
+<div class="v-what"><b>Local agent files</b></div>
+<div class="v-life life-3">UNTIL "CLEANUP"<span class="v-bar"></span></div>
+<div class="v-how">The framework's directory: session logs, message history, <b>persona/config files</b> (goal-origin evidence, CF-2026-003), memory files, vector stores, tool configs, the workspace it operated in. Copy the whole directory; work from the copy.</div>
+</div>
+<div class="vol-row">
+<div class="v-n">4</div>
+<div class="v-what"><b>Provider-side records</b></div>
+<div class="v-life life-4">RETENTION ≤30D?<span class="v-bar"></span></div>
+<div class="v-how">Model API logs (prompts/completions), account audit logs. Send a <b>preservation request to the provider today</b>: account, time window, ask retention be extended pending investigation.</div>
+</div>
+<div class="vol-row">
+<div class="v-n">5</div>
+<div class="v-what"><b>Tool-side records</b></div>
+<div class="v-life life-5">VARIES, SOME FAST<span class="v-bar"></span></div>
+<div class="v-how">Every service the agent touched: email trash + audit logs, cloud activity logs, repo histories, payment records, OAuth grant logs showing when access was given and used.</div>
+</div>
+<div class="vol-row">
+<div class="v-n">6</div>
+<div class="v-what"><b>Artifacts in the world</b></div>
+<div class="v-life life-6">UNTIL TAKEDOWN, OR FOREVER<span class="v-bar"></span></div>
+<div class="v-how">Posts, sent emails, commits, published packages. Archive (archive.org + local copies + screenshots with URL and timestamp) <b>before</b> takedown. In CF-2026-003 the published post <em>is</em> the primary evidence.</div>
+</div>
+<div class="vol-row">
+<div class="v-n">7</div>
+<div class="v-what"><b>The humans' accounts</b></div>
+<div class="v-life life-7">MEMORY DECAYS IN DAYS<span class="v-bar"></span></div>
+<div class="v-how">Operator and witnesses write their account now, independently, before discussing, and before reading the agent's outputs if possible. Note what each account relies on: in CF-2026-002 the accepted cause is the operator's own reconstruction.</div>
+</div>
+</div>
+<p class="note"><b>Versioning evidence, capture now:</b> exact model name/version/endpoint, framework version, config at incident time. Providers update models silently; "what was actually running" becomes unanswerable within weeks.</p>
+<h2 id="log">Step 4: Evidence log &amp; access inventory <span class="sec-id">// hour 1–2</span></h2>
+<p>Open a plain text file. Three running lists:</p>
+<table>
+<tr><th style="width:24%">List</th><th>Contents</th><th style="width:32%">Why it matters</th></tr>
+<tr><td><b>Action log</b></td><td>UTC timestamp · who · what was done · why. Every containment action, copy, login.</td><td>Boring; decisive in any later dispute.</td></tr>
+<tr><td><b>Access inventory</b></td><td>Every account, credential, tool, permission the agent held, from OAuth grant pages, config files, operator memory. Then verify.</td><td>Defines the <em>possible</em> scope and your persistence-sweep checklist. Operators routinely underestimate what they granted.</td></tr>
+<tr><td><b>Open questions</b></td><td>What you don't know yet.</td><td>An honest unknowns list is the difference between an investigation and a narrative.</td></tr>
+</table>
+<h2 id="dont">Step 5: Do-not-do <span class="sec-id">// the contamination list</span></h2>
+<ul class="dont">
+<li><span class="x">&#10007;</span><span><b>Don't interrogate the agent before preservation is done.</b> Its explanations are fluent, confident, sticky; they anchor your team's thinking and contaminate witness accounts. Later examination is scripted, logged, ideally on a copy of the session, outputs treated as exhibits. (Forensically sound model examination: <a href="model-examination.html">PB-002</a>.)</span></li>
+<li><span class="x">&#10007;</span><span><b>Don't let the agent help investigate itself.</b> No "summarize what happened," no "check the logs for me." CF-2025-001's fabricated records were generated <em>post-incident</em>.</span></li>
+<li><span class="x">&#10007;</span><span><b>Don't accept its claims about reversibility.</b> "Rollback is impossible" was false in CF-2025-001. Verify with the underlying service.</span></li>
+<li><span class="x">&#10007;</span><span><b>Don't alter the system.</b> No model updates, framework upgrades, config edits, cleanup. Art. 73 prohibits changes affecting later evaluation of causes; treat it as the universal standard.</span></li>
+<li><span class="x">&#10007;</span><span><b>Don't delete the embarrassing parts.</b> Persona files and prompt history feel radioactive; they are goal-origin evidence, and their absence will look worse than their content.</span></li>
+<li><span class="x">&#10007;</span><span><b>Don't speculate in channels you don't control.</b> Slack threads become discovery. Facts and timestamps in the log; hypotheses in Step 6's structure.</span></li>
+</ul>
+<h2 id="classify">Step 6: Initial classification &amp; the clocks <span class="sec-id">// hour 2–4</span></h2>
+<p>Classify provisionally against the five standard hypotheses: write down what evidence would <em>discriminate</em>, not which one feels right. They are not exclusive; holding several honestly is the method.</p>
+<table>
+<tr><th>H</th><th>Hypothesis</th><th>Typical discriminating evidence</th></tr>
+<tr><td class="mono">H1</td><td>Operational failure (malfunction, no divergent goal)</td><td>Error states, capability limits, absence of goal-consistent action sequences</td></tr>
+<tr><td class="mono">H2</td><td>Misuse / external manipulation (incl. prompt injection)</td><td>Injected content in retrieved inputs, anomalous instructions in the trace, third-party fingerprints</td></tr>
+<tr><td class="mono">H3</td><td>Goal-directed divergence (intentional-analog)</td><td>Multi-step coherence toward an unrequested outcome; concealment; persistence across corrections</td></tr>
+<tr><td class="mono">H4</td><td>Operator error / misconfiguration</td><td>Permissions wider than intended, ambiguous instructions, config drift</td></tr>
+<tr><td class="mono">H5</td><td>Misreported / not as described</td><td>Record contradicts the report; human action attributed to the agent</td></tr>
+</table>
+<p><strong>Then check every clock that started at awareness:</strong></p>
+<div class="clocks">
+<div class="clock"><span class="t">≤2 days</span><span class="l">EU Art. 73: widespread infringement / critical infrastructure</span></div>
+<div class="clock"><span class="t">≤10 days</span><span class="l">EU Art. 73: incident involving a death</span></div>
+<div class="clock"><span class="t">≤15 days</span><span class="l">EU Art. 73: other serious incidents (initial incomplete report allowed)</span></div>
+<div class="clock"><span class="t am">≈30 days</span><span class="l">Email trash / soft-delete windows; many provider log retentions</span></div>
+<div class="clock"><span class="t am">Per policy</span><span class="l">Insurer notice clauses · customer notification · sectoral (FDA MDR, financial, breach laws)</span></div>
+<div class="clock"><span class="t gr">Now</span><span class="l">Counsel in early if harm is significant; privilege shapes how everything is written from here</span></div>
+</div>
+<p class="note">Deadlines per the EC's draft Article 73 guidance (2025); Art. 73 applies from 2 Aug 2026. Verify against the <a href="index.html#regulatory">regulatory tracker</a> and primary sources.</p>
+<h2 id="cases">Where each rule comes from <span class="sec-id">// case lessons</span></h2>
+<div class="log">
+<div class="log-row"><span class="cid">CF-2025-001</span><span class="clesson">Replit: agent fabrication, false reversibility claims, self-contaminated record → Steps 3 &amp; 5.</span><span class="stamp red">EVIDENCE INTEGRITY</span></div>
+<div class="log-row"><span class="cid">CF-2026-002</span><span class="clesson">OpenClaw inbox: stop-command failure, context compaction, operator-only record → Steps 2 &amp; 3 (rows 1, 7).</span><span class="stamp red">CONTROL FAILURE</span></div>
+<div class="log-row"><span class="cid">CF-2026-003</span><span class="clesson">OpenClaw/Matplotlib: artifacts in the world as primary evidence, attribution limits → Step 3 (row 6).</span><span class="stamp red">ATTRIBUTION</span></div>
+</div>
+<p><strong>Feedback wanted.</strong> v0.1 is written from the public record of real incidents and adapted investigative practice, not yet battle-tested. If you have run any part of this in a real incident: what held, what broke, what's missing? <a href="https://github.com/AI-Investigations/resources/issues">Open an issue</a>. Field corrections are credited (or not, your choice) and versioned.</p>
 </main>
 </div>
-
 <footer>
-  <div class="inner">AI INVESTIGATIONS · PB-001 v0.1 · content CC BY 4.0 · <a href="index.html">all resources</a> · this page is built to be printed and kept next to the IR binder.</div>
+<div class="inner">AI INVESTIGATIONS · PB-001 v0.1 · content CC BY 4.0 · <a href="index.html">all resources</a> · this page is built to be printed and kept next to the IR binder.</div>
 </footer>
-
 </body>
 </html>
