@@ -59,7 +59,7 @@ font-size:11px; color:#e8d9a0; white-space:nowrap;
 .frame{max-width:1080px; margin:0 auto; display:flex; align-items:flex-start}
 nav{
 flex:0 0 200px; background:var(--steel); color:var(--white);
-align-self:stretch; min-height:calc(100vh - 60px);
+align-self:flex-start; position:sticky; top:0; height:100vh; overflow-y:auto;
 }
 nav .nav-label{
 font-family:"Courier New",Courier,monospace; font-size:10px; letter-spacing:1.5px;
@@ -142,7 +142,7 @@ footer a{color:#e8d9a0}
 /* ---------- responsive ---------- */
 @media (max-width:760px){
 .frame{flex-direction:column}
-nav{flex:none; width:100%; min-height:0}
+nav{flex:none; width:100%; min-height:0; position:static; height:auto; overflow-y:visible}
 nav ul{display:flex; flex-wrap:wrap}
 nav li a{border-bottom:none; border-right:1px solid #4a525a}
 main{border-left:none; padding:18px 16px 50px}
