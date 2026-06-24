@@ -84,9 +84,9 @@
   }
   h2 .sec-id{font-family:"Courier New",Courier,monospace; font-size:11px; color:var(--meta); font-weight:normal; margin-left:8px}
   h3{font-size:13px; margin:18px 0 4px}
-  p{margin:8px 0; max-width:72ch}
-  .lede{font-size:14px; max-width:72ch}
-  .note{font-size:11px; color:var(--meta); max-width:72ch}
+  p{margin:8px 0; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
+  .lede{font-size:14px}
+  .note{font-size:11px; color:var(--meta)}
 
   /* evidence-log entries: the signature element */
   .log{border:1px solid var(--rule); margin:14px 0}
@@ -106,15 +106,15 @@
   .stamp.red{color:var(--stamp-red)}
   .stamp.amber{color:var(--stamp-amber)}
   .stamp.green{color:var(--stamp-green)}
-  .cdesc{flex-basis:100%; font-size:12px; color:#3a3f44; max-width:78ch}
+  .cdesc{flex-basis:100%; font-size:12px; color:#3a3f44; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
 
   table{border-collapse:collapse; margin:12px 0; font-size:12px; width:100%; max-width:760px}
   th,td{border:1px solid var(--rule); padding:6px 9px; text-align:left; vertical-align:top}
   th{background:var(--ink); color:#fff; font-weight:bold}
   tr:nth-child(even) td{background:#faf9f6}
 
-  ul.plain{margin:8px 0 8px 20px; max-width:72ch}
-  ul.plain li{margin:4px 0}
+  ul.plain{margin:8px 0 8px 20px}
+  ul.plain li{margin:4px 0; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
 
   .deadline{color:var(--stamp-red); font-weight:bold}
   footer{
@@ -128,11 +128,11 @@
   .scope{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
   .role{border:1px solid var(--rule);background:#fbfaf7;display:flex;flex-direction:column}
   .role .r-head{padding:8px 10px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1px;color:#fff;background:var(--ink)}
-  .role .r-body{padding:10px 12px;font-size:12px;flex:1}
+  .role .r-body{padding:10px 12px;font-size:12px;flex:1; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
   .role .r-body b{display:block;font-size:12.5px;margin-bottom:4px}
   .role .r-tags{padding:8px 10px;border-top:1px dashed var(--rule);display:flex;gap:6px;flex-wrap:wrap}
   .subcats{display:flex;gap:6px;margin-top:8px}
-  .subcat{flex:1;border:1px solid var(--rule);background:#fff;padding:6px 7px;font-size:10.5px;line-height:1.45}
+  .subcat{flex:1;border:1px solid var(--rule);background:#fff;padding:6px 7px;font-size:10.5px;line-height:1.45; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
   .subcat .sc-label{display:block;font-family:"Courier New",Courier,monospace;font-size:9.5px;letter-spacing:.5px}
   .subcat.sc-op .sc-label{color:var(--amber)} .subcat.sc-mis .sc-label{color:var(--red)}
   .role.planned{border-style:dashed;background:transparent;margin:14px 0;display:flex;flex-direction:row;align-items:baseline;gap:12px;padding:9px 12px}
@@ -146,7 +146,7 @@
   .flow .stage .st-label{display:block;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:.5px;font-weight:bold;margin-bottom:2px}
   .flow .stage .st-arrow{position:absolute;right:-6px;top:50%;transform:translateY(-50%);color:var(--red);font-weight:bold;background:#fbfaf7;line-height:1;font-size:12px}
   .flow .stage a{text-decoration:underline}
-  .keyline{border:2px solid var(--ink);background:#fbfaf7;padding:10px 14px;margin:14px 0;max-width:76ch;font-size:13px}
+  .keyline{border:2px solid var(--ink);background:#fbfaf7;padding:10px 14px;margin:14px 0;font-size:13px; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
 
   /* ---------- responsive ---------- */
   @media (max-width:760px){
