@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulatory tracker — AI incident reporting obligations — AI Investigations</title>
+<meta name="description" content="Who must report what AI incidents, to whom, by when. EU AI Act Article 73, GPAI Code of Practice, US federal and state, international regimes. A tracker for practitioners, not legal advice.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://investigateai.org/regulatory.html">
+<meta property="og:title" content="Regulatory tracker — AI incident reporting obligations">
+<meta property="og:description" content="Who must report what AI incidents, to whom, by when. EU AI Act Article 73, GPAI Code of Practice, US federal and state, international regimes.">
+<meta property="og:url" content="https://investigateai.org/regulatory.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://investigateai.org/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --ink:#23272b; --steel:#3d444b; --paper:#f4f3ef; --white:#ffffff;
+    --rule:#cfccc4; --link:#1a56a0; --visited:#5a3d8a; --meta:#6a6f75;
+    --red:#8c2f2f; --amber:#8a6a1f; --green:#3c6e3c;
+    --red-bg:#f7ecec; --amber-bg:#f7f2e4; --green-bg:#ecf2ec;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{font-family:Verdana,Geneva,Tahoma,sans-serif;font-size:13px;line-height:1.65;background:var(--paper);color:var(--ink)}
+  a{color:var(--link)} a:visited{color:var(--visited)}
+  a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .mono{font-family:"Courier New",Courier,monospace}
+  code{font-family:"Courier New",Courier,monospace;background:#eceae4;padding:0 4px;font-size:12px}
+
+  header{background:var(--ink);color:var(--white);padding:14px 20px;border-bottom:4px solid var(--red)}
+  .masthead{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px}
+  .site-name{font-size:21px;font-weight:bold;letter-spacing:2px}
+  .site-name a{color:var(--white);text-decoration:none}
+  .crumb{font-family:"Courier New",Courier,monospace;font-size:11px;color:#c9cdd2}
+  .updated{margin-left:auto;font-family:"Courier New",Courier,monospace;font-size:11px;color:#e8d9a0;white-space:nowrap}
+
+  .frame{max-width:1080px;margin:0 auto;display:flex;align-items:flex-start}
+  nav{flex:0 0 200px;background:var(--steel);color:var(--white);align-self:stretch}
+  nav .nav-label{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1.5px;color:#aeb4ba;padding:14px 14px 4px}
+  nav ul{list-style:none}
+  nav li a{display:block;padding:7px 14px;color:#eceef0;text-decoration:none;border-bottom:1px solid #4a525a;font-size:12px}
+  nav li a:visited{color:#eceef0}
+  nav li a:hover{background:var(--ink)}
+  main{flex:1;background:var(--white);padding:24px 30px 60px;border-left:1px solid var(--rule);min-width:0}
+
+  h1{font-size:20px;margin:0 0 4px}
+  .pg-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 12px}
+  .stamp{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;border:1px solid currentColor;padding:1px 6px;white-space:nowrap}
+  .stamp.red{color:var(--red)} .stamp.amber{color:var(--amber)} .stamp.green{color:var(--green)} .stamp.gray{color:var(--meta)}
+  h2{font-size:15px;margin:34px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--ink)}
+  h2 .sec-id{font-family:"Courier New",Courier,monospace;font-size:11px;color:var(--meta);font-weight:normal;margin-left:8px}
+  h3{font-size:14px;margin:22px 0 6px;color:var(--ink)}
+  p{margin:8px 0;max-width:74ch}
+  .note{font-size:11px;color:var(--meta);max-width:74ch}
+  .disclaimer{border:2px solid var(--ink);background:#fbfaf7;padding:10px 14px;margin:14px 0;max-width:78ch;font-size:13px}
+
+  /* regime block — looks like an evidence-log row */
+  .regime{border:1px solid var(--rule);margin:16px 0;background:#fbfaf7}
+  .regime-head{background:var(--ink);color:#fff;padding:8px 14px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+  .regime-head .rid{font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1px;color:#e8d9a0}
+  .regime-head .rtitle{font-size:14px;font-weight:bold}
+  .regime-body{padding:10px 14px}
+  .regime-body dl{display:grid;grid-template-columns:130px 1fr;gap:6px 14px}
+  .regime-body dt{font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;color:var(--meta);padding-top:3px}
+  .regime-body dd{font-size:12.5px}
+  .regime-body dd ul{margin:4px 0 0 18px}
+  .regime-body dd li{margin:2px 0}
+  .regime-body .note-inline{font-style:italic;color:var(--meta);margin-top:4px;font-size:12px}
+
+  /* deadline clocks — same visual language as PB-001 */
+  .clocks{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+  .clock{border:1px solid var(--rule);background:#fff;padding:6px 9px;flex:1 1 130px;min-width:120px}
+  .clock .t{font-family:"Courier New",Courier,monospace;font-size:14px;font-weight:bold;color:var(--red)}
+  .clock .t.am{color:var(--amber)}
+  .clock .l{font-size:10.5px;color:#3a3f44;display:block;margin-top:2px;line-height:1.45}
+
+  /* sub-section for grouped regimes */
+  .subhead{font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px;color:var(--meta);margin:18px 0 4px;padding-bottom:3px;border-bottom:1px dashed var(--rule)}
+
+  /* how-to checklist */
+  .howto{border:1px solid var(--rule);background:#fbfaf7;margin:14px 0;padding:0}
+  .howto-head{background:var(--ink);color:#fff;padding:7px 12px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px}
+  .howto ul{list-style:none}
+  .howto li{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-bottom:1px solid var(--rule);font-size:12.5px}
+  .howto li:last-child{border-bottom:none}
+  .howto li::before{content:"•";font-family:"Courier New",Courier,monospace;font-weight:bold;color:var(--red);flex:0 0 14px}
+
+  footer{background:var(--ink);color:#c9cdd2;font-size:11px;padding:16px 20px}
+  footer .inner{max-width:1080px;margin:0 auto}
+  footer a{color:#e8d9a0}
+
+  @media (max-width:780px){
+    .frame{flex-direction:column}
+    nav{flex:none;width:100%}
+    nav ul{display:flex;flex-wrap:wrap}
+    nav li a{border-bottom:none;border-right:1px solid #4a525a}
+    main{border-left:none;padding:18px 14px 50px}
+    .updated{margin-left:0;flex-basis:100%}
+    .regime-body dl{grid-template-columns:1fr}
+    .regime-body dt{padding-top:8px}
+  }
+  @media print{
+    nav,header .updated,footer{display:none}
+    body{background:#fff}
+    main{border:none;padding:0}
+    .frame{display:block}
+    h2{break-after:avoid}
+    .regime,.howto,.disclaimer{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead">
+    <span class="site-name"><a href="index.html">AI&nbsp;INVESTIGATIONS</a></span>
+    <span class="crumb">&gt; REGULATORY TRACKER</span>
+    <span class="updated">LAST REVIEWED: 2026-06</span>
+  </div>
+</header>
+
+<div class="frame">
+<nav aria-label="Sections of this tracker">
+  <div class="nav-label">JURISDICTIONS</div>
+  <ul>
+    <li><a href="#eu">European Union</a></li>
+    <li><a href="#us">United States</a></li>
+    <li><a href="#intl">International / other</a></li>
+    <li><a href="#howto">How to use this page</a></li>
+  </ul>
+  <div class="nav-label">RELATED</div>
+  <ul>
+    <li><a href="first-hours.html">PB-001 First Hours</a></li>
+    <li><a href="model-examination.html">PB-002 Model Examination</a></li>
+    <li><a href="index.html">&larr; All resources</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h1>Regulatory tracker — AI incident reporting obligations</h1>
+  <div class="pg-meta">
+    <span class="stamp gray">v0.1</span>
+    <span class="stamp amber">LIVE — UNDER ACTIVE REVIEW</span>
+  </div>
+
+  <div class="disclaimer">
+    This tracker summarises in a simplified format who must report what, to whom, by when. <strong>Please note this page is a tracker, not legal advice.</strong> Items marked <span class="mono">⏳</span> have deadlines inside the next 12 months.
+  </div>
+
+  <h2 id="eu">European Union <span class="sec-id">// the EU AI Act and adjacent instruments</span></h2>
+
+  <div class="regime" id="art73">
+    <div class="regime-head">
+      <span class="rid">EU-001 ⏳</span>
+      <span class="rtitle">The EU AI Act — Article 73: Reporting of Serious Incidents</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>WHO</dt>
+        <dd>Providers of high-risk AI systems; deployers have identification/escalation duties.</dd>
+
+        <dt>WHAT</dt>
+        <dd>"Serious incidents" per Art. 3(49) — death or serious harm to health, serious and irreversible disruption of critical infrastructure, infringement of fundamental-rights obligations, serious harm to property or environment.</dd>
+
+        <dt>WHEN</dt>
+        <dd>
+          <div class="clocks">
+            <div class="clock"><span class="t">≤15 days</span><span class="l">Default. Report immediately upon establishing a causal link (or reasonable likelihood of such link), no later than 15 days after becoming aware.</span></div>
+            <div class="clock"><span class="t">≤2 days</span><span class="l">Widespread infringement or critical-infrastructure incidents.</span></div>
+            <div class="clock"><span class="t">≤10 days</span><span class="l">Incidents involving death.</span></div>
+          </div>
+          <div class="note-inline">Initial incomplete reports allowed, followed by complete report.</div>
+        </dd>
+
+        <dt>INVESTIGATION DUTY</dt>
+        <dd>Following reporting, providers shall perform the necessary investigations, including performing a risk assessment of the incident and corrective action. They shall cooperate with the authorities and shall <strong>not</strong> alter the system in any way that affects later evaluation of causes before informing authorities.
+          <div class="note-inline">Note: the Act does not currently include guidance on an investigative methodology.</div>
+        </dd>
+
+        <dt>STATUS</dt>
+        <dd>Applicable from <strong>2 August 2026</strong>. Draft guidance and reporting template published 26 September 2025 (consultation closed 7 November 2025); final guidance expected before applicability.</dd>
+
+        <dt>SOURCE</dt>
+        <dd>Regulation (EU) 2024/1689, Art. 73; EC draft guidance via digital-strategy.ec.europa.eu.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="regime" id="gpai">
+    <div class="regime-head">
+      <span class="rid">EU-002</span>
+      <span class="rtitle">GPAI Code of Practice (systemic-risk models)</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>WHO</dt>
+        <dd>Signatory providers of general-purpose AI models with systemic risk (obligations under Art. 55 applied from 2 August 2025).</dd>
+
+        <dt>WHAT</dt>
+        <dd>Serious-incident reporting to the AI Office, including the chain of events and root-cause analysis of causal factors.</dd>
+
+        <dt>SOURCE</dt>
+        <dd>EC, General-Purpose AI Code of Practice (July 2025).</dd>
+      </dl>
+    </div>
+  </div>
+
+  <h2 id="us">United States <span class="sec-id">// federal voluntary + state binding</span></h2>
+
+  <div class="subhead">Federal</div>
+
+  <div class="regime" id="nist">
+    <div class="regime-head">
+      <span class="rid">US-F-001</span>
+      <span class="rtitle">NIST AI Risk Management Framework (AI RMF)</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>NATURE</dt>
+        <dd>Voluntary risk-management framework with no direct reporting mandate. Increasingly used as a reference point in procurement, governance programs, and emerging standards of care.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="regime" id="fda">
+    <div class="regime-head">
+      <span class="rid">US-F-002</span>
+      <span class="rtitle">FDA — AI/ML-enabled medical devices</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>NATURE</dt>
+        <dd>AI/ML-enabled medical devices remain subject to existing medical-device obligations, including adverse-event reporting under the Medical Device Reporting regime, 21 CFR Part 803. FDA guidance on AI/ML software lifecycle management continues to evolve.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <p class="note"><strong>Track:</strong> incident-reporting provisions in agency-specific rules; federal legislative proposals.</p>
+
+  <div class="subhead">State (selected — verify current status before relying)</div>
+
+  <div class="regime" id="colorado">
+    <div class="regime-head">
+      <span class="rid">US-S-001 ⏳</span>
+      <span class="rtitle">Colorado AI Act (SB 24-205)</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>NATURE</dt>
+        <dd>Duties for developers/deployers of high-risk AI systems, including disclosure of known algorithmic-discrimination risks to the Attorney General.</dd>
+        <dt>EFFECTIVE</dt>
+        <dd><strong>30 June 2026</strong> (delayed from February 2026).</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="regime" id="texas">
+    <div class="regime-head">
+      <span class="rid">US-S-002</span>
+      <span class="rtitle">Texas (TRAIGA)</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>NATURE</dt>
+        <dd>Responsible AI governance act.</dd>
+        <dt>EFFECTIVE</dt>
+        <dd><strong>1 January 2026</strong>.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <p class="note"><strong>Track:</strong> California enacted-law cluster including frontier-model transparency (SB 53); NY; Illinois; Utah disclosure laws.</p>
+
+  <h2 id="intl">International / other <span class="sec-id">// voluntary, multilateral, and adjacent regimes</span></h2>
+
+  <div class="regime" id="oecd">
+    <div class="regime-head">
+      <span class="rid">INTL-001</span>
+      <span class="rtitle">OECD — common reporting framework</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>NATURE</dt>
+        <dd>Common reporting framework (AI Papers No. 34, 2025; 29 criteria) and the AI Incidents Monitor (AIM). Voluntary benchmark; explicitly the interoperability layer that other regimes align to.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="regime" id="g7">
+    <div class="regime-head">
+      <span class="rid">INTL-002</span>
+      <span class="rtitle">G7 Hiroshima AI Process</span>
+    </div>
+    <div class="regime-body">
+      <dl>
+        <dt>NATURE</dt>
+        <dd>Reporting framework launched February 2025; voluntary transparency reporting for advanced AI developers.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <p class="note"><strong>Track:</strong> UK, Canada (AIDA successor efforts), China algorithm/incident filing rules, sectoral financial regulators.</p>
+
+  <h2 id="howto">How to use this page in an investigation</h2>
+  <div class="howto">
+    <div class="howto-head">PRACTITIONER CHECKLIST</div>
+    <ul>
+      <li>Identify every jurisdiction the incident touches (deployment location, affected persons, provider establishment).</li>
+      <li>Map the incident against each definition above — "serious incident" thresholds differ.</li>
+      <li>Diary the deadlines <strong>from the moment of awareness/causal-link establishment</strong>, not from harm.</li>
+      <li>Preserve evidence before corrective action wherever Art. 73-style non-alteration duties apply.</li>
+      <li>Record the reporting decision (report / no report / why) — that decision is itself reviewable later.</li>
+    </ul>
+  </div>
+
+  <p class="note">Corrections with sources are the most valuable contribution: <a href="https://github.com/AI-Investigations/resources/issues">open an issue</a> or write in confidence. Markdown source: <a href="https://github.com/AI-Investigations/resources/blob/main/regulatory/regulatory-tracker.md">on GitHub</a>.</p>
+</main>
+</div>
+
+<footer>
+  <div class="inner">AI INVESTIGATIONS · Regulatory tracker · content CC BY 4.0 · <a href="index.html">all resources</a> · this page is built to be printed and kept next to the IR binder.</div>
+</footer>
+
+</body>
+</html>
