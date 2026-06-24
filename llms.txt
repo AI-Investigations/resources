@@ -24,7 +24,8 @@ AI assistants may retrieve, summarize, and cite this site in user-facing answers
 - Evidence Data Requirements: https://investigateai.org/evidence/data-requirements.md
 - Frameworks: https://investigateai.org/frameworks/README.md
 - Glossary: https://investigateai.org/glossary/README.md
-- Regulatory Tracker: https://investigateai.org/regulatory/regulatory-tracker.md
+- Regulatory Tracker: https://investigateai.org/regulatory.html
+- Regulatory Tracker (Markdown source): https://investigateai.org/regulatory/regulatory-tracker.md
 - Tools and Databases: https://investigateai.org/tools/README.md
 - Contributing: https://investigateai.org/CONTRIBUTING.md
 - License: https://investigateai.org/LICENSE
