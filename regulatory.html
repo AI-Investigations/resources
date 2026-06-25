@@ -120,6 +120,7 @@ nav li.tl-item a:hover{background:rgba(0,0,0,.18); color:#fff}
 body{-webkit-text-size-adjust:100%; text-size-adjust:100%}
 h1,h2{scroll-margin-top:74px}
 @media (max-width:780px){
+.frame{flex-direction:column; align-items:stretch}
 header{position:static; height:auto; padding:12px 16px}
 nav{flex:none; width:100%; min-height:0; position:sticky; top:0; z-index:25; height:auto; overflow:visible; border-bottom:1px solid #4a525a; box-shadow:0 2px 6px rgba(0,0,0,.18)}
 nav .nav-label{display:none}
@@ -132,7 +133,7 @@ nav li.tl-item a{padding:9px 13px; white-space:nowrap; border:none; border-botto
 nav li.tl-item a::before{display:none}
 nav li.tl-item.passed a{color:#d4d8dc; border-bottom-color:rgba(232,217,160,.45)}
 nav li.tl-item.active a{color:#fff; font-weight:bold; border-bottom-color:#e8d9a0; background:rgba(0,0,0,.2)}
-main{border-left:none; padding:18px 16px 50px}
+main{border-left:none; padding:18px 16px 50px; min-width:0}
 footer{padding:14px 16px}
 h1,h2{scroll-margin-top:52px}
 }
