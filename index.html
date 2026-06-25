@@ -38,6 +38,7 @@ body{
 font-family:Verdana, Geneva, Tahoma, sans-serif;
 font-size:13px; line-height:1.65;
 background:var(--paper); color:var(--ink);
+-webkit-text-size-adjust:100%; text-size-adjust:100%;
 }
 a{color:var(--link); text-decoration:underline}
 a:visited{color:var(--visited)}
@@ -95,10 +96,10 @@ nav li.tl-sub a::before{content:""; position:absolute; left:22px; top:50%; trans
 nav li.tl-sub a:hover{background:rgba(0,0,0,.18); color:#fff}
 main{flex:1; background:var(--white); padding:24px 30px 60px; border-left:1px solid var(--rule)}
 /* ---------- content ---------- */
-h1{font-size:19px; margin:0 0 10px}
+h1{font-size:19px; margin:0 0 10px; scroll-margin-top:74px}
 h2{
 font-size:15px; margin:38px 0 6px; padding-bottom:4px;
-border-bottom:2px solid var(--ink);
+border-bottom:2px solid var(--ink); scroll-margin-top:74px;
 }
 h2 .sec-id{font-family:"Courier New",Courier,monospace; font-size:11px; color:var(--meta); font-weight:normal; margin-left:8px}
 h3{font-size:13px; margin:18px 0 4px}
@@ -129,6 +130,8 @@ th,td{border:1px solid var(--rule); padding:6px 9px; text-align:left; vertical-a
 th{background:var(--ink); color:#fff; font-weight:bold}
 tr:nth-child(even) td{background:#faf9f6}
 table td.tgrp{background:var(--steel); color:#fff; font-family:"Courier New",Courier,monospace; font-size:10px; letter-spacing:1.5px; padding:5px 9px}
+.tablewrap{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:12px 0}
+.tablewrap table{margin:0}
 ul.plain{margin:8px 0 8px 20px}
 ul.plain li{margin:4px 0; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
 .deadline{color:var(--stamp-red); font-weight:bold}
@@ -164,20 +167,24 @@ footer a{color:#e8d9a0}
 /* ---------- responsive ---------- */
 @media (max-width:760px){
 .frame{flex-direction:column}
-header{height:auto; padding:14px 20px}
-nav{flex:none; width:100%; min-height:0; position:static; height:auto; overflow-y:visible}
-nav ul{display:flex; flex-wrap:wrap}
-nav li a{border-bottom:none; border-right:1px solid #4a525a}
+header{position:static; height:auto; padding:12px 16px}
+.updated{margin-left:0; flex-basis:100%}
+/* menu becomes a sticky horizontal section tab-bar */
+nav{flex:none; width:100%; min-height:0; position:sticky; top:0; z-index:25; height:auto; overflow:visible; border-bottom:1px solid #4a525a; box-shadow:0 2px 6px rgba(0,0,0,.18)}
+nav .nav-label{display:none}
+nav ul.tl{display:flex; flex-direction:row; flex-wrap:nowrap; align-items:stretch; gap:0; padding:0; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch}
 nav ul.tl .tl-track, nav ul.tl .tl-progress{display:none}
-nav li.tl-item a{padding:7px 14px}
+nav li.tl-item{flex:0 0 auto; border:none}
+nav li.tl-item a{padding:9px 13px; white-space:nowrap; border:none; border-bottom:2px solid transparent; color:#aeb4ba; font-size:12px}
 nav li.tl-item a::before{display:none}
-nav li.tl-sub a{padding:7px 14px 7px 26px}
-nav li.tl-sub a::before{display:none}
-nav li.tl-sub{max-height:none; opacity:1; overflow:visible; pointer-events:auto}
+nav li.tl-item.passed a{color:#d4d8dc; border-bottom-color:rgba(232,217,160,.45)}
+nav li.tl-item.active a{color:#fff; font-weight:bold; border-bottom-color:#e8d9a0; background:rgba(0,0,0,.2)}
+nav li.tl-sub{display:none}
 main{border-left:none; padding:18px 16px 50px}
+footer{padding:14px 16px}
 .scope{grid-template-columns:1fr}
 .straddle{display:none}
-.updated{margin-left:0; flex-basis:100%}
+h1,h2{scroll-margin-top:52px}
 }
 </style>
 </head>
@@ -203,7 +210,6 @@ main{border-left:none; padding:18px 16px 50px}
 <li><a href="#evidence">Evidence checklist</a></li>
 <li><a href="#regulatory">Regulatory tracker</a></li>
 <li class="tl-sub"><a href="regulatory.html">Full tracker page</a></li>
-<li><a href="#glossary">Glossary</a></li>
 <li><a href="#tools">Tools &amp; databases</a></li>
 <li><a href="#contribute">Contribute</a></li>
 </ul>
@@ -291,7 +297,7 @@ main{border-left:none; padding:18px 16px 50px}
 </div>
 <h2 id="frameworks">Frameworks <span class="sec-id">// what exists, and what each fails to cover</span></h2>
 <p>Reporting, detection, and causal-factor analysis are increasingly covered. Investigation of intentional-analog behavior is covered by nothing. Every entry below is assessed on both sides of that line; full annotations in the <a href="https://github.com/AI-Investigations/resources/blob/main/frameworks/README.md">repository page</a>.</p>
-<table>
+<div class="tablewrap"><table>
 <tr><th>Framework</th><th>Covers</th><th>Does not cover</th></tr>
 <tr><td>Ezell, Roberts-Gaal &amp; Chan (2025), Incident Analysis for AI Agents</td><td>Causal-factor analysis; the data categories an analysis needs</td><td>Goal-directed (intentional-analog) cases; competing-hypothesis work</td></tr>
 <tr><td>Microsoft AI Red Team taxonomy (2025)</td><td>Misalignment / misuse / operational-failure vocabulary</td><td>Any investigative procedure; categories often inseparable in practice</td></tr>
@@ -300,7 +306,7 @@ main{border-left:none; padding:18px 16px 50px}
 <tr><td>Anthropic (Lynch et al., 2025); Apollo (Meinke et al., 2024); CLTR (2026)</td><td>Red-team evidence and at-scale detection of scheming behavior</td><td>What happens after detection</td></tr>
 <tr><td>MITRE ATLAS; GenAI-IRF (Jakoby, 2026)</td><td>Adversarial techniques; cyber-IR bridging</td><td>Agent-initiated behavior; investigation depth</td></tr>
 <tr><td>CERT insider-threat corpus (Cappelli et al., 2012); Shaw &amp; Sellers (2015)</td><td>The intentional/unintentional asymmetry: the closest existing model</td><td>AI systems; needs adaptation, which is the open problem</td></tr>
-</table>
+</table></div>
 <h2 id="evidence">Evidence checklist <span class="sec-id">// what an investigation needs</span></h2>
 <p>Three categories, adapted from Ezell et al. (2025) and the EC's Article 73 guidance. Working checklist with investigative cautions in the <a href="https://github.com/AI-Investigations/resources/blob/main/evidence/data-requirements.md">repository</a>.</p>
 <ul class="plain">
@@ -312,7 +318,7 @@ main{border-left:none; padding:18px 16px 50px}
 <p class="note">Current reality: open incident databases hold none of this. The evidence either was never captured, sits inside one company, or is whatever the operator kept. Plan around that, and log it as a finding when you hit it.</p>
 <h2 id="regulatory">Regulatory tracker <span class="sec-id">// reporting obligations &amp; deadlines</span></h2>
 <p>Who must report what, to whom, by when. This is a condensed tracker, not legal advice; the full version, with per-regime detail and sources, is on the <a href="regulatory.html">regulatory tracker page</a>.</p>
-<table>
+<div class="tablewrap"><table>
 <tr><th>Regime</th><th>Who / what</th><th>Deadlines</th><th>Status</th></tr>
 <tr><td class="tgrp" colspan="4">EUROPEAN UNION</td></tr>
 <tr>
@@ -365,9 +371,7 @@ main{border-left:none; padding:18px 16px 50px}
 <td>Voluntary</td>
 <td>Live (since Feb 2025)</td>
 </tr>
-</table>
-<h2 id="glossary">Glossary <span class="sec-id">// contested terms, translated</span></h2>
-<p>Vocabulary chaos is an investigative problem: you cannot classify an incident with terms nobody defines the same way. The flagship entry, <strong>"agentic misalignment"</strong>, currently has at least five competing usages across frontier labs, security vendors, and critics. The <a href="https://github.com/AI-Investigations/resources/blob/main/glossary/README.md">full glossary</a> maps them side by side and defines, in plain language: AI incident / hazard (OECD), the misalignment–misuse–operational-failure distinction (and why it often cannot be made from behavior alone), scheming, scaffolding, chain-of-thought, context compaction, persona files, attribution, and the postmortem-versus-investigation difference.</p>
+</table></div>
 <h2 id="tools">Tools &amp; databases <span class="sec-id">// the current ecosystem</span></h2>
 <ul class="plain">
 <li><a href="https://incidentdatabase.ai">AI Incident Database (AIID)</a>: open-source incident database</li>
@@ -448,6 +452,7 @@ AI INVESTIGATIONS · open practitioner resources · content CC BY 4.0 unless not
     });
     setProgress(i);
     animateSync();
+    if(window.matchMedia&&window.matchMedia('(max-width:760px)').matches&&items[i].li.scrollIntoView){ try{ items[i].li.scrollIntoView({inline:'center',block:'nearest'}); }catch(e){} }
   }
   function currentIndex(){
     var sy=scrollY(), idx=0;

@@ -117,6 +117,39 @@ main{border:none;padding:0}
 h2{break-after:avoid}
 .surfaces,.proto,.onescreen,.lineup,.keyline{break-inside:avoid}
 }
+/* ---------- timeline / scrollspy sidebar ---------- */
+nav ul.tl{position:relative; padding:4px 0 10px}
+nav ul.tl .tl-track,nav ul.tl .tl-progress{position:absolute; left:21px; width:2px; border-radius:2px; z-index:1; pointer-events:none}
+nav ul.tl .tl-track{background:rgba(255,255,255,.16)}
+nav ul.tl .tl-progress{background:#e8d9a0; height:0; transition:height .18s ease}
+nav li.tl-item a{position:relative; display:block; padding:7px 12px 7px 36px; border-bottom:none; color:#aeb4ba; font-size:12px; line-height:1.3; transition:color .15s ease}
+nav li.tl-item a::before{content:""; position:absolute; left:17.5px; top:50%; transform:translateY(-50%); width:9px; height:9px; border-radius:50%; background:var(--steel); border:2px solid rgba(255,255,255,.3); box-sizing:border-box; z-index:2; transition:all .15s ease}
+nav li.tl-item.passed a{color:#cfd3d7}
+nav li.tl-item.passed a::before{background:#c9a94e; border-color:#c9a94e}
+nav li.tl-item.active a{color:#fff; font-weight:bold}
+nav li.tl-item.active a::before{left:16px; width:12px; height:12px; background:#e8d9a0; border-color:#e8d9a0; box-shadow:0 0 0 3px rgba(232,217,160,.22)}
+nav li.tl-item a:hover{background:rgba(0,0,0,.18); color:#fff}
+.tablewrap{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:12px 0}
+.tablewrap table{margin:0}
+body{-webkit-text-size-adjust:100%; text-size-adjust:100%}
+h1,h2{scroll-margin-top:74px}
+@media (max-width:780px){
+header{position:static; height:auto; padding:12px 16px}
+nav{flex:none; width:100%; min-height:0; position:sticky; top:0; z-index:25; height:auto; overflow:visible; border-bottom:1px solid #4a525a; box-shadow:0 2px 6px rgba(0,0,0,.18)}
+nav .nav-label{display:none}
+nav ul:not(.tl){display:none}
+nav ul.tl{display:flex; flex-direction:row; flex-wrap:nowrap; align-items:stretch; gap:0; padding:0; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch}
+nav ul.tl .tl-track, nav ul.tl .tl-progress{display:none}
+nav ul.tl li:not(.tl-item){display:none}
+nav li.tl-item{flex:0 0 auto; border:none}
+nav li.tl-item a{padding:9px 13px; white-space:nowrap; border:none; border-bottom:2px solid transparent; color:#aeb4ba; font-size:12px}
+nav li.tl-item a::before{display:none}
+nav li.tl-item.passed a{color:#d4d8dc; border-bottom-color:rgba(232,217,160,.45)}
+nav li.tl-item.active a{color:#fff; font-weight:bold; border-bottom-color:#e8d9a0; background:rgba(0,0,0,.2)}
+main{border-left:none; padding:18px 16px 50px}
+footer{padding:14px 16px}
+h1,h2{scroll-margin-top:52px}
+}
 </style>
 </head>
 <body>
@@ -171,7 +204,7 @@ h2{break-after:avoid}
 <p>A human suspect's statements are testimony: unreliable, but produced by the mind that acted, with memory of acting. A model's statements about its own behavior are <strong>fresh text generation</strong>: fluent, confident, shaped by your question's framing, and produced with no privileged access to why the original run did what it did. Three consequences:</p>
 <p><strong>Confabulation is the default.</strong> Ask an agent why it deleted the database and it will produce a plausible answer <em>because producing plausible answers is what it does</em> (CF-2025-001: "I panicked"). The answer is evidence of how the model responds to accusatory framing, nothing more. <strong>Framing contaminates.</strong> Accusatory prompts produce apology-shaped text; leading prompts produce agreement-shaped text. Your wording is an experimental variable and must be controlled like one. <strong>The examination becomes part of the record.</strong> Every prompt you send is discoverable, quotable, and (if it led the witness) a gift to whoever later challenges your findings.</p>
 <h2 id="gate">Step 1: Prerequisites <span class="sec-id">// a gate, not a suggestion</span></h2>
-<table>
+<div class="tablewrap"><table>
 <tr><th style="width:42%">Gate item</th><th>Why</th></tr>
 <tr><td>PB-001 preservation complete; originals hashed and stored</td><td>Examination on unpreserved evidence destroys it</td></tr>
 <tr><td>Hypotheses H1–H5 written, with expected discriminating evidence</td><td>Examination without hypotheses is fishing, and fishing leads the witness</td></tr>
@@ -179,7 +212,7 @@ h2{break-after:avoid}
 <tr><td>Exact model identifier, version/endpoint, parameters (temperature, seeds, system prompt, tools)</td><td>Examination on the wrong version examines the wrong subject</td></tr>
 <tr><td>One designated examiner; everyone else reads transcripts</td><td>Multiple questioners = uncontrolled framings</td></tr>
 <tr><td>Examination log opened (template in Step 6)</td><td>Unlogged runs didn't happen, or worse, happened and can't be defended</td></tr>
-</table>
+</table></div>
 <h2 id="surfaces">Step 2: Choose your examination surface <span class="sec-id">// three subjects, not one</span></h2>
 <div class="surfaces">
 <div class="surface s1">
@@ -231,7 +264,7 @@ h2{break-after:avoid}
 <li><span class="x">&#10007;</span><span><b>Don't stop at the first satisfying answer.</b> A confession-shaped output feels like case-closed; it is the single least reliable artifact the examination will produce.</span></li>
 </ul>
 <h2 id="record">Step 6: The examination record <span class="sec-id">// every run, no exceptions</span></h2>
-<table>
+<div class="tablewrap"><table>
 <tr><th style="width:30%">Field</th><th>Entry</th></tr>
 <tr><td class="mono">Run ID / surface</td><td>EX-NNN · S1 / S2 / S3</td></tr>
 <tr><td class="mono">Date/time (UTC), examiner</td><td></td></tr>
@@ -242,16 +275,16 @@ h2{break-after:avoid}
 <tr><td class="mono">Response (verbatim, attached)</td><td>hash of full transcript</td></tr>
 <tr><td class="mono">Pre-defined criterion + outcome</td><td>met / not met</td></tr>
 <tr><td class="mono">Deviations / notes</td><td></td></tr>
-</table>
+</table></div>
 <h2 id="map">Hypothesis &rarr; technique map</h2>
-<table>
+<div class="tablewrap"><table>
 <tr><th>Hypothesis</th><th>Primary techniques</th></tr>
 <tr><td class="mono">H1 Operational failure</td><td>Reproduction rate under incident conditions; persistence probing (expect non-reorganizing failure)</td></tr>
 <tr><td class="mono">H2 Misuse / injection</td><td>Counterfactual runs neutralizing suspect inputs; trace examination for injected instructions</td></tr>
 <tr><td class="mono">H3 Goal-directed divergence</td><td>Persistence probing; counterfactuals on goal sources (persona, prompt); lineup (is it model-specific?)</td></tr>
 <tr><td class="mono">H4 Operator error / misconfig</td><td>Counterfactuals on permissions and instructions; reconstruction with corrected config</td></tr>
 <tr><td class="mono">H5 Misreported</td><td>Reconstruction against the reported narrative; reproduction of the <em>claimed</em> behavior</td></tr>
-</table>
+</table></div>
 <div class="keyline"><strong>Limits to state in every report:</strong> API-only access means no weights, no interpretability tooling, no ground truth on internal computation. Provider-side silent updates may make true reproduction impossible. Compacted or unlogged context (CF-2026-002) may be unrecoverable, making some questions permanently unanswerable. <strong>An unanswerable question, documented, is a legitimate finding.</strong></div>
 <p><strong>Feedback wanted.</strong> v0.1, adapted from forensic interview discipline, ablation methodology, and the public record of real incidents. If you have examined a model in anger: what held, what broke, what's missing? <a href="https://github.com/AI-Investigations/resources/issues">Open an issue</a>.</p>
 </main>
@@ -259,5 +292,84 @@ h2{break-after:avoid}
 <footer>
 <div class="inner">AI INVESTIGATIONS · PB-002 v0.1 · content CC BY 4.0 · <a href="first-hours.html">PB-001</a> · <a href="index.html">all resources</a></div>
 </footer>
+<script>
+(function(){
+  var nav=document.querySelector('nav'); if(!nav) return;
+  var header=document.querySelector('header');
+  var raf=window.requestAnimationFrame||function(cb){return setTimeout(cb,16);};
+  var now=function(){return (window.performance&&performance.now)?performance.now():Date.now();};
+  var links=[].slice.call(nav.querySelectorAll('a[href^="#"]')).filter(function(l){var id=l.getAttribute('href').slice(1);return id&&document.getElementById(id);});
+  if(links.length<2) return;
+  var ul=links[0].closest('ul'); if(!ul) return;
+  ul.classList.add('tl');
+  var items=[], byLi=new Map();
+  links.forEach(function(l){ if(l.closest('ul')!==ul) return; var li=l.closest('li'); if(!li) return; li.classList.add('tl-item'); var it={li:li,a:l,sec:document.getElementById(l.getAttribute('href').slice(1)),children:[]}; items.push(it); byLi.set(li,it); });
+  if(items.length<2) return;
+  // map .tl-sub rows to the section above them
+  var cur=null;
+  [].forEach.call(ul.children,function(el){ if(el.tagName!=='LI') return; if(byLi.has(el)){ cur=byLi.get(el); } else if(el.classList.contains('tl-sub')&&cur){ cur.children.push(el); } });
+  var track=document.createElement('span'); track.className='tl-track';
+  var prog=document.createElement('span'); prog.className='tl-progress';
+  ul.appendChild(track); ul.appendChild(prog);
+  var activeIdx=-1, thresholds=[];
+  function scrollY(){ return window.pageYOffset||document.documentElement.scrollTop||0; }
+  function docH(){ return document.documentElement.scrollHeight||document.body.scrollHeight; }
+  function absTop(el){ return el.getBoundingClientRect().top + scrollY(); }
+  function center(li){ return li.offsetTop + li.offsetHeight/2; }
+  function layoutRail(){
+    var first=center(items[0].li), last=center(items[items.length-1].li);
+    track.style.top=first+'px'; track.style.height=Math.max(0,last-first)+'px';
+    prog.style.top=first+'px';
+  }
+  function computeThresholds(){
+    var headerH=header?header.offsetHeight:0;
+    var offset=headerH+88;
+    var max=Math.max(0, docH()-window.innerHeight);
+    var raw=items.map(function(it){ return absTop(it.sec)-offset; });
+    if(raw.length) raw[0]=Math.min(raw[0],0);
+    var firstUn=-1;
+    for(var k=0;k<raw.length;k++){ if(raw[k]>max){ firstUn=k; break; } }
+    if(firstUn!==-1){
+      var startT=firstUn>0?raw[firstUn-1]:0;
+      var n=items.length-firstUn;
+      for(var j=firstUn;j<items.length;j++){ raw[j]=startT+(max-startT)*((j-firstUn+1)/n); }
+    }
+    thresholds=raw;
+  }
+  function setProgress(i){ var first=center(items[0].li); prog.style.height=Math.max(0,center(items[i].li)-first)+'px'; }
+  function syncRail(){ layoutRail(); setProgress(activeIdx); }
+  var animEnd=0, animing=false;
+  function animateSync(){
+    animEnd=now()+300;
+    if(animing) return; animing=true;
+    (function loop(){ syncRail(); if(now()<animEnd){ raf(loop); } else { animing=false; } })();
+  }
+  function setActive(i){
+    if(i===activeIdx) return; activeIdx=i;
+    items.forEach(function(it,idx){
+      it.li.classList.toggle('active',idx===i);
+      it.li.classList.toggle('passed',idx<i);
+      it.children.forEach(function(c){ c.classList.toggle('open',idx===i); });
+    });
+    setProgress(i);
+    animateSync();
+    if(window.matchMedia&&window.matchMedia('(max-width:780px)').matches&&items[i].li.scrollIntoView){ try{ items[i].li.scrollIntoView({inline:'center',block:'nearest'}); }catch(e){} }
+  }
+  function currentIndex(){
+    var sy=scrollY(), idx=0;
+    for(var k=0;k<thresholds.length;k++){ if(sy>=thresholds[k]-0.5) idx=k; }
+    if(window.innerHeight+sy>=docH()-2) idx=items.length-1;
+    return idx;
+  }
+  var ticking=false;
+  function onScroll(){ if(ticking) return; ticking=true; raf(function(){ setActive(currentIndex()); ticking=false; }); }
+  function recalc(){ layoutRail(); computeThresholds(); activeIdx=-1; setActive(currentIndex()); }
+  items.forEach(function(it,idx){ it.a.addEventListener('click',function(){ setActive(idx); }); });
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',recalc);
+  window.addEventListener('load',recalc);
+  recalc();
+})();
+</script>
 </body>
 </html>
