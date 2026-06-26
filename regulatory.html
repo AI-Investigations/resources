@@ -54,7 +54,6 @@ h3{font-size:14px;margin:22px 0 6px;color:var(--ink)}
 p{margin:8px 0;max-width:74ch}
 .note{font-size:11px;color:var(--meta);max-width:74ch}
 .disclaimer{border:2px solid var(--ink);background:#fbfaf7;padding:10px 14px;margin:14px 0;max-width:78ch;font-size:13px}
-/* regime block: looks like an evidence-log row */
 .regime{border:1px solid var(--rule);margin:16px 0;background:#fbfaf7}
 .regime-head{background:var(--ink);color:#fff;padding:8px 14px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
 .regime-head .rid{font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1px;color:#e8d9a0}
@@ -66,15 +65,12 @@ p{margin:8px 0;max-width:74ch}
 .regime-body dd ul{margin:4px 0 0 18px}
 .regime-body dd li{margin:2px 0}
 .regime-body .note-inline{font-style:italic;color:var(--meta);margin-top:4px;font-size:12px}
-/* deadline clocks: same visual language as PB-001 */
 .clocks{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
 .clock{border:1px solid var(--rule);background:#fff;padding:6px 9px;flex:1 1 130px;min-width:120px}
 .clock .t{font-family:"Courier New",Courier,monospace;font-size:14px;font-weight:bold;color:var(--red)}
 .clock .t.am{color:var(--amber)}
 .clock .l{font-size:10.5px;color:#3a3f44;display:block;margin-top:2px;line-height:1.45}
-/* sub-section for grouped regimes */
 .subhead{font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px;color:var(--meta);margin:18px 0 4px;padding-bottom:3px;border-bottom:1px dashed var(--rule)}
-/* how-to checklist */
 .howto{border:1px solid var(--rule);background:#fbfaf7;margin:14px 0;padding:0}
 .howto-head{background:var(--ink);color:#fff;padding:7px 12px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px}
 .howto ul{list-style:none}
@@ -138,13 +134,15 @@ footer{padding:14px 16px}
 h1,h2{scroll-margin-top:52px}
 }
 </style>
+<style id="mapbg-style">html{background:#0a0c0f}body{background:transparent}#mapbg{position:fixed;inset:0;z-index:-1;pointer-events:none}.masthead{position:relative;padding-right:122px}.mapbtn{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:"Courier New",monospace;font-size:11px;letter-spacing:1px;color:#fff;background:#3a2326;border:1px solid #8c2f2f;padding:5px 11px;text-decoration:none;white-space:nowrap}.mapbtn:visited{color:#fff}.mapbtn:hover{background:#5a2f33;border-color:#c2453d}@media(max-width:780px){.masthead{padding-right:0}.mapbtn{position:static;transform:none;margin-left:14px}}@media(max-width:1240px){#mapbg{display:none}html,body{background:var(--paper)}}</style>
 </head>
 <body>
 <header>
 <div class="masthead">
-<span class="site-name"><a href="index.html">AI&nbsp;INVESTIGATIONS</a></span>
+<span class="site-name"><a href="menu.html">AI&nbsp;INVESTIGATIONS</a></span>
 <span class="crumb">&gt; REGULATORY TRACKER</span>
 <span class="updated">LAST REVIEWED: 2026-06</span>
+<a class="mapbtn" href="index.html">← LINK MAP</a>
 </div>
 </header>
 <div class="frame">
@@ -160,7 +158,7 @@ h1,h2{scroll-margin-top:52px}
 <ul>
 <li><a href="first-hours.html">PB-001 First Hours</a></li>
 <li><a href="model-examination.html">PB-002 Model Examination</a></li>
-<li><a href="index.html">&larr; All resources</a></li>
+<li><a href="menu.html">&larr; All resources</a></li>
 </ul>
 </nav>
 <main>
@@ -318,7 +316,7 @@ This tracker summarises in a simplified format who must report what, to whom, by
 </main>
 </div>
 <footer>
-<div class="inner">AI INVESTIGATIONS · Regulatory tracker · content CC BY 4.0 · <a href="index.html">all resources</a> · this page is built to be printed and kept next to the IR binder.</div>
+<div class="inner">AI INVESTIGATIONS · Regulatory tracker · content CC BY 4.0 · <a href="menu.html">all resources</a> · this page is built to be printed and kept next to the IR binder.</div>
 </footer>
 <script>
 (function(){
@@ -333,7 +331,6 @@ This tracker summarises in a simplified format who must report what, to whom, by
   var items=[], byLi=new Map();
   links.forEach(function(l){ if(l.closest('ul')!==ul) return; var li=l.closest('li'); if(!li) return; li.classList.add('tl-item'); var it={li:li,a:l,sec:document.getElementById(l.getAttribute('href').slice(1)),children:[]}; items.push(it); byLi.set(li,it); });
   if(items.length<2) return;
-  // map .tl-sub rows to the section above them
   var cur=null;
   [].forEach.call(ul.children,function(el){ if(el.tagName!=='LI') return; if(byLi.has(el)){ cur=byLi.get(el); } else if(el.classList.contains('tl-sub')&&cur){ cur.children.push(el); } });
   var track=document.createElement('span'); track.className='tl-track';
@@ -399,5 +396,6 @@ This tracker summarises in a simplified format who must report what, to whom, by
   recalc();
 })();
 </script>
+<script src="map-bg.js" defer></script>
 </body>
 </html>

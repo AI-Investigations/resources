@@ -1,0 +1,30 @@
+InvestigateAI — site update (link-analysis landing + amber map background)
+==========================================================================
+
+WHAT CHANGED (drop these into the repo root and commit):
+
+NEW files
+  index.html      -> now the interactive link-analysis MAP (this is the new homepage / site root)
+  menu.html       -> the previous content homepage (timeline scroll-spy menu), renamed from index.html
+  landing.html    -> identical copy of index.html (optional alias, so /landing.html also opens the map)
+  map-bg.js       -> amber animated network background used behind the content pages
+
+CHANGED files (content identical to the repo; added the map background + "LINK MAP" header button)
+  first-hours.html
+  model-examination.html
+  regulatory.html
+
+NAVIGATION
+  index.html (map)  --[ENTER SITE]-->  menu.html (and the section anchors menu.html#scope, etc.)
+  every content page --[<- LINK MAP]-->  index.html (the map)
+  content pages link to each other and to menu.html for "all resources"
+
+BEFORE YOU COMMIT — please also do:
+  1. sitemap.xml: add an entry for /menu.html, and make sure / (index.html) is listed.
+     The site root URL now serves the MAP; the text homepage moved to /menu.html.
+  2. Check for any EXTERNAL links (social posts, etc.) pointing to the old text homepage at "/" —
+     they will now land on the map. /menu.html is the text homepage.
+  3. og:image / favicons are unchanged and still referenced with absolute /paths.
+
+Everything else in the repo (case-files/, evidence/, frameworks/, README.md, favicons, etc.)
+is unchanged and does not need to be re-uploaded.

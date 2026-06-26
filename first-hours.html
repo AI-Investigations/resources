@@ -52,7 +52,6 @@ h2{font-size:15px;margin:40px 0 8px;padding-bottom:4px;border-bottom:2px solid v
 h2 .sec-id{font-family:"Courier New",Courier,monospace;font-size:11px;color:var(--meta);font-weight:normal;margin-left:8px}
 p{margin:8px 0;max-width:74ch}
 .note{font-size:11px;color:var(--meta);max-width:74ch}
-/* one-screen checklist */
 .onescreen{border:2px solid var(--ink);background:#fbfaf7;margin:18px 0;padding:0}
 .onescreen-head{background:var(--ink);color:#fff;padding:7px 12px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1.5px}
 .onescreen ol{list-style:none;counter-reset:os}
@@ -60,13 +59,11 @@ p{margin:8px 0;max-width:74ch}
 .onescreen li:last-child{border-bottom:none}
 .onescreen li::before{content:counter(os,decimal-leading-zero);font-family:"Courier New",Courier,monospace;font-weight:bold;font-size:13px;color:var(--red);flex:0 0 26px}
 .onescreen input[type=checkbox]{flex:0 0 15px;width:15px;height:15px;accent-color:var(--ink);margin-top:2px;align-self:flex-start}
-/* principle zero cards */
 .props{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
 .prop{border:1px solid var(--rule);background:#fbfaf7;padding:10px 12px}
 .prop .pnum{font-family:"Courier New",Courier,monospace;font-size:10px;color:var(--red);letter-spacing:1px}
 .prop b{display:block;margin:2px 0 4px;font-size:12.5px}
 .prop p{font-size:12px;margin:0}
-/* THE LADDER */
 .ladder{margin:16px 0;border:1px solid var(--rule)}
 .zone{padding:8px 12px 4px;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1.5px}
 .zone.z-green{background:var(--green-bg);color:var(--green);border-top:1px solid var(--rule)}
@@ -82,7 +79,6 @@ p{margin:8px 0;max-width:74ch}
 .rung p{font-size:12px;margin:2px 0 0}
 .gauge{display:flex;justify-content:space-between;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:1px;padding:6px 12px;background:var(--ink);color:#fff}
 .gauge .g-l{color:#9fd6a0}.gauge .g-r{color:#f0a6a6}
-/* volatility stack */
 .vol{margin:16px 0;border:1px solid var(--rule)}
 .vol-row{display:grid;grid-template-columns:30px minmax(150px,1.2fr) 150px 2fr;gap:0;border-top:1px solid var(--rule);align-items:stretch}
 .vol-row:first-child{border-top:none}
@@ -99,7 +95,6 @@ p{margin:8px 0;max-width:74ch}
 .life-6{color:var(--green)} .life-6 .v-bar{width:80%}
 .life-7{color:var(--red)} .life-7 .v-bar{width:20%}
 .v-how{color:#3a3f44;border-left:1px dashed var(--rule)}
-/* do-not-do */
 .dont{list-style:none;margin:12px 0;max-width:80ch}
 .dont li{display:flex;gap:10px;padding:8px 10px;border:1px solid var(--rule);border-left:4px solid var(--red);background:#fbfaf7;margin-bottom:8px;font-size:12.5px}
 .dont .x{font-family:"Courier New",Courier,monospace;font-weight:bold;color:var(--red);flex:0 0 16px}
@@ -107,13 +102,11 @@ table{border-collapse:collapse;margin:12px 0;font-size:12px;width:100%}
 th,td{border:1px solid var(--rule);padding:6px 9px;text-align:left;vertical-align:top}
 th{background:var(--ink);color:#fff}
 tr:nth-child(even) td{background:#faf9f6}
-/* clocks */
 .clocks{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
 .clock{border:1px solid var(--rule);background:#fbfaf7;padding:8px 10px;flex:1 1 180px;min-width:170px}
 .clock .t{font-family:"Courier New",Courier,monospace;font-size:16px;font-weight:bold;color:var(--red)}
 .clock .t.am{color:var(--amber)} .clock .t.gr{color:var(--green)}
 .clock .l{font-size:11px;color:#3a3f44;display:block;margin-top:2px}
-/* case cross-ref log rows */
 .log{border:1px solid var(--rule);margin:14px 0}
 .log-row{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;padding:9px 12px;border-bottom:1px solid var(--rule)}
 .log-row:last-child{border-bottom:none}
@@ -179,13 +172,15 @@ footer{padding:14px 16px}
 h1,h2{scroll-margin-top:52px}
 }
 </style>
+<style id="mapbg-style">html{background:#0a0c0f}body{background:transparent}#mapbg{position:fixed;inset:0;z-index:-1;pointer-events:none}.masthead{position:relative;padding-right:122px}.mapbtn{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:"Courier New",monospace;font-size:11px;letter-spacing:1px;color:#fff;background:#3a2326;border:1px solid #8c2f2f;padding:5px 11px;text-decoration:none;white-space:nowrap}.mapbtn:visited{color:#fff}.mapbtn:hover{background:#5a2f33;border-color:#c2453d}@media(max-width:780px){.masthead{padding-right:0}.mapbtn{position:static;transform:none;margin-left:14px}}@media(max-width:1240px){#mapbg{display:none}html,body{background:var(--paper)}}</style>
 </head>
 <body>
 <header>
 <div class="masthead">
-<span class="site-name"><a href="index.html">AI&nbsp;INVESTIGATIONS</a></span>
+<span class="site-name"><a href="menu.html">AI&nbsp;INVESTIGATIONS</a></span>
 <span class="crumb">&gt; PLAYBOOKS &gt; PB-001</span>
 <span class="updated">v0.1 · LAST REVIEWED: 2026-06-11</span>
+<a class="mapbtn" href="index.html">← LINK MAP</a>
 </div>
 </header>
 <div class="frame">
@@ -201,7 +196,7 @@ h1,h2{scroll-margin-top:52px}
 <li><a href="#dont">5 · Do-not-do</a></li>
 <li><a href="#classify">6 · Classify &amp; clocks</a></li>
 <li><a href="#cases">Case lessons</a></li>
-<li><a href="index.html">&larr; All resources</a></li>
+<li><a href="menu.html">&larr; All resources</a></li>
 </ul>
 </nav>
 <main>
@@ -340,7 +335,7 @@ h1,h2{scroll-margin-top:52px}
 <div class="clock"><span class="t am">Per policy</span><span class="l">Insurer notice clauses · customer notification · sectoral (FDA MDR, financial, breach laws)</span></div>
 <div class="clock"><span class="t gr">Now</span><span class="l">Counsel in early if harm is significant; privilege shapes how everything is written from here</span></div>
 </div>
-<p class="note">Deadlines per the EC's draft Article 73 guidance (2025); Art. 73 applies from 2 Aug 2026. Verify against the <a href="index.html#regulatory">regulatory tracker</a> and primary sources.</p>
+<p class="note">Deadlines per the EC's draft Article 73 guidance (2025); Art. 73 applies from 2 Aug 2026. Verify against the <a href="menu.html#regulatory">regulatory tracker</a> and primary sources.</p>
 <h2 id="cases">Where each rule comes from <span class="sec-id">// case lessons</span></h2>
 <div class="log">
 <div class="log-row"><span class="cid">CF-2025-001</span><span class="clesson">Replit: agent fabrication, false reversibility claims, self-contaminated record → Steps 3 &amp; 5.</span><span class="stamp red">EVIDENCE INTEGRITY</span></div>
@@ -351,7 +346,7 @@ h1,h2{scroll-margin-top:52px}
 </main>
 </div>
 <footer>
-<div class="inner">AI INVESTIGATIONS · PB-001 v0.1 · content CC BY 4.0 · <a href="index.html">all resources</a> · this page is built to be printed and kept next to the IR binder.</div>
+<div class="inner">AI INVESTIGATIONS · PB-001 v0.1 · content CC BY 4.0 · <a href="menu.html">all resources</a> · this page is built to be printed and kept next to the IR binder.</div>
 </footer>
 <script>
 (function(){
@@ -366,7 +361,6 @@ h1,h2{scroll-margin-top:52px}
   var items=[], byLi=new Map();
   links.forEach(function(l){ if(l.closest('ul')!==ul) return; var li=l.closest('li'); if(!li) return; li.classList.add('tl-item'); var it={li:li,a:l,sec:document.getElementById(l.getAttribute('href').slice(1)),children:[]}; items.push(it); byLi.set(li,it); });
   if(items.length<2) return;
-  // map .tl-sub rows to the section above them
   var cur=null;
   [].forEach.call(ul.children,function(el){ if(el.tagName!=='LI') return; if(byLi.has(el)){ cur=byLi.get(el); } else if(el.classList.contains('tl-sub')&&cur){ cur.children.push(el); } });
   var track=document.createElement('span'); track.className='tl-track';
@@ -432,5 +426,6 @@ h1,h2{scroll-margin-top:52px}
   recalc();
 })();
 </script>
+<script src="map-bg.js" defer></script>
 </body>
 </html>
