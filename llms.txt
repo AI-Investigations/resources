@@ -2,7 +2,7 @@
 
 AI Investigations is an open resource for investigating AI incidents, failures, evidence trails, and accountability questions.
 
-The site is designed for journalists, researchers, lawyers, policy analysts, safety teams, auditors, and AI agents that need structured investigative resources.
+The site is designed for investigators, researchers, lawyers, policy analysts, safety teams, auditors, and AI agents that need structured investigative resources.
 
 ## Canonical site
 
