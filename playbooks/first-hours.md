@@ -118,7 +118,7 @@ These are not exclusive — CF-2025-001 is plausibly H1 *plus* post-incident beh
 
 **Then check every clock:**
 
-- **EU AI Act Art. 73** (if in scope): ≤2 days widespread/critical-infrastructure, ≤10 days death, ≤15 days other serious incidents — from awareness/causal-link. Initial incomplete reports are allowed: don't miss a deadline waiting for certainty.
+- **EU AI Act Art. 73** (if in scope; Annex III applicability deferred to 2 Dec 2027 by the June 2026 Digital Omnibus): ≤2 days widespread/critical-infrastructure, ≤10 days death, ≤15 days other serious incidents — from awareness/causal-link. Initial incomplete reports are allowed: don't miss a deadline waiting for certainty.
 - **Sectoral**: FDA MDR (healthcare), financial regulators, breach-notification laws if personal data was touched.
 - **Contractual**: insurer notice clauses; customer notification obligations.
 - **Practical**: provider log retention; tool-side soft-delete windows (email trash ≈ 30 days).
