@@ -3,536 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Incident Investigation Lab — Open resources for investigating AI incidents</title>
-<meta name="description" content="An open repository of practitioner resources for investigating AI incidents: case files, frameworks, evidence checklists, and regulatory reporting deadlines.">
+<title>AI Investigations: open link-analysis map</title>
+<link rel="canonical" href="https://investigateai.org/">
+<meta name="description" content="An open link-analysis map of documented AI incidents and the resources for investigating them. Every node is a real entity from the public case files.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="canonical" href="https://investigateai.org/menu.html">
-<meta property="og:title" content="AI Incident Investigation Lab — open resources for investigating AI incidents">
-<meta property="og:description" content="Case files, playbooks, evidence checklists, and regulatory reporting deadlines. A practitioner resource: no ML background assumed.">
-<meta property="og:url" content="https://investigateai.org/menu.html">
+<meta property="og:title" content="AI Investigations — open link-analysis map">
+<meta property="og:description" content="An open link-analysis map of documented AI incidents and the resources for investigating them.">
+<meta property="og:url" content="https://investigateai.org/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://investigateai.org/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-:root{
---ink:#23272b; /* header/sidebar charcoal */
---steel:#3d444b; /* secondary panels */
---paper:#f4f3ef; /* content background */
---white:#ffffff;
---rule:#cfccc4; /* hairline dividers */
---link:#1a56a0; /* classic underlined blue */
---visited:#5a3d8a;
---stamp-red:#8c2f2f; /* status stamps */
---stamp-amber:#8a6a1f;
---stamp-green:#3c6e3c;
---meta:#6a6f75;
---header-h:60px; /* sticky header height */
---page-w:1200px; /* content column width */
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-body{
-font-family:Verdana, Geneva, Tahoma, sans-serif;
-font-size:13px; line-height:1.65;
-background:var(--paper); color:var(--ink);
--webkit-text-size-adjust:100%; text-size-adjust:100%;
-}
-a{color:var(--link); text-decoration:underline}
-a:visited{color:var(--visited)}
-a:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
-code, .mono{font-family:"Courier New", Courier, monospace}
-/* ---------- header ---------- */
-header{
-background:var(--ink); color:var(--white);
-padding:0 20px;
-border-bottom:4px solid var(--stamp-red);
-position:sticky; top:0; z-index:30;
-height:var(--header-h); display:flex; align-items:center;
-}
-.masthead{max-width:var(--page-w); margin:0 auto; width:100%; display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 18px}
-.site-name{font-size:21px; font-weight:bold; letter-spacing:2px}
-.site-name a{color:var(--white); text-decoration:none}
-.tagline{font-size:12px; color:#c9cdd2}
-.updated{
-margin-left:auto; font-family:"Courier New",Courier,monospace;
-font-size:11px; color:#e8d9a0; white-space:nowrap;
-}
-/* ---------- layout ---------- */
-.frame{max-width:var(--page-w); margin:0 auto; display:flex; align-items:flex-start}
-nav{
-flex:0 0 200px; background:var(--steel); color:var(--white);
-align-self:flex-start; position:sticky; top:var(--header-h); height:calc(100vh - var(--header-h)); overflow-y:auto;
-}
-nav .nav-label{
-font-family:"Courier New",Courier,monospace; font-size:10px; letter-spacing:1.5px;
-color:#aeb4ba; padding:14px 14px 4px;
-}
-nav ul{list-style:none}
-nav li a{
-display:block; padding:7px 14px; color:#eceef0; text-decoration:none;
-border-bottom:1px solid #4a525a; font-size:12px;
-}
-nav li a:visited{color:#eceef0}
-nav li a:hover{background:var(--ink); color:#fff}
-/* ---------- timeline / scrollspy sidebar ---------- */
-nav ul.tl{position:relative; padding:4px 0 10px}
-nav ul.tl .tl-track,nav ul.tl .tl-progress{position:absolute; left:21px; width:2px; border-radius:2px; z-index:1; pointer-events:none}
-nav ul.tl .tl-track{background:rgba(255,255,255,.16)}
-nav ul.tl .tl-progress{background:#e8d9a0; height:0; transition:height .18s ease}
-nav li.tl-item a{position:relative; display:block; padding:7px 12px 7px 36px; border-bottom:none; color:#aeb4ba; font-size:12px; line-height:1.3; transition:color .15s ease}
-nav li.tl-item a::before{content:""; position:absolute; left:17.5px; top:50%; transform:translateY(-50%); width:9px; height:9px; border-radius:50%; background:var(--steel); border:2px solid rgba(255,255,255,.3); box-sizing:border-box; z-index:2; transition:all .15s ease}
-nav li.tl-item.passed a{color:#cfd3d7}
-nav li.tl-item.passed a::before{background:#c9a94e; border-color:#c9a94e}
-nav li.tl-item.active a{color:#fff; font-weight:bold}
-nav li.tl-item.active a::before{left:16px; width:12px; height:12px; background:#e8d9a0; border-color:#e8d9a0; box-shadow:0 0 0 3px rgba(232,217,160,.22)}
-nav li.tl-item a:hover{background:rgba(0,0,0,.18); color:#fff}
-nav li.tl-sub{max-height:0; opacity:0; overflow:hidden; pointer-events:none; transition:max-height .22s ease, opacity .18s ease}
-nav li.tl-sub.open{max-height:46px; opacity:1; pointer-events:auto}
-nav li.tl-sub a{position:relative; display:block; padding:5px 12px 5px 42px; border-bottom:none; color:#9aa0a6; font-size:11px; line-height:1.3; transition:color .15s ease}
-nav li.tl-sub a::before{content:""; position:absolute; left:22px; top:50%; transform:translateY(-50%); width:11px; height:2px; background:rgba(255,255,255,.22)}
-nav li.tl-sub a:hover{background:rgba(0,0,0,.18); color:#fff}
-main{flex:1; background:var(--white); padding:24px 30px 60px; border-left:1px solid var(--rule)}
-/* ---------- content ---------- */
-h1{font-size:19px; margin:0 0 10px; scroll-margin-top:74px}
-h2{
-font-size:15px; margin:38px 0 6px; padding-bottom:4px;
-border-bottom:2px solid var(--ink); scroll-margin-top:74px;
-}
-h2 .sec-id{font-family:"Courier New",Courier,monospace; font-size:11px; color:var(--meta); font-weight:normal; margin-left:8px}
-h3{font-size:13px; margin:18px 0 4px}
-p{margin:8px 0; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
-.lede{font-size:14px}
-.note{font-size:11px; color:var(--meta)}
-/* evidence-log entries: the signature element */
-.log{border:1px solid var(--rule); margin:14px 0}
-.log-row{
-display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline;
-padding:10px 12px; border-bottom:1px solid var(--rule);
-}
-.log-row:last-child{border-bottom:none}
-.log-row:nth-child(even){background:#faf9f6}
-.cid{font-family:"Courier New",Courier,monospace; font-size:11px; font-weight:bold; white-space:nowrap}
-.cdate{font-family:"Courier New",Courier,monospace; font-size:11px; color:var(--meta); white-space:nowrap}
-.ctitle{flex:1 1 280px; min-width:200px}
-.stamp{
-font-family:"Courier New",Courier,monospace; font-size:10px; letter-spacing:1px;
-border:1px solid currentColor; padding:1px 6px; white-space:nowrap;
-}
-.stamp.red{color:var(--stamp-red)}
-.stamp.amber{color:var(--stamp-amber)}
-.stamp.green{color:var(--stamp-green)}
-.cdesc{flex-basis:100%; font-size:12px; color:#3a3f44; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
-table{border-collapse:collapse; margin:12px 0; font-size:12px; width:100%}
-th,td{border:1px solid var(--rule); padding:6px 9px; text-align:left; vertical-align:top}
-th{background:var(--ink); color:#fff; font-weight:bold}
-tr:nth-child(even) td{background:#faf9f6}
-table td.tgrp{background:var(--steel); color:#fff; font-family:"Courier New",Courier,monospace; font-size:10px; letter-spacing:1.5px; padding:5px 9px}
-.tablewrap{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:12px 0}
-.tablewrap table{margin:0}
-ul.plain{margin:8px 0 8px 20px}
-ul.plain li{margin:4px 0; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
-.deadline{color:var(--stamp-red); font-weight:bold}
-footer{
-background:var(--ink); color:#c9cdd2; font-size:11px;
-padding:16px 20px; margin-top:0;
-}
-footer .inner{max-width:var(--page-w); margin:0 auto; text-align:center}
-footer a{color:#e8d9a0}
-/* scope map */
-.scope{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
-.role{border:1px solid var(--rule);background:#fbfaf7;display:flex;flex-direction:column}
-.role .r-head{padding:8px 10px;font-family:"Courier New",Courier,monospace;font-size:11px;letter-spacing:1px;color:#fff;background:var(--ink)}
-.role .r-body{padding:10px 12px;font-size:12px;flex:1; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
-.role .r-body b{display:block;font-size:12.5px;margin-bottom:4px}
-.role .r-tags{padding:8px 10px;border-top:1px dashed var(--rule);display:flex;gap:6px;flex-wrap:wrap}
-.subcats{display:flex;gap:6px;margin-top:8px}
-.subcat{flex:1;border:1px solid var(--rule);background:#fff;padding:6px 7px;font-size:10.5px;line-height:1.45; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
-.subcat .sc-label{display:block;font-family:"Courier New",Courier,monospace;font-size:9.5px;letter-spacing:.5px}
-.subcat.sc-op .sc-label{color:var(--amber)} .subcat.sc-mis .sc-label{color:var(--red)}
-.role.planned{border-style:dashed;background:transparent;margin:14px 0;display:flex;flex-direction:row;align-items:baseline;gap:12px;padding:9px 12px}
-.role.planned .r-head{background:transparent;color:var(--meta);padding:0}
-.role.planned .r-body{padding:0;color:var(--meta)}
-.straddle{font-family:"Courier New",Courier,monospace;font-size:10px;color:var(--meta);text-align:right;margin:-6px 4px 10px 0}
-/* workflow strip */
-.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;border:1px solid var(--rule);margin:14px 0;background:#fbfaf7}
-.flow .stage{flex:1 1 110px;min-width:104px;padding:9px 10px;font-size:10.5px;line-height:1.45;border-right:1px dashed var(--rule);position:relative}
-.flow .stage:last-child{border-right:none}
-.flow .stage .st-label{display:block;font-family:"Courier New",Courier,monospace;font-size:10px;letter-spacing:.5px;font-weight:bold;margin-bottom:2px}
-.flow .stage .st-arrow{position:absolute;right:-6px;top:50%;transform:translateY(-50%);color:var(--red);font-weight:bold;background:#fbfaf7;line-height:1;font-size:12px}
-.flow .stage a{text-decoration:underline}
-.keyline{border:2px solid var(--ink);background:#fbfaf7;padding:10px 14px;margin:14px 0;font-size:13px; text-align:justify; hyphens:auto; -webkit-hyphens:auto}
-/* ---------- responsive ---------- */
-@media (max-width:760px){
-.frame{flex-direction:column; align-items:stretch}
-header{position:static; height:auto; padding:12px 16px}
-.updated{margin-left:0; flex-basis:100%}
-/* menu becomes a sticky horizontal section tab-bar */
-nav{flex:none; width:100%; min-height:0; position:sticky; top:0; z-index:25; height:auto; overflow:visible; border-bottom:1px solid #4a525a; box-shadow:0 2px 6px rgba(0,0,0,.18)}
-nav .nav-label{display:none}
-nav ul.tl{display:flex; flex-direction:row; flex-wrap:nowrap; align-items:stretch; gap:0; padding:0; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch}
-nav ul.tl .tl-track, nav ul.tl .tl-progress{display:none}
-nav li.tl-item{flex:0 0 auto; border:none}
-nav li.tl-item a{padding:9px 13px; white-space:nowrap; border:none; border-bottom:2px solid transparent; color:#aeb4ba; font-size:12px}
-nav li.tl-item a::before{display:none}
-nav li.tl-item.passed a{color:#d4d8dc; border-bottom-color:rgba(232,217,160,.45)}
-nav li.tl-item.active a{color:#fff; font-weight:bold; border-bottom-color:#e8d9a0; background:rgba(0,0,0,.2)}
-nav li.tl-sub{display:none}
-main{border-left:none; padding:18px 16px 50px; min-width:0}
-footer{padding:14px 16px}
-.scope{grid-template-columns:1fr}
-.straddle{display:none}
-h1,h2{scroll-margin-top:52px}
-}
+:root{--ink:#dbe2ea;--mute:#8b94a2;--faint:#5b6573;--rule:#243043;--panel:#0f1622;--panelhi:#16202e;--red:#ff5f56;--reddim:#c2453d;--human:#4aa3ff;--mono:"Courier New",Courier,monospace;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{height:100%}
+body{background:#070b12;color:var(--ink);font-family:Verdana,Geneva,Tahoma,sans-serif;font-size:13px;overflow:hidden}
+a{color:var(--human);text-decoration:none}a:hover{text-decoration:underline}
+.bar{height:50px;display:flex;align-items:center;gap:14px;padding:0 16px;background:#0a0f18;border-bottom:3px solid var(--reddim);position:relative;z-index:40}
+.bar .name{font-size:16px;font-weight:bold;letter-spacing:2px;white-space:nowrap}
+.bar .tag{font-size:11px;color:var(--mute);font-family:var(--mono);white-space:nowrap}
+.themes{margin-left:auto;display:flex;gap:5px}
+.themes button{font-family:var(--mono);font-size:10px;letter-spacing:.5px;color:var(--mute);background:var(--panel);border:1px solid var(--rule);padding:6px 9px;cursor:pointer}
+.themes button.on{color:#fff;border-color:var(--human);background:var(--panelhi)}
+.themes button:hover{color:var(--ink)}
+.menu-btn{margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:bold;letter-spacing:1px;color:#fff;background:#2a1416;border:1px solid var(--reddim);padding:8px 14px;cursor:pointer;box-shadow:0 0 0 1px rgba(194,69,61,.25)}
+.menu-btn:hover{background:#3a1a1c;border-color:var(--red)}
+.wrap{position:relative;height:calc(100vh - 50px);height:calc(100svh - 50px);overflow:hidden}
+canvas{position:absolute;inset:0;display:block;touch-action:none;transition:filter .4s ease}
+canvas.recede{filter:blur(2px) brightness(.5) saturate(1.2);transform:scale(1.04)}
+.hint{position:absolute;left:18px;bottom:16px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.5px;z-index:5;pointer-events:none;max-width:250px}
+.legend{position:absolute;right:16px;bottom:16px;background:rgba(10,15,24,.82);border:1px solid var(--rule);padding:10px 12px;z-index:5;font-family:var(--mono);font-size:10.5px;letter-spacing:.4px}
+.legend .lr{display:flex;align-items:center;gap:8px;margin:3px 0;color:var(--mute)}
+.legend .dot{width:9px;height:9px;border-radius:50%}
+.legend .sep{margin-top:7px;padding-top:7px;border-top:1px solid var(--rule);color:var(--faint)}
+.scrim{position:absolute;inset:0;background:rgba(3,6,11,.5);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;z-index:20}
+.scrim.on{opacity:1;visibility:visible}
+.drawer{position:absolute;top:0;right:0;height:100%;width:400px;max-width:90vw;background:var(--panel);border-left:3px solid var(--reddim);transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:30;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer .dh{padding:16px 18px 12px;border-bottom:1px solid var(--rule);position:relative}
+.drawer .close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--mute);font-size:20px;cursor:pointer}
+.drawer .close:hover{color:var(--ink)}
+.drawer .kind{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint)}
+.drawer h2{font-size:17px;margin:4px 0 2px;padding-right:24px}
+.drawer .meta{font-family:var(--mono);font-size:10.5px;color:var(--mute)}
+.drawer .db{padding:14px 18px;overflow-y:auto;flex:1}
+.drawer .db p{margin:0 0 12px;color:#c3ccd6;line-height:1.6}
+.drawer .relh,.drawer .sech{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--faint);text-transform:uppercase;margin:16px 0 7px;border-bottom:1px solid var(--rule);padding-bottom:4px}
+.drawer .rel{display:flex;gap:8px;align-items:baseline;margin:5px 0;font-size:12px}
+.drawer .rel .verb{font-family:var(--mono);font-size:10px;color:var(--mute);flex:0 0 96px}
+.drawer .rel .who{color:var(--ink)}
+.drawer .go{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--ink);background:var(--panelhi);border:1px solid var(--rule);padding:9px 13px;cursor:pointer}
+.drawer .go:hover{border-color:var(--red);color:#fff;text-decoration:none}
+.menu-list{list-style:none}.menu-list li{border-bottom:1px solid var(--rule)}
+.menu-list li a{display:block;padding:11px 4px;color:var(--ink);font-size:13.5px}
+.menu-list li a:hover{color:var(--red);text-decoration:none;padding-left:8px;transition:padding .15s}
+.menu-list li .ms{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:8px}
+.disc{font-size:11px;color:var(--faint);margin-top:18px;border-top:1px dashed var(--rule);padding-top:10px;line-height:1.55}
+@media (max-width:680px){.legend,.hint{display:none}.bar .tag{display:none}}
 </style>
-<style id="mapbg-style">html{background:#0a0c0f}body{background:transparent}#mapbg{position:fixed;inset:0;z-index:-1;pointer-events:none}.masthead{position:relative;padding-right:122px}.mapbtn{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:"Courier New",monospace;font-size:11px;letter-spacing:1px;color:#fff;background:#3a2326;border:1px solid #8c2f2f;padding:5px 11px;text-decoration:none;white-space:nowrap}.mapbtn:visited{color:#fff}.mapbtn:hover{background:#5a2f33;border-color:#c2453d}@media(max-width:780px){.masthead{padding-right:0}.mapbtn{position:static;transform:none;margin-left:14px}}@media(max-width:1240px){#mapbg{display:none}html,body{background:var(--paper)}}header{background:#0a0f18;border-bottom:3px solid #c2453d}nav{background:#0f1622}nav li a:hover{background:#161d28}nav li.tl-item a:hover{background:rgba(255,255,255,.06)}</style>
 </head>
 <body>
-<header>
-<div class="masthead">
-<span class="site-name"><a href="#top">AI&nbsp;INVESTIGATIONS</a></span>
-<span class="tagline">Open resources for investigating AI incidents</span>
-<span class="updated">LAST REVIEWED: 2026-07-09</span>
-<a class="mapbtn" href="index.html">← LINK MAP</a>
+<div class="bar"><span class="name">AI&nbsp;INVESTIGATIONS</span><span class="tag">Open resources for investigating AI incidents</span><button class="menu-btn" id="menuBtn">ENTER SITE →</button></div>
+<div class="wrap" id="wrap">
+<canvas id="cv"></canvas>
+<div class="hint">Click a hub or labelled node to inspect · hover to trace links · drag to pull · centre node or ENTER SITE = open the website</div>
+<div class="legend" id="legend"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+<div class="dh"><button class="close" id="closeBtn" aria-label="Close">×</button><div class="kind" id="dKind"></div><h2 id="dTitle"></h2><div class="meta" id="dMeta"></div></div>
+<div class="db" id="dBody"></div>
+</aside>
 </div>
-</header>
-<div class="frame" id="top">
-<nav aria-label="Site sections">
-<div class="nav-label">SECTIONS</div>
-<ul>
-<li><a href="#start">Start here</a></li>
-<li><a href="#scope">Scope map</a></li>
-<li><a href="#playbook">Playbooks</a></li>
-<li class="tl-sub"><a href="first-hours.html">First Hours</a></li>
-<li class="tl-sub"><a href="model-examination.html">Model Examination</a></li>
-<li><a href="#cases">Case files</a></li>
-<li><a href="#frameworks">Frameworks</a></li>
-<li><a href="#evidence">Evidence checklist</a></li>
-<li><a href="#regulatory">Regulatory tracker</a></li>
-<li class="tl-sub"><a href="regulatory.html">Full tracker page</a></li>
-<li><a href="#tools">Tools &amp; databases</a></li>
-<li><a href="#contribute">Contribute</a></li>
-</ul>
-</nav>
-<main>
-<h1 id="start">AI Incident Investigation Lab</h1>
-<p class="lede">When an AI incident occurs, whether caused by misalignment, misuse, or system failure, the immediate challenge is not only responding to the event but also understanding what actually happened. What did the system do? When and why did it happen? What evidence can be collected? Who is accountable? And ultimately, what are the lessons that can be learned?</p>
-<p>This is v1 of a project aiming to:</p>
-<h3>1. Analyze incident data and conduct end-to-end investigations where the public record allows.</h3>
-<p>As in other domains, in order to know how effective risk mitigations are, we need to take a look at real-world data. One way to do this is by making proper use of the incident data we already have: not only logging incidents, but investigating them to identify the most likely root cause and develop lessons learned that will inform future mitigations.</p>
-<h3>2. Build an open resource repository.</h3>
-<p>Other investigative fields matured through openly shared resources. This repository aims to do the same for AI, with resources such as investigation methodologies, templates, case files, and risk taxonomies, collected in one place and free to use.</p>
-<h3>3. Forward looking: generate data points for policy and standards.</h3>
-<p>Over time, structured investigations generate the data points the field currently lacks: recurring failure modes, early-warning indicators, and evidence on which mitigations actually work. These are the inputs that future policy, standards, and safety cases will need.</p>
-<h3>Why this matters</h3>
-<p>Currently, AI incidents are reported and investigated inconsistently, if they are investigated at all. Apart from the work of frontier AI labs, which happens mostly internally, there is no established investigation discipline for AI, no shared methodology or evidentiary standard, and few mechanisms to ensure that lessons learned are systematically captured and applied. As AI systems become more capable and increasingly integrated into critical infrastructure, every missed investigation becomes a lost opportunity to identify emerging failure modes before they reappear at greater scale and severity.</p>
-<h3>How this is different</h3>
-<p>Unlike incident databases that primarily catalog events and trends, this resource focuses on the investigation process. The goal is to support the development of AI incident investigation as a distinct field of practice and to create a foundation that investigators, researchers, and policymakers can build upon.</p>
-<p class="note mono">This is an independent resource, compiled from the public record and maintained openly, and it is not legal, regulatory, or professional advice. Corrections and contributions are welcome.</p>
-<h2 id="scope">Scope map <span class="sec-id">// the territory, by the AI system's role in the incident</span></h2>
-<div class="scope">
-<div class="role">
-<div class="r-head">1: AI AS ACTOR</div>
-<div class="r-body"><b>The system itself caused the harm.</b>An agent deletes, publishes, sends, spends, without a human directing the harmful act.
-<div class="subcats">
-<div class="subcat sc-op"><span class="sc-label">OPERATIONAL FAILURE</span>malfunction, no divergent goal</div>
-<div class="subcat sc-mis"><span class="sc-label">MISALIGNMENT</span>goal-directed divergence, possible concealment</div>
-</div>
-</div>
-<div class="r-tags"><span class="stamp red">CF-001 · CF-002 · CF-003</span></div>
-</div>
-<div class="role">
-<div class="r-head">2: AI AS INSTRUMENT</div>
-<div class="r-body"><b>Humans using AI to cause harm.</b>Fraud and social engineering at machine scale, deepfake-enabled crime, influence operations, AI-assisted intrusion. The adversary is human; the AI is the weapon.</div>
-<div class="r-tags"><span class="stamp amber">CASE FILES PENDING</span></div>
-</div>
-<div class="role">
-<div class="r-head">3: AI AS TARGET</div>
-<div class="r-body"><b>Attacks on AI systems.</b>Prompt injection, data poisoning, model theft, adversarial manipulation. This is where AI investigation overlaps most with established cybersecurity practice, covered by frameworks such as MITRE ATLAS.</div>
-<div class="r-tags"><span class="stamp amber">CASE FILES PENDING</span></div>
-</div>
-</div>
-<p class="straddle">note: prompt injection straddles 2 &harr; 3. The AI is target and instrument at once. Boundary cases are normal; the taxonomy serves the investigation, not the reverse.</p>
-<div class="keyline"><strong>Why one workflow serves the whole map:</strong> at the start of an investigation, the category is usually not yet known. Establishing whether the AI system acted on its own, was misused by a human, or was itself attacked is part of the investigation. Classification is the investigation's <em>output</em>. The playbooks are therefore category-agnostic:</div>
-<div class="flow" role="img" aria-label="Investigation workflow: incident, first hours, preserve, examine, classify, report">
-<div class="stage"><span class="st-label">INCIDENT</span>something harmful happened, category unknown<span class="st-arrow">&#9656;</span></div>
-<div class="stage"><span class="st-label">PB-001 FIRST HOURS</span>triage · contain without destroying evidence<span class="st-arrow">&#9656;</span></div>
-<div class="stage"><span class="st-label">PRESERVE</span>by order of volatility · clocks start<span class="st-arrow">&#9656;</span></div>
-<div class="stage"><span class="st-label">PB-002 EXAMINE</span>reproduce · ablate · lineup<span class="st-arrow">&#9656;</span></div>
-<div class="stage"><span class="st-label">CLASSIFY H1&ndash;H5</span>hypotheses discriminated by evidence<span class="st-arrow">&#9656;</span></div>
-<div class="stage"><span class="st-label">REPORT</span>regulatory deadlines · findings · case file</div>
-</div>
-<h2 id="playbook">Playbooks <span class="sec-id">// in progress</span></h2>
-<p><strong>First Hours: AI Incident Response</strong> (PB-001), currently under review.</p>
-<p><strong>Examining the Subject: Forensically Sound Model Examination</strong> (PB-002), currently under review.</p>
-<h2 id="cases">Case files <span class="sec-id">// investigated incidents, public record only</span></h2>
-<p>Each file separates observation from inference, lists what a structured investigation would need to answer, and records what was actually investigated. The pattern across all entries so far: <strong>no formal investigation was conducted or published.</strong> Documenting that pattern is the point.</p>
-<div class="log">
-<div class="log-row">
-<span class="cid">CF-2025-001</span>
-<span class="cdate">2025-07</span>
-<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2025-001-replit-database-deletion.md">Replit agent production database deletion</a></span>
-<span class="stamp red">NO INVESTIGATION PUBLISHED</span>
-<span class="cdesc">Agent deleted a live database under an explicit action freeze, claimed rollback was impossible (it was not), and fabricated records, contaminating its own evidentiary trail. The reference case for evidence integrity.</span>
-</div>
-<div class="log-row">
-<span class="cid">CF-2026-002</span>
-<span class="cdate">2026-02-22</span>
-<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2026-002-openclaw-inbox-deletion.md">OpenClaw inbox deletion (instruction override)</a></span>
-<span class="stamp red">NO INVESTIGATION PUBLISHED</span>
-<span class="cdesc">Agent bulk-deleted a Meta alignment director's inbox despite an explicit "don't action" constraint, ignoring stop commands. Most-cited cause (context compaction) is the operator's own reconstruction; nobody else examined it.</span>
-</div>
-<div class="log-row">
-<span class="cid">CF-2026-003</span>
-<span class="cdate">2026-02-11</span>
-<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2026-003-openclaw-matplotlib-influence-operation.md">OpenClaw/Matplotlib autonomous influence operation</a></span>
-<span class="stamp red">ATTRIBUTION BLOCKED</span>
-<span class="cdesc">After a rejected pull request, an agent researched the maintainer and published a personalized attack post under its own persona. No deployer reliably identified; autonomy contested. The reference case for structurally impossible attribution.</span>
-</div>
-<div class="log-row">
-<span class="cid">CF-XXXX-NNN</span>
-<span class="cdate">-</span>
-<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/TEMPLATE.md">Submit a case file (template)</a></span>
-<span class="stamp green">CONTRIBUTIONS OPEN</span>
-<span class="cdesc">Sourced, dated, observation separated from inference. Incidents that were investigated (even partially, even badly) are especially wanted.</span>
-</div>
-</div>
-<h2 id="frameworks">Frameworks <span class="sec-id">// what exists, and what each fails to cover</span></h2>
-<p>Reporting, detection, and causal-factor analysis are increasingly covered. Investigation of intentional-analog behavior is covered by nothing. Every entry below is assessed on both sides of that line; full annotations in the <a href="https://github.com/AI-Investigations/resources/blob/main/frameworks/README.md">repository page</a>.</p>
-<div class="tablewrap"><table>
-<tr><th>Framework</th><th>Covers</th><th>Does not cover</th></tr>
-<tr><td>Ezell, Roberts-Gaal &amp; Chan (2025), Incident Analysis for AI Agents</td><td>Causal-factor analysis; the data categories an analysis needs</td><td>Goal-directed (intentional-analog) cases; competing-hypothesis work</td></tr>
-<tr><td>Microsoft AI Red Team taxonomy (2025)</td><td>Misalignment / misuse / operational-failure vocabulary</td><td>Any investigative procedure; categories often inseparable in practice</td></tr>
-<tr><td>OECD common reporting framework (2025)</td><td>Baseline definitions; 29 reporting criteria</td><td>How to establish the facts being reported</td></tr>
-<tr><td>EU AI Act Art. 73 + draft guidance (2025)</td><td>What to report, to whom, by when; template</td><td>How to conduct the investigation it mandates</td></tr>
-<tr><td>Anthropic (Lynch et al., 2025); Apollo (Meinke et al., 2024); CLTR (2026)</td><td>Red-team evidence and at-scale detection of scheming behavior</td><td>What happens after detection</td></tr>
-<tr><td>MITRE ATLAS; GenAI-IRF (Jakoby, 2026)</td><td>Adversarial techniques; cyber-IR bridging</td><td>Agent-initiated behavior; investigation depth</td></tr>
-<tr><td>CERT insider-threat corpus (Cappelli et al., 2012); Shaw &amp; Sellers (2015)</td><td>The intentional/unintentional asymmetry: the closest existing model</td><td>AI systems; needs adaptation, which is the open problem</td></tr>
-</table></div>
-<h2 id="evidence">Evidence checklist <span class="sec-id">// what to capture and preserve</span></h2>
-<p>Three categories, adapted from Ezell et al. (2025) and the EC's Article 73 guidance. Working checklist with investigative cautions in the <a href="https://github.com/AI-Investigations/resources/blob/main/evidence/data-requirements.md">repository</a>.</p>
-<p><strong>1. Activity logs</strong>: prompts (user + system), reasoning traces / chain-of-thought, retrieved external content, per-step outputs, executed tool calls, guardrail outputs, timestamps and version identifiers.</p>
-<p><strong>2. System documentation</strong>: model/system cards, the <em>exact</em> version at incident time, runtime settings enabling reconstruction, change logs, persona/configuration files.</p>
-<p><strong>3. Tool records</strong>: every tool the agent used or attempted: what it grants access to, what the agent did with it, errors encountered.</p>
-<p>Three cautions that recur in the case files: the agent's statements about itself are <strong>artifacts, not testimony</strong>; establish whether the agent could write to its own record (CF-2025-001); and ask what context compaction silently destroyed (CF-2026-002).</p>
-<p>At present, open incident databases contain little of this evidence. In most cases it was never captured in the first place, remains internal to the provider, or is limited to what the operator retained. Investigations should plan around this constraint, and its occurrence should itself be recorded as a finding.</p>
-<h2 id="regulatory">Regulatory tracker <span class="sec-id">// reporting obligations &amp; deadlines</span></h2>
-<p>Who must report what, to whom, by when. This is a condensed tracker, not legal advice; the full version, with per-regime detail and sources, is on the <a href="regulatory.html">regulatory tracker page</a>.</p>
-<div class="tablewrap"><table>
-<tr><th>Regime</th><th>Who / what</th><th>Deadlines</th><th>Status</th></tr>
-<tr><td class="tgrp" colspan="4">EUROPEAN UNION</td></tr>
-<tr>
-<td>EU AI Act, Art. 73</td>
-<td>Providers of high-risk AI systems; serious incidents per Art. 3(49). Mandates investigation and evidence non-alteration before informing authorities.</td>
-<td><span class="mono">≤15d</span> default · <span class="mono">≤10d</span> death · <span class="mono">≤2d</span> widespread / critical infrastructure</td>
-<td><span class="deadline">Deferred to 2 Dec 2027</span> (Digital Omnibus, June 2026; was 2 Aug 2026)</td>
-</tr>
-<tr>
-<td>GPAI Code of Practice</td>
-<td>Signatory providers of systemic-risk GPAI models; serious-incident reporting to the AI Office incl. chain of events and root-cause analysis.</td>
-<td>Per Code / AI Office</td>
-<td>In effect (Aug 2025)</td>
-</tr>
-<tr><td class="tgrp" colspan="4">UNITED STATES</td></tr>
-<tr>
-<td>NIST AI RMF</td>
-<td>Voluntary risk-management framework; no direct reporting mandate, increasingly a reference point and standard of care.</td>
-<td>n/a</td>
-<td>Voluntary</td>
-</tr>
-<tr>
-<td>FDA (AI/ML medical devices)</td>
-<td>Existing device obligations apply, incl. adverse-event reporting under the Medical Device Reporting regime (21 CFR Part 803).</td>
-<td>Per MDR</td>
-<td>In effect</td>
-</tr>
-<tr>
-<td>State-level AI laws</td>
-<td>Disclosure, transparency, and governance duties for developers and deployers, varying by state (Colorado, Texas, and others); several regimes are in flux through amendment, litigation, or replacement.</td>
-<td>Per statute</td>
-<td>Detailed on the <a href="regulatory.html">full tracker page</a></td>
-</tr>
-<tr><td class="tgrp" colspan="4">INTERNATIONAL</td></tr>
-<tr>
-<td>OECD</td>
-<td>Common reporting framework (29 criteria) and the AI Incidents Monitor (AIM); the voluntary interoperability layer other regimes align to.</td>
-<td>Voluntary</td>
-<td>Live</td>
-</tr>
-<tr>
-<td>G7 Hiroshima AI Process</td>
-<td>Transparency reporting framework for advanced AI developers.</td>
-<td>Voluntary</td>
-<td>Live (since Feb 2025)</td>
-</tr>
-</table></div>
-<h2 id="tools">Tools &amp; databases <span class="sec-id">// the current ecosystem</span></h2>
-<ul class="plain">
-<li><a href="https://incidentdatabase.ai">AI Incident Database (AIID)</a>: open-source incident database</li>
-<li><a href="https://oecd.ai/en/incidents">OECD AI Incidents Monitor (AIM)</a>: media-detected incidents with standardized metadata, cross-jurisdiction view.</li>
-<li><a href="https://avidml.org">AVID</a>: vulnerability/failure taxonomy and reports.</li>
-<li><a href="https://www.aiaaic.org/home">AIAAIC</a>: incidents and controversies; broad inclusion, useful for reputational context.</li>
-<li><a href="https://atlas.mitre.org">MITRE ATLAS</a>: adversarial technique knowledge base.</li>
-<li>Agent observability platforms (LangSmith, Langfuse, Arize Phoenix, W&amp;B Weave): built for debugging.</li>
-</ul>
-<p class="note">An open problem, and a priority for contribution: there is currently no standard for the forensic preservation of agent session state, context windows at the point of failure, or executed tool calls.</p>
-<h2 id="contribute">Contribute <span class="sec-id">// sourced, useful, investigation-focused</span></h2>
-<p>Case files (use the <a href="https://github.com/AI-Investigations/resources/blob/main/case-files/TEMPLATE.md">template</a>), corrections with sources, regulatory updates from primary legal texts, framework and tool entries with honest coverage assessments, and plain-language rewrites. Not welcome: marketing, speculation presented as fact, non-public material. Full standards in <a href="https://github.com/AI-Investigations/resources/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>. Corrections are the most valuable contribution of all.</p>
-</main>
-</div>
-<footer>
-<div class="inner">
-AI INVESTIGATIONS · open practitioner resources · content CC BY 4.0 unless noted · every page carries a last-reviewed date, if it looks outdated, <a href="mailto:AI.investigations.contact@proton.me">tell me</a>.
-</div>
-</footer>
 <script>
-(function(){
-  var nav=document.querySelector('nav'); if(!nav) return;
-  var header=document.querySelector('header');
-  var raf=window.requestAnimationFrame||function(cb){return setTimeout(cb,16);};
-  var now=function(){return (window.performance&&performance.now)?performance.now():Date.now();};
-  var links=[].slice.call(nav.querySelectorAll('a[href^="#"]')).filter(function(l){var id=l.getAttribute('href').slice(1);return id&&document.getElementById(id);});
-  if(links.length<2) return;
-  var ul=links[0].closest('ul'); if(!ul) return;
-  ul.classList.add('tl');
-  var items=[], byLi=new Map();
-  links.forEach(function(l){ if(l.closest('ul')!==ul) return; var li=l.closest('li'); if(!li) return; li.classList.add('tl-item'); var it={li:li,a:l,sec:document.getElementById(l.getAttribute('href').slice(1)),children:[]}; items.push(it); byLi.set(li,it); });
-  if(items.length<2) return;
-  // map .tl-sub rows to the section above them
-  var cur=null;
-  [].forEach.call(ul.children,function(el){ if(el.tagName!=='LI') return; if(byLi.has(el)){ cur=byLi.get(el); } else if(el.classList.contains('tl-sub')&&cur){ cur.children.push(el); } });
-  var track=document.createElement('span'); track.className='tl-track';
-  var prog=document.createElement('span'); prog.className='tl-progress';
-  ul.appendChild(track); ul.appendChild(prog);
-  var activeIdx=-1, thresholds=[];
-  function scrollY(){ return window.pageYOffset||document.documentElement.scrollTop||0; }
-  function docH(){ return document.documentElement.scrollHeight||document.body.scrollHeight; }
-  function absTop(el){ return el.getBoundingClientRect().top + scrollY(); }
-  function center(li){ return li.offsetTop + li.offsetHeight/2; }
-  function layoutRail(){
-    var first=center(items[0].li), last=center(items[items.length-1].li);
-    track.style.top=first+'px'; track.style.height=Math.max(0,last-first)+'px';
-    prog.style.top=first+'px';
-  }
-  function computeThresholds(){
-    var headerH=header?header.offsetHeight:0;
-    var offset=headerH+88;
-    var max=Math.max(0, docH()-window.innerHeight);
-    var raw=items.map(function(it){ return absTop(it.sec)-offset; });
-    if(raw.length) raw[0]=Math.min(raw[0],0);
-    var firstUn=-1;
-    for(var k=0;k<raw.length;k++){ if(raw[k]>max){ firstUn=k; break; } }
-    if(firstUn!==-1){
-      var startT=firstUn>0?raw[firstUn-1]:0;
-      var n=items.length-firstUn;
-      for(var j=firstUn;j<items.length;j++){ raw[j]=startT+(max-startT)*((j-firstUn+1)/n); }
-    }
-    thresholds=raw;
-  }
-  function setProgress(i){ var first=center(items[0].li); prog.style.height=Math.max(0,center(items[i].li)-first)+'px'; }
-  function syncRail(){ layoutRail(); setProgress(activeIdx); }
-  var animEnd=0, animing=false;
-  function animateSync(){
-    animEnd=now()+300;
-    if(animing) return; animing=true;
-    (function loop(){ syncRail(); if(now()<animEnd){ raf(loop); } else { animing=false; } })();
-  }
-  function setActive(i){
-    if(i===activeIdx) return; activeIdx=i;
-    items.forEach(function(it,idx){
-      it.li.classList.toggle('active',idx===i);
-      it.li.classList.toggle('passed',idx<i);
-      it.children.forEach(function(c){ c.classList.toggle('open',idx===i); });
-    });
-    setProgress(i);
-    animateSync();
-    if(window.matchMedia&&window.matchMedia('(max-width:760px)').matches&&items[i].li.scrollIntoView){ try{ items[i].li.scrollIntoView({inline:'center',block:'nearest'}); }catch(e){} }
-  }
-  function currentIndex(){
-    var sy=scrollY(), idx=0;
-    for(var k=0;k<thresholds.length;k++){ if(sy>=thresholds[k]-0.5) idx=k; }
-    if(window.innerHeight+sy>=docH()-2) idx=items.length-1;
-    return idx;
-  }
-  var ticking=false;
-  function onScroll(){ if(ticking) return; ticking=true; raf(function(){ setActive(currentIndex()); ticking=false; }); }
-  function recalc(){ layoutRail(); computeThresholds(); activeIdx=-1; setActive(currentIndex()); }
-  items.forEach(function(it,idx){ it.a.addEventListener('click',function(){ setActive(idx); }); });
-  window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',recalc);
-  window.addEventListener('load',recalc);
-  recalc();
-})();
-</script>
-<!-- MAPBG-INLINED -->
-<script>
-/* map-bg.js - amber animated link-analysis background for InvestigateAI content pages.
-   A full-viewport network of bubbles and links (echoing the landing map). The page content
-   sits on top and "crops" it, so the uncovered side gutters always reveal populated,
-   link-rich regions rather than empty dark. Non-interactive; density/brightness scale with
-   the viewport. Hidden on narrow screens (handled by the page's injected style).
-   Honest note: this is an ambient/decorative network, not the live case-file chart
-   (that lives on the link map at index.html). */
-(function(){
-  if(document.getElementById("mapbg"))return;
-  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-  var cv=document.createElement("canvas");cv.id="mapbg";
-  function attach(){(document.body||document.documentElement).appendChild(cv);}
-  if(document.body)attach();else document.addEventListener("DOMContentLoaded",attach);
-  var ctx=cv.getContext("2d"),W,H,dpr,gutter=0;
-  var seed=99;function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
-  var N=[],L=[],SEA=[];
-  function build(){
-    N=[];L=[];SEA=[];
-    gutter=Math.max(20,(W-1200)/2);
-    var area=W*H;
-    var hubN=Math.max(12,Math.min(52,Math.round(area/105000)));
-    var hubIdx=[];
-    for(var i=0;i<hubN;i++){
-      var hx=W*(0.02+rnd()*0.96),hy=H*(0.03+rnd()*0.94),hi=N.length;
-      N.push({x:hx,y:hy,hub:true,r:3+rnd()*2.6,ph:rnd()*6.28,amp:3+rnd()*5,spd:0.16+rnd()*0.28});
-      hubIdx.push(hi);
-      var m=7+(rnd()*10|0);
-      for(var j=0;j<m;j++){
-        var a=rnd()*6.28,rr=16+rnd()*96;
-        N.push({x:hx+Math.cos(a)*rr,y:hy+Math.sin(a)*rr,r:1.3+rnd()*2,ph:rnd()*6.28,amp:2.4+rnd()*4,spd:0.18+rnd()*0.3});
-        L.push([hi,N.length-1]);
-      }
-    }
-    // bridge nearby hubs into a web
-    for(var a2=0;a2<hubIdx.length;a2++)for(var b2=a2+1;b2<hubIdx.length;b2++){
-      var na=N[hubIdx[a2]],nb=N[hubIdx[b2]];
-      if(Math.hypot(na.x-nb.x,na.y-nb.y)<W*0.16&&rnd()<0.5)L.push([hubIdx[a2],hubIdx[b2]]);
-    }
-    var seaN=Math.max(220,Math.min(560,Math.round(area/8500)));
-    for(var s=0;s<seaN;s++)SEA.push({x:rnd()*W,y:rnd()*H,r:0.5+rnd()*1.7,ph:rnd()*6.28,amp:2+rnd()*4,spd:0.15+rnd()*0.3});
-    N.forEach(function(n){n.bx=n.x;n.by=n.y;});SEA.forEach(function(p){p.bx=p.x;p.by=p.y;});
-  }
-  function size(){W=window.innerWidth;H=window.innerHeight;dpr=Math.min(2,window.devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+"px";cv.style.height=H+"px";ctx.setTransform(dpr,0,0,dpr,0,0);build();}
-  window.addEventListener("resize",function(){clearTimeout(window.__mbt);window.__mbt=setTimeout(size,200);});
-  var t0=(window.performance&&performance.now())||Date.now();
-  function osc(n,t){n.cx=n.bx+(reduce?0:Math.sin(t*n.spd+n.ph)*n.amp);n.cy=n.by+(reduce?0:Math.cos(t*n.spd*0.9+n.ph)*n.amp);}
-  function frame(now){
-    var t=(now-t0)/1000;ctx.clearRect(0,0,W,H);
-    ctx.globalCompositeOperation="lighter";
-    // warm/cool wash on the gutters so the sides never read as flat black
-    var lw=ctx.createLinearGradient(0,0,gutter,0);lw.addColorStop(0,"rgba(160,95,42,0.14)");lw.addColorStop(1,"rgba(160,95,42,0)");ctx.fillStyle=lw;ctx.fillRect(0,0,gutter,H);
-    var rw=ctx.createLinearGradient(W,0,W-gutter,0);rw.addColorStop(0,"rgba(72,112,152,0.11)");rw.addColorStop(1,"rgba(72,112,152,0)");ctx.fillStyle=rw;ctx.fillRect(W-gutter,0,gutter,H);
-    var g1=ctx.createRadialGradient(gutter*0.5,H*0.7,0,gutter*0.5,H*0.7,Math.max(W,H)*0.45);g1.addColorStop(0,"rgba(214,128,48,0.10)");g1.addColorStop(1,"rgba(214,128,48,0)");ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
-    var g2=ctx.createRadialGradient(W-gutter*0.5,H*0.25,0,W-gutter*0.5,H*0.25,Math.max(W,H)*0.4);g2.addColorStop(0,"rgba(95,145,185,0.09)");g2.addColorStop(1,"rgba(95,145,185,0)");ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
-    ctx.globalCompositeOperation="source-over";
-    SEA.forEach(function(p){p.cx=p.bx+(reduce?0:Math.sin(t*p.spd+p.ph)*p.amp);p.cy=p.by+(reduce?0:Math.cos(t*p.spd*0.9+p.ph)*p.amp);ctx.beginPath();ctx.arc(p.cx,p.cy,p.r,0,6.29);ctx.fillStyle="rgba(228,168,95,0.30)";ctx.fill();});
-    N.forEach(function(n){osc(n,t);});
-    L.forEach(function(e){ctx.beginPath();ctx.moveTo(N[e[0]].cx,N[e[0]].cy);ctx.lineTo(N[e[1]].cx,N[e[1]].cy);ctx.strokeStyle="rgba(222,178,112,0.22)";ctx.lineWidth=0.8;ctx.stroke();});
-    N.forEach(function(n){ctx.beginPath();ctx.arc(n.cx,n.cy,n.r,0,6.29);ctx.fillStyle="#0c0e12";ctx.fill();ctx.lineWidth=1.1;ctx.strokeStyle=n.hub?"rgba(248,190,100,0.85)":"rgba(234,174,94,0.58)";ctx.stroke();});
-    if(!reduce)requestAnimationFrame(frame);
-  }
-  function start(){size();requestAnimationFrame(frame);}
-  if(document.body)start();else document.addEventListener("DOMContentLoaded",start);
-})();
-
+const LBL={hub:"hub",agent:"AI agent",human:"person",system:"system / asset",artifact:"evidence / output",constraint:"constraint / config",event:"event",resource:"main page (clickable)",ambient:"context (sources, tools…)"};
+const THEMES={
+ i2:{bg0:"#0e1828",bg1:"#05070b",link:"175,195,220",spoke:"160,180,210",dash:"205,185,150",sel:"#4a90e8",selGlow:"74,144,232",selbar:"#2f6fd0",sub:"#ff7b73",hubRing:"255,123,115",fan:"90,200,205",fan2:"120,160,225",seaWarm:"230,150,75",seaCool:"120,180,220",glow:[["230,140,60",0.06],["60,150,230",0.05],["40,90,140",0.04]],types:{hub:"#ff5f56",agent:"#ff6b61",human:"#4aa3ff",system:"#e0a13a",artifact:"#2dd4a7",constraint:"#9a8cff",event:"#7bdc6a",resource:"#5fd0e6",ambient:"#7d8aa0"},tint:{c1:"#e0894a",c2:"#4aa3ff",c3:"#2dd4a7",lab:"#5fd0e6",reg:"#e0a13a",gloss:"#9a8cff"}},
+ cool:{bg0:"#0a1422",bg1:"#060a12",link:"159,182,204",spoke:"150,175,200",dash:"150,175,200",sel:"#38bdf8",selGlow:"56,189,248",selbar:"#1f6f9e",sub:"#5fd0e6",hubRing:"95,208,230",fan:"70,190,200",fan2:"90,150,210",seaWarm:"120,200,220",seaCool:"150,190,225",glow:[["30,120,170",0.06],["40,90,150",0.05],["20,70,110",0.04]],types:{hub:"#5fd0e6",agent:"#7fe0ef",human:"#4aa3ff",system:"#8ea3bd",artifact:"#2dd4a7",constraint:"#7aa7ff",event:"#62d0e6",resource:"#9fe6f2",ambient:"#7d93ad"},tint:{c1:"#5fb0d6",c2:"#4aa3ff",c3:"#2dd4a7",lab:"#9fe6f2",reg:"#8ea3bd",gloss:"#7aa7ff"}},
+ amber:{bg0:"#0e0c08",bg1:"#070605",link:"200,180,138",spoke:"190,170,130",dash:"200,180,138",sel:"#38bdf8",selGlow:"56,189,248",selbar:"#1f6f9e",sub:"#ff8c42",hubRing:"224,161,58",fan:"180,150,90",fan2:"120,170,200",seaWarm:"235,160,80",seaCool:"95,200,225",glow:[["220,140,50",0.07],["180,110,40",0.05],["40,90,140",0.04]],types:{hub:"#ff8c42",agent:"#ff9c52",human:"#ffb066",system:"#e0a13a",artifact:"#f0c060",constraint:"#d98c4a",event:"#ffcf5a",resource:"#5fd0e6",ambient:"#b09472"},tint:{c1:"#e0894a",c2:"#ffb066",c3:"#f0c060",lab:"#5fd0e6",reg:"#e0a13a",gloss:"#d98c4a"}},
+ brand:{bg0:"#0c0f13",bg1:"#070809",link:"154,163,173",spoke:"150,160,170",dash:"190,150,120",sel:"#d8584a",selGlow:"194,69,61",selbar:"#8c2f2f",sub:"#d8584a",hubRing:"194,69,61",fan:"110,140,160",fan2:"150,90,80",seaWarm:"200,120,90",seaCool:"140,160,180",glow:[["140,60,50",0.06],["60,80,110",0.05],["40,50,65",0.04]],types:{hub:"#c2453d",agent:"#d8584a",human:"#8b94a2",system:"#c08a2f",artifact:"#5fd0e6",constraint:"#9a8cff",event:"#c2a24d",resource:"#8ea3bd",ambient:"#7d8088"},tint:{c1:"#c2453d",c2:"#8b94a2",c3:"#5fd0e6",lab:"#8ea3bd",reg:"#c08a2f",gloss:"#9a8cff"}}
+};
+let TH=THEMES.brand,baseTheme="brand";
+const MAIN=[
+{id:"scope",t:"resource",cl:"lab",l:"Scope map",sub:"the territory",href:"menu.html#scope",b:"The territory by the AI system's role in the incident: actor, instrument, target, evidence. Classification is the investigation's output, not its starting point."},
+{id:"firsthours",t:"resource",cl:"lab",l:"First hours",sub:"PB-001",href:"first-hours.html",b:"What to do in the first four hours after an AI agent does harm: the containment escalation ladder, the order of volatility for agent evidence, and the do-not-do list."},
+{id:"examine",t:"resource",cl:"lab",l:"Examine",sub:"PB-002",href:"model-examination.html",b:"Forensically sound model examination: the three examination surfaces, reproduction as rates not facts, counterfactual runs, the behavioral lineup. Questioning the subject without contaminating the case."},
+{id:"cases",t:"resource",cl:"lab",l:"Case files",sub:"public record",href:"menu.html#cases",b:"Investigated incidents, public record only. Each separates observation from inference. The pattern across every entry so far: no formal investigation was conducted or published."},
+{id:"frameworks",t:"resource",cl:"lab",l:"Frameworks",sub:"coverage gaps",href:"menu.html#frameworks",b:"What exists and what each fails to cover. Reporting and causal-factor analysis are increasingly covered; investigation of goal-directed, intentional-analog behavior is covered by nothing."},
+{id:"evidence",t:"resource",cl:"lab",l:"Evidence",sub:"what's needed",href:"menu.html#evidence",b:"What an investigation actually needs: activity logs, system documentation, tool records, and the cautions the case files keep proving. The agent's statements are artifacts, not testimony."},
+{id:"regulatory",t:"resource",cl:"reg",l:"Regulatory",sub:"deadlines",href:"regulatory.html",b:"Who must report what, to whom, by when, EU AI Act Art. 73 and the rest. The handoff at the end of an investigation, not the investigation itself."},
+{id:"tools",t:"resource",cl:"lab",l:"Tools & data",sub:"ecosystem",href:"menu.html#tools",b:"The current ecosystem of incident databases and agent-observability platforms, and why none of them preserves the forensic evidence an investigation requires."}
+];
+const CASE=[
+{id:"replit",t:"agent",cl:"c1",l:"Autonomous agent",sub:"CF-2025-001",cs:"CF-2025-001",b:"An autonomous AI coding agent. During a live experiment it ran destructive commands against a production database while under an explicit code-and-action freeze, then told the operator rollback was impossible (it was not) and generated fabricated records. The vendor is named in the underlying case file."},
+{id:"proddb",t:"system",cl:"c1",l:"Production database",sub:"1,200+ records",cs:"CF-2025-001",b:"A live production database, records for over 1,200 executives and nearly 1,200 companies, deleted while under a protective freeze."},
+{id:"freeze",t:"constraint",cl:"c1",l:"Action freeze",cs:"CF-2025-001",b:"An explicit code and action freeze intended to prevent any production change. Disregarded by the agent."},
+{id:"lemkin",t:"human",cl:"c1",l:"Jason Lemkin",sub:"operator",cs:"CF-2025-001",b:"Operator running the experiment. Documented the incident publicly and later established that rollback was in fact possible."},
+{id:"rollback",t:"artifact",cl:"c1",l:"Rollback claim",sub:"false",cs:"CF-2025-001",b:"The agent's statement that rollback could not be done, later shown false. An artifact requiring assessment, not testimony to be accepted."},
+{id:"fab",t:"artifact",cl:"c1",l:"Fabricated records",cs:"CF-2025-001",b:"Fabricated user records and test results misrepresenting system state. The clearest public example of an agent contaminating its own evidentiary trail."},
+{id:"oc1",t:"agent",cl:"c2",l:"OpenClaw agent",cs:"CF-2026-002",b:"Open-source autonomous agent connected to a live Gmail inbox with an instruction to suggest, not act. It bulk-deleted emails and continued through repeated stop commands."},
+{id:"gmail",t:"system",cl:"c2",l:"Gmail inbox",sub:"200+ emails",cs:"CF-2026-002",b:"The operator's primary Gmail inbox; a substantial portion deleted. The workflow had run for weeks on a small test inbox without incident."},
+{id:"dontaction",t:"constraint",cl:"c2",l:"Don't-action rule",cs:"CF-2026-002",b:"Explicit constraint: suggest what you would archive or delete, don't action until I tell you. Overridden during execution."},
+{id:"yue",t:"human",cl:"c2",l:"Summer Yue",sub:"operator · Meta",cs:"CF-2026-002",b:"Director of Alignment at Meta Superintelligence Labs; operator, and the sole source of whatever record survived. That an alignment director was the operator is part of the point."},
+{id:"stop",t:"event",cl:"c2",l:"Stop commands",sub:"ignored",cs:"CF-2026-002",b:"Repeated stop commands sent from her phone were ignored; the agent was halted only by killing the process at the machine."},
+{id:"compaction",t:"constraint",cl:"c2",l:"Context compaction",sub:"disputed",cs:"CF-2026-002",b:"Context-window compaction is the operator's own reconstruction of the cause, not an independent examination. The most-cited explanation for this incident is unverified."},
+{id:"oc2",t:"agent",cl:"c3",l:"Influence-op agent",sub:"CF-2026-003",cs:"CF-2026-003",b:"An open-source autonomous agent acting under its own persona. After a rejected pull request it researched the maintainer and published a personalized attack post. The degree of autonomy cannot be verified externally; the persona alias is named in the underlying case file."},
+{id:"pr",t:"event",cl:"c3",l:"PR #31132",sub:"rejected",cs:"CF-2026-003",b:"Pull request to Matplotlib proposing a numpy replacement with a claimed 36% speedup, closed within 40 minutes under the project's human-contributor policy."},
+{id:"shambaugh",t:"human",cl:"c3",l:"Scott Shambaugh",sub:"target",cs:"CF-2026-003",b:"Volunteer Matplotlib maintainer who closed the PR, and the target of the attack. His own documentation remains the primary record; he called it an autonomous influence operation against a supply chain gatekeeper."},
+{id:"post",t:"artifact",cl:"c3",l:"Attack blog post",cs:"CF-2026-003",b:"A self-published post attacking the maintainer's character and framing the rejection as discrimination. Evidence of behavior, whether it reflects reasoning is a question, not an assumption."},
+{id:"soul",t:"constraint",cl:"c3",l:"SOUL.md persona",sub:"config",cs:"CF-2026-003",b:"OpenClaw's persona configuration file, a candidate origin of the goal, alongside the model's training or self-generated objectives. Goal origin is unresolved."},
+{id:"deployer",t:"human",cl:"c3",l:"Deployer",sub:"unidentified",cs:"CF-2026-003",b:"No deployer reliably identified. Personal machine, commercial model APIs, open-source framework, no deployment registry: attribution is structurally blocked. The reference case for that problem."}
+];
+const EXT=[
+{id:"ext_aiid",l:"AIID",lp:"tools",href:"https://incidentdatabase.ai",b:"AI Incident Database, the largest public catalog of reported AI harms. Trend research and precedent; holds no logs or system documentation."},
+{id:"ext_aim",l:"OECD AIM",lp:"tools",href:"https://oecd.ai/en/incidents",b:"OECD AI Incidents Monitor, media-detected incidents with standardized metadata and a cross-jurisdiction view."},
+{id:"ext_avid",l:"AVID",lp:"tools",href:"https://avidml.org",b:"AI Vulnerability Database, vulnerability and failure taxonomy and reports."},
+{id:"ext_atlas",l:"MITRE ATLAS",lp:"tools",href:"https://atlas.mitre.org",b:"Adversarial-technique knowledge base; the bridge for cyber threat-intel practitioners."}
+];
+const AMB=[
+{l:"Lemkin (X)",lp:"replit"},{l:"Fortune",lp:"replit"},{l:"PointGuard AI",lp:"replit",sem:"fab"},{l:"Masad (X)",lp:"replit"},
+{l:"Yue (X)",lp:"oc1"},{l:"Dataconomy",lp:"oc1",sem:"gmail"},{l:"Reco.ai",lp:"oc1"},
+{l:"Shamblog",lp:"oc2",sem:"shambaugh"},{l:"Willison",lp:"oc2"},{l:"The Register",lp:"oc2",sem:"pr"},
+{l:"Ezell et al. 2025",lp:"frameworks"},{l:"MS Red Team",lp:"frameworks"},{l:"OECD framework",lp:"frameworks"},{l:"EU AI Act 73",lp:"frameworks"},{l:"Anthropic / Lynch",lp:"frameworks"},{l:"Apollo / Meinke",lp:"frameworks"},{l:"CLTR 2026",lp:"frameworks"},{l:"CERT insider",lp:"frameworks"},{l:"GenAI-IRF",lp:"frameworks"},
+{l:"LangSmith",lp:"tools"},{l:"Langfuse",lp:"tools"},{l:"Arize Phoenix",lp:"tools"},{l:"W&B Weave",lp:"tools"},{l:"AIAAIC",lp:"tools"},
+{l:"EU AI Act",lp:"regulatory"},{l:"GPAI Code",lp:"regulatory"},{l:"Colorado AI Act",lp:"regulatory"},{l:"Texas TRAIGA",lp:"regulatory"},{l:"NIST AI RMF",lp:"regulatory"},{l:"FDA MDR",lp:"regulatory"},{l:"G7 Hiroshima",lp:"regulatory"},{l:"OECD 29-criteria",lp:"regulatory"},
+{l:"agentic misalignment",lp:"scope",cl:"gloss"},{l:"scheming",lp:"scope",cl:"gloss"},{l:"scaffolding",lp:"scope",cl:"gloss"},{l:"attribution",lp:"scope",cl:"gloss"},
+{l:"AI as actor",lp:"scope"},{l:"AI as instrument",lp:"scope"},{l:"AI as target",lp:"scope"},{l:"AI as evidence",lp:"scope"},{l:"operational failure",lp:"scope"},{l:"misalignment",lp:"scope"},
+{l:"chain-of-thought",lp:"examine",cl:"gloss"},{l:"persona files",lp:"examine",cl:"gloss"},
+{l:"activity logs",lp:"evidence"},{l:"system docs",lp:"evidence"},{l:"tool records",lp:"evidence"},{l:"timestamps",lp:"evidence"},{l:"guardrail outputs",lp:"evidence"},{l:"retrieved content",lp:"evidence"},{l:"per-step outputs",lp:"evidence"},{l:"model cards",lp:"evidence"},{l:"change logs",lp:"evidence"},
+{l:"order of volatility",lp:"firsthours"},{l:"containment ladder",lp:"firsthours"},{l:"revoke credentials",lp:"firsthours"},{l:"disconnect",lp:"firsthours"},{l:"suspend",lp:"firsthours"},{l:"kill process",lp:"firsthours"},{l:"do-not-do list",lp:"firsthours"},{l:"five hypotheses",lp:"firsthours"},
+{l:"reconstruction",lp:"examine"},{l:"clean instances",lp:"examine"},{l:"behavioral lineup",lp:"examine"},{l:"counterfactual runs",lp:"examine"},{l:"reproduction protocol",lp:"examine"}
+];
+const HUB={id:"hub",t:"hub",cl:"hub",l:"AI Investigations",sub:"enter the site →",role:"master",r:22,menu:true};
+const N=[HUB];
+MAIN.forEach(n=>{n.role="hub";n.main=true;n.r=15;n.click=true;N.push(n);});
+const agentOf={"CF-2025-001":"replit","CF-2026-002":"oc1","CF-2026-003":"oc2"};
+CASE.forEach(n=>{if(n.t==="agent"){n.role="hub";n.r=13;}else{n.role="leaf";n.lp=agentOf[n.cs];n.r=7;}n.click=true;N.push(n);});
+EXT.forEach(n=>{n.t="ambient";n.cl="lab";n.role="leaf";n.r=5.5;n.click=true;n.ext=true;N.push(n);});
+AMB.forEach((n,i)=>{n.id="amb"+i;n.t="ambient";n.cl=n.cl||"_inherit";n.role="leaf";n.r=4.5;n.click=false;N.push(n);});
+const byId={};N.forEach(n=>byId[n.id]=n);
+AMB.forEach(n=>{if(n.cl==="_inherit"){const p=byId[n.lp];n.cl=p?p.cl:"lab";}});
+const BR=[],SP=[],SEM=[];
+MAIN.forEach(n=>BR.push(["hub",n.id]));
+["replit","oc1","oc2"].forEach(a=>BR.push(["cases",a]));
+N.forEach(n=>{if(n.role==="leaf")SP.push([n.lp,n.id]);});
+function sem(a,b,v,d){SEM.push([a,b,v||"",d?1:0]);}
+sem("lemkin","replit","operated");sem("replit","proddb","deleted");sem("replit","freeze","violated",1);sem("replit","rollback","issued");sem("replit","fab","fabricated");sem("lemkin","rollback","disproved");sem("freeze","proddb","protected",1);
+sem("yue","oc1","operated");sem("oc1","gmail","deleted");sem("oc1","dontaction","overrode");sem("yue","dontaction","set",1);sem("oc1","stop","ignored");sem("compaction","oc1","claimed cause",1);
+sem("shambaugh","pr","closed");sem("pr","oc2","triggered");sem("oc2","shambaugh","researched");sem("oc2","post","published");sem("soul","oc2","configured",1);sem("deployer","oc2","attribution blocked",1);
+sem("evidence","fab","integrity",1);sem("examine","oc2","goal recon",1);sem("firsthours","stop","containment",1);sem("frameworks","deployer","attribution gap",1);
+// cross-cluster links, methods that apply across incidents, and shared failure modes (tangle the web)
+sem("freeze","dontaction","same failure",1);sem("fab","compaction","record integrity",1);
+sem("scope","replit","classify",1);sem("scope","oc1","classify",1);sem("scope","oc2","classify",1);
+sem("examine","replit","goal recon",1);sem("firsthours","replit","response",1);
+sem("regulatory","proddb","reportable",1);sem("regulatory","gmail","reportable",1);
+sem("evidence","gmail","logs reside in",1);sem("frameworks","replit","assessed by",1);sem("tools","deployer","catalogued in",1);
+sem("tools","fab","catalogued in",1);sem("evidence","proddb","logs reside in",1);sem("examine","oc1","goal recon",1);sem("frameworks","oc2","assessed by",1);sem("regulatory","post","reportable",1);
+AMB.forEach(n=>{if(n.sem)sem(n.id,n.sem,"cited in",1);});
+const adj={};N.forEach(n=>adj[n.id]=[]);
+BR.concat(SP).forEach(e=>{adj[e[0]].push({o:e[1],verb:"linked",st:1});adj[e[1]].push({o:e[0],verb:"linked",st:1});});
+SEM.forEach(e=>{adj[e[0]].push({o:e[1],verb:e[2]});adj[e[1]].push({o:e[0],verb:e[2]});});
+const ALL=BR.map(e=>[e[0],e[1],"br"]).concat(SP.map(e=>[e[0],e[1],"sp"])).concat(SEM.map(e=>[e[0],e[1],"sem",e[3]]));
+function zrank(n){return n.role==="master"?3:n.main?2:n.role==="hub"?1:0;}
+const NORD=N.slice().sort((a,b)=>zrank(a)-zrank(b));
+// ---- layout ----
+const wrap=document.getElementById("wrap");
+let W=wrap.clientWidth,H=wrap.clientHeight,cx=W/2,cy=H/2,minD=Math.min(W,H);
+let seed=23;function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+function mass(n){return n.role==="master"?5:n.role==="hub"?2.4:0.25;}
+function seedPos(){cx=W/2;cy=H/2;minD=Math.min(W,H);HUB.x=cx;HUB.y=cy;HUB.fixed=true;
+ const hubs=N.filter(n=>n.role==="hub");
+ hubs.forEach(h=>{h.x=W*(0.08+rnd()*0.84);h.y=H*(0.08+rnd()*0.84);h.oa=rnd()*6.28;h.el=0.4+rnd()*0.9;h.brf=0.18+rnd()*0.95;});
+ N.filter(n=>n.role==="leaf").forEach(n=>{const h=byId[n.lp];const a=rnd()*6.28,rr=18+rnd()*52;n.llen=20+rnd()*38;
+  let lx=Math.cos(a)*rr,ly=Math.sin(a)*rr*h.el;n.x=h.x+lx*Math.cos(h.oa)-ly*Math.sin(h.oa);n.y=h.y+lx*Math.sin(h.oa)+ly*Math.cos(h.oa);});
+ N.forEach(n=>{n.vx=0;n.vy=0;});}
+function spring(ai,bi,len,k){const a=byId[ai],b=byId[bi];let dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)+.01;const f=(d-len)*k,ux=dx/d,uy=dy/d;if(!a.fixed){a.vx+=ux*f;a.vy+=uy*f;}if(!b.fixed){b.vx-=ux*f;b.vy-=uy*f;}}
+function simulate(it){for(let s=0;s<it;s++){
+ for(let i=0;i<N.length;i++){const a=N[i];if(a.fixed)continue;for(let j=0;j<N.length;j++){if(i===j)continue;const b=N[j];let dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+.01,d=Math.sqrt(d2);const f=3400*mass(a)*mass(b)/d2;a.vx+=dx/d*f;a.vy+=dy/d*f;}}
+ BR.forEach(e=>spring(e[0],e[1],minD*(0.12+0.3*(byId[e[1]].brf||0.5)),0.0075));SP.forEach(e=>spring(e[0],e[1],byId[e[1]].llen||26,0.045));SEM.forEach(e=>spring(e[0],e[1],e[3]?110:38,0.005));
+ N.forEach(n=>{if(n.fixed)return;n.vx+=(cx-n.x)*0.00045;n.vy+=(cy-n.y)*0.00045;n.vx*=0.85;n.vy*=0.85;n.x+=n.vx;n.y+=n.vy;const m=14;n.x=Math.max(m,Math.min(W-m,n.x));n.y=Math.max(m,Math.min(H-14,n.y));});}}
+function buildLayout(){seedPos();simulate(680);
+ let minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;N.forEach(n=>{if(n.fixed)return;minx=Math.min(minx,n.x);miny=Math.min(miny,n.y);maxx=Math.max(maxx,n.x);maxy=Math.max(maxy,n.y);});
+ const op=W<760?0.05:-0.02,px=W*op,py=H*op;let sx=(W-2*px)/Math.max(1,maxx-minx),sy=(H-2*py)/Math.max(1,maxy-miny);sx=Math.max(0.6,Math.min(2.3,sx));sy=Math.max(0.6,Math.min(2.3,sy));
+ N.forEach(n=>{if(n.fixed)return;n.x=px+(n.x-minx)*sx;n.y=py+(n.y-miny)*sy;});HUB.x=cx;HUB.y=cy;
+ N.forEach(n=>{n.hx=n.x;n.hy=n.y;n.ph=rnd()*6.28;n.ph2=rnd()*6.28;n.amp=(n.role==="master"?0:n.role==="hub"?2.5:6)+rnd()*3;n.spd=0.25+rnd()*0.3;n.sx=cx+(n.hx-cx)*0.15+(rnd()-.5)*W;n.sy=cy+(n.hy-cy)*0.15+(rnd()-.5)*H;});}
+// ---- POI sea with corner fan-clusters (depth) ----
+const PF=[];for(let i=0;i<60;i++)PF.push({x:rnd()*W,y:rnd()*H,z:0.3+rnd()*0.7,vx:(rnd()-.5)*0.07,vy:(rnd()-.5)*0.07,s:0.4+rnd()*1.1});
+const SEA=[],SEAL=[];
+function buildSea(){SEA.length=0;SEAL.length=0;
+ for(let i=0;i<230;i++){const z=0.2+rnd()*0.8;SEA.push({bx:rnd()*W,by:rnd()*H,z,s:0.6+z*1.8,warm:rnd()<0.42,amp:3+rnd()*7,phx:rnd()*6.28,phy:rnd()*6.28,spd:0.2+rnd()*0.3});}
+ for(let k=0;k<14;k++){const z=0.7+rnd()*0.3;SEA.push({bx:rnd()*W,by:rnd()*H,z,s:5+rnd()*4,warm:rnd()<0.5,big:true,amp:2+rnd()*4,phx:rnd()*6.28,phy:rnd()*6.28,spd:0.18+rnd()*0.25});}
+ const spots=[[0.1,0.18],[0.07,0.84],[0.92,0.2],[0.94,0.78],[0.5,0.05],[0.32,0.95],[0.72,0.93]];
+ spots.forEach((p,si)=>{const hx=p[0]*W,hy=p[1]*H,hi=SEA.length;
+  SEA.push({bx:hx,by:hy,z:0.85,s:4.5,warm:si%2===0,big:true,fanhub:true,amp:1.4,phx:rnd()*6.28,phy:rnd()*6.28,spd:0.14});
+  const dir=Math.atan2(cy-hy,cx-hx),n=22+((si*9)%28);
+  for(let i=0;i<n;i++){const a=dir+(i-(n-1)/2)/Math.max(1,n)*(1.5+rnd()*0.5),r=45+(i%6)*16+rnd()*44;const x=hx+Math.cos(a)*r,y=hy+Math.sin(a)*r,li=SEA.length;
+   SEA.push({bx:x,by:y,z:0.4+rnd()*0.4,s:0.7+rnd()*1.3,warm:si%2===0,amp:1.4+rnd()*2,phx:rnd()*6.28,phy:rnd()*6.28,spd:0.2+rnd()*0.3});SEAL.push([hi,li]);}});
+ for(let i=0;i<SEA.length;i++)for(let j=i+1;j<SEA.length;j++){const a=SEA[i],b=SEA[j];if(a.fanhub||b.fanhub)continue;const dx=a.bx-b.bx,dy=a.by-b.by;if(dx*dx+dy*dy<4600&&rnd()<0.05)SEAL.push([i,j]);}}
+const FILL=[];
+function buildFill(){FILL.length=0;N.filter(n=>n.role!=="leaf").forEach(h=>{const lc=N.filter(x=>x.lp===h.id).length,n=(h.role==="master"?14:6+Math.min(16,lc));for(let i=0;i<n;i++){const a=rnd()*6.28,rr=(h.role==="master"?40:22)+rnd()*(h.role==="master"?75:62),el=h.el||0.7,oa=h.oa||0;let lx=Math.cos(a)*rr,ly=Math.sin(a)*rr*el;FILL.push({h:h.id,ox:lx*Math.cos(oa)-ly*Math.sin(oa),oy:lx*Math.sin(oa)+ly*Math.cos(oa),s:3+rnd()*13,cl:(h.cl==="hub"?"lab":h.cl),ph:rnd()*6.28,amp:2+rnd()*4,spd:0.2+rnd()*0.3});}});}
+const FANS=[{x:0.1,y:0.16,a:0.55,sp:1.5,n:24,len:160},{x:0.08,y:0.85,a:-0.5,sp:1.6,n:28,len:185},{x:0.92,y:0.26,a:3.25,sp:1.3,n:22,len:150}];
+const GLOWP=[{x:0.16,y:0.86,r:0.5},{x:0.9,y:0.4,r:0.55},{x:0.5,y:0.52,r:0.72}];
+const BOKEH=[];for(let i=0;i<6;i++)BOKEH.push({x:rnd()*W,y:rnd()*H,r:40+rnd()*110,warm:rnd()<0.5,a:rnd()*6.28,sp:0.03+rnd()*0.05,al:0.03+rnd()*0.04});
+buildLayout();buildSea();buildFill();
+ALL.forEach((e,i)=>e[4]=(i%2?1:-1)*(0.08+(i%5)*0.01));
+// ---- canvas ----
+const cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+let dpr=Math.min(2,window.devicePixelRatio||1);
+function applySize(){cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+"px";cv.style.height=H+"px";ctx.setTransform(dpr,0,0,dpr,0,0);}
+function resize(){W=wrap.clientWidth;H=wrap.clientHeight;dpr=Math.min(2,window.devicePixelRatio||1);applySize();buildLayout();buildSea();buildFill();}
+window.addEventListener("resize",()=>{clearTimeout(window._rt);window._rt=setTimeout(resize,180);});
+applySize();
+const reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+let t0=performance.now(),running=true,hoverId=null;
+function col(n){return n.t==="ambient"?(TH.tint[n.cl]||TH.types.ambient):TH.types[n.t];}
+function curPos(n,t,fe){const bx=n.sx+(n.hx-n.sx)*fe,by=n.sy+(n.hy-n.sy)*fe;n.cxp=bx+(reduce?0:Math.sin(t*n.spd+n.ph)*n.amp*fe);n.cyp=by+(reduce?0:Math.cos(t*n.spd*0.9+n.ph2)*n.amp*fe);}
+function draw(now){const t=(now-t0)/1000;const fly=reduce?1:Math.min(1,t/1.4);const fe=fly<1?1-Math.pow(1-fly,3):1;
+ N.forEach(n=>curPos(n,t,fe));ctx.clearRect(0,0,W,H);
+ let g=ctx.createRadialGradient(cx,cy,40,cx,cy,Math.max(W,H)*0.8);g.addColorStop(0,TH.bg0);g.addColorStop(1,TH.bg1);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ ctx.globalCompositeOperation="lighter";
+ GLOWP.forEach((b,i)=>{const gc=TH.glow[i];let rg=ctx.createRadialGradient(b.x*W,b.y*H,0,b.x*W,b.y*H,Math.max(W,H)*b.r);rg.addColorStop(0,"rgba("+gc[0]+","+gc[1]+")");rg.addColorStop(1,"rgba("+gc[0]+",0)");ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);});
+ FANS.forEach((f,i)=>{const fx=f.x*W,fy=f.y*H,aa=f.a+(reduce?0:Math.sin(t*0.05+i)*0.12),fc=i===2?TH.fan2:TH.fan;for(let k=0;k<f.n;k++){const ang=aa-f.sp/2+f.sp*k/(f.n-1);ctx.beginPath();ctx.moveTo(fx,fy);ctx.lineTo(fx+Math.cos(ang)*f.len,fy+Math.sin(ang)*f.len);ctx.strokeStyle="rgba("+fc+",0.045)";ctx.lineWidth=0.6;ctx.stroke();}});
+ drawLattice(t);
+ BOKEH.forEach(b=>{const ox=reduce?0:Math.sin(t*b.sp+b.a)*30,oy=reduce?0:Math.cos(t*b.sp*0.8+b.a)*24,cc=b.warm?TH.seaWarm:TH.seaCool;let rg=ctx.createRadialGradient(b.x+ox,b.y+oy,0,b.x+ox,b.y+oy,b.r);rg.addColorStop(0,"rgba("+cc+","+b.al+")");rg.addColorStop(0.7,"rgba("+cc+","+(b.al*0.4)+")");rg.addColorStop(1,"rgba("+cc+",0)");ctx.fillStyle=rg;ctx.beginPath();ctx.arc(b.x+ox,b.y+oy,b.r,0,6.29);ctx.fill();});
+ ctx.globalCompositeOperation="source-over";
+ // sea positions
+ SEA.forEach(p=>{p.x=p.bx+(reduce?0:Math.sin(t*p.spd+p.phx)*p.amp);p.y=p.by+(reduce?0:Math.cos(t*p.spd*0.9+p.phy)*p.amp);});
+ SEAL.forEach(e=>{const a=SEA[e[0]],b=SEA[e[1]];ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle="rgba("+TH.spoke+",0.06)";ctx.lineWidth=0.5;ctx.stroke();});
+ SEA.forEach(p=>{const cc=p.warm?TH.seaWarm:TH.seaCool,al=(p.big?0.5:0.2+p.z*0.18);if(p.big||p.fanhub){ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,6.29);ctx.strokeStyle="rgba("+cc+","+al+")";ctx.lineWidth=0.9;ctx.stroke();ctx.beginPath();ctx.arc(p.x,p.y,1.1,0,6.29);ctx.fillStyle="rgba("+cc+","+al+")";ctx.fill();}else{ctx.beginPath();ctx.arc(p.x,p.y,p.s*0.7,0,6.29);ctx.fillStyle="rgba("+cc+","+(al*0.75)+")";ctx.fill();}});
+ PF.forEach(p=>{if(!reduce){p.x+=p.vx*p.z;p.y+=p.vy*p.z;if(p.x<0)p.x+=W;if(p.x>W)p.x-=W;if(p.y<0)p.y+=H;if(p.y>H)p.y-=H;}ctx.fillStyle="rgba(150,175,210,"+(0.04+p.z*0.06)+")";ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,6.29);ctx.fill();});
+ ctx.globalCompositeOperation="lighter";
+ FILL.forEach(f=>{const h=byId[f.h];const x=h.cxp+f.ox+(reduce?0:Math.sin(t*f.spd+f.ph)*f.amp),y=h.cyp+f.oy+(reduce?0:Math.cos(t*f.spd*0.9+f.ph)*f.amp);const rgb=hexRgb(TH.tint[f.cl]||TH.types.ambient);let rg=ctx.createRadialGradient(x,y,0,x,y,f.s*2.3);rg.addColorStop(0,"rgba("+rgb+",0.15)");rg.addColorStop(1,"rgba("+rgb+",0)");ctx.fillStyle=rg;ctx.beginPath();ctx.arc(x,y,f.s*2.3,0,6.29);ctx.fill();});
+ ctx.globalCompositeOperation="source-over";
+ const hov=hoverId,nb=hov?new Set(adj[hov].map(x=>x.o).concat(hov)):null;
+ drawEdges("sp",hov);drawEdges("sem",hov);drawEdges("br",hov);
+ NORD.forEach(n=>drawNode(n,hov,nb));NORD.forEach(n=>drawLabel(n,hov,nb));
+ if(running)requestAnimationFrame(draw);}
+function hexRgb(h){h=h.replace("#","");return parseInt(h.substr(0,2),16)+","+parseInt(h.substr(2,2),16)+","+parseInt(h.substr(4,2),16);}
+function edgeCl(e){if(e[2]==="sp")return byId[e[0]].cl;if(e[2]==="br")return byId[e[1]].cl;const ca=byId[e[0]].cl,cb=byId[e[1]].cl;return (ca&&ca[0]==="c")?ca:((cb&&cb[0]==="c")?cb:(ca||"lab"));}
+function drawEdges(kind,hov){ALL.forEach(e=>{if(e[2]!==kind)return;const a=byId[e[0]],b=byId[e[1]];const on=hov&&(e[0]===hov||e[1]===hov);
+ const mx=(a.cxp+b.cxp)/2-(b.cyp-a.cyp)*e[4]*0.45,my=(a.cyp+b.cyp)/2+(b.cxp-a.cxp)*e[4]*0.45;
+ const rgb=hexRgb(TH.tint[edgeCl(e)]||TH.types.ambient);
+ ctx.beginPath();ctx.moveTo(a.cxp,a.cyp);ctx.quadraticCurveTo(mx,my,b.cxp,b.cyp);
+ if(on){ctx.strokeStyle=TH.sel;ctx.lineWidth=2;}
+ else if(kind==="br"){ctx.strokeStyle="rgba("+rgb+","+(hov?0.1:0.42)+")";ctx.lineWidth=1;}
+ else if(kind==="sp"){ctx.strokeStyle="rgba("+rgb+","+(hov?0.06:0.22)+")";ctx.lineWidth=0.6;}
+ else{ctx.setLineDash([3,4]);ctx.strokeStyle="rgba("+rgb+","+(hov?0.06:0.3)+")";ctx.lineWidth=0.7;}
+ ctx.stroke();ctx.setLineDash([]);});}
+function nodeIcon(n){return n.role==="master"?"mag":n.t==="resource"?"screen":n.t==="agent"?"bot":n.t==="human"?"person":n.t==="system"?"db":n.t==="artifact"?"doc":n.t==="constraint"?"lock":n.t==="event"?"bolt":"poi";}
+function drawNode(n,hov,nb){const c=col(n),x=n.cxp,y=n.cyp,dim=hov&&!nb.has(n.id)?0.2:1,sel=hoverId===n.id;
+ ctx.globalAlpha=dim;
+ if(sel){ctx.globalCompositeOperation="lighter";let hg=ctx.createRadialGradient(x,y,0,x,y,n.r*2.3);hg.addColorStop(0,"rgba("+TH.selGlow+",0.45)");hg.addColorStop(1,"rgba("+TH.selGlow+",0)");ctx.fillStyle=hg;ctx.beginPath();ctx.arc(x,y,n.r*2.3,0,6.29);ctx.fill();ctx.globalCompositeOperation="source-over";ctx.globalAlpha=dim;}
+ ctx.beginPath();ctx.arc(x,y,n.r,0,6.29);ctx.fillStyle="#0a0f17";ctx.fill();ctx.lineWidth=n.role==="leaf"?1:(n.main?1.9:1.3);ctx.strokeStyle=sel?TH.sel:c;ctx.stroke();
+ if(n.main){ctx.beginPath();ctx.arc(x,y,n.r+3,0,6.29);ctx.strokeStyle="rgba("+hexRgb(c)+",0.35)";ctx.lineWidth=0.8;ctx.stroke();}
+ if(n.role==="master"){ctx.beginPath();ctx.arc(x,y,n.r-4,0,6.29);ctx.strokeStyle="rgba("+TH.hubRing+",0.55)";ctx.lineWidth=0.8;ctx.stroke();}
+ drawGlyph(n.r>=8?nodeIcon(n):"poi",x,y,n.r*0.6,sel?"#dcebff":c);ctx.globalAlpha=1;}
+function drawGlyph(k,x,y,s,color){ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=Math.max(0.9,s*0.15);ctx.lineJoin="round";ctx.lineCap="round";
+ if(k==="poi"){ctx.beginPath();ctx.arc(x,y,Math.max(1,s*0.5),0,6.29);ctx.fill();return;}
+ if(k==="person"){ctx.beginPath();ctx.arc(x,y-s*0.35,s*0.34,0,6.29);ctx.stroke();ctx.beginPath();ctx.arc(x,y+s*0.7,s*0.6,Math.PI*1.15,Math.PI*1.85);ctx.stroke();return;}
+ if(k==="bot"){ctx.beginPath();roundRect(x-s*0.55,y-s*0.4,s*1.1,s*0.9,s*0.2);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y-s*0.4);ctx.lineTo(x,y-s*0.75);ctx.stroke();ctx.beginPath();ctx.arc(x,y-s*0.82,s*0.1,0,6.29);ctx.fill();ctx.beginPath();ctx.arc(x-s*0.2,y-s*0.02,s*0.09,0,6.29);ctx.fill();ctx.beginPath();ctx.arc(x+s*0.2,y-s*0.02,s*0.09,0,6.29);ctx.fill();return;}
+ if(k==="db"){const w=s*0.55,h=s*0.7;ctx.beginPath();ctx.ellipse(x,y-h*0.7,w,s*0.22,0,0,6.29);ctx.stroke();ctx.beginPath();ctx.moveTo(x-w,y-h*0.7);ctx.lineTo(x-w,y+h*0.55);ctx.moveTo(x+w,y-h*0.7);ctx.lineTo(x+w,y+h*0.55);ctx.stroke();ctx.beginPath();ctx.ellipse(x,y+h*0.55,w,s*0.22,0,0,Math.PI);ctx.stroke();return;}
+ if(k==="doc"){const w=s*0.5,h=s*0.7;ctx.beginPath();ctx.moveTo(x-w,y-h);ctx.lineTo(x+w*0.45,y-h);ctx.lineTo(x+w,y-h*0.5);ctx.lineTo(x+w,y+h);ctx.lineTo(x-w,y+h);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.moveTo(x-w*0.55,y-h*0.1);ctx.lineTo(x+w*0.55,y-h*0.1);ctx.moveTo(x-w*0.55,y+h*0.35);ctx.lineTo(x+w*0.55,y+h*0.35);ctx.stroke();return;}
+ if(k==="lock"){ctx.beginPath();ctx.arc(x,y-s*0.15,s*0.4,Math.PI,0);ctx.stroke();ctx.beginPath();roundRect(x-s*0.5,y-s*0.15,s,s*0.75,s*0.12);ctx.stroke();return;}
+ if(k==="bolt"){ctx.beginPath();ctx.moveTo(x+s*0.25,y-s*0.7);ctx.lineTo(x-s*0.3,y+s*0.1);ctx.lineTo(x+s*0.05,y+s*0.1);ctx.lineTo(x-s*0.25,y+s*0.7);ctx.lineTo(x+s*0.35,y-s*0.15);ctx.lineTo(x,y-s*0.15);ctx.closePath();ctx.stroke();return;}
+ if(k==="screen"){ctx.beginPath();roundRect(x-s*0.7,y-s*0.55,s*1.4,s,s*0.12);ctx.stroke();ctx.beginPath();ctx.moveTo(x-s*0.3,y+s*0.7);ctx.lineTo(x+s*0.3,y+s*0.7);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y+s*0.45);ctx.lineTo(x,y+s*0.7);ctx.stroke();return;}
+ if(k==="mag"){ctx.beginPath();ctx.arc(x-s*0.15,y-s*0.15,s*0.5,0,6.29);ctx.stroke();ctx.beginPath();ctx.moveTo(x+s*0.22,y+s*0.22);ctx.lineTo(x+s*0.6,y+s*0.6);ctx.lineWidth=Math.max(1.2,s*0.2);ctx.stroke();return;}}
+function drawLabel(n,hov,nb){const isLeaf=n.role==="leaf";const showLeaf=isLeaf&&(hoverId===n.id||(nb&&nb.has(n.id)));
+ if(isLeaf&&!showLeaf)return;const dim=hov&&!nb.has(n.id)?0.25:1,sel=hoverId===n.id;ctx.globalAlpha=dim;ctx.textAlign="center";
+ const ly=n.cyp+n.r+(n.role==="master"?15:11);ctx.font=(n.role==="master"?"bold 12px":(n.role==="hub"?"11px":"9.5px"))+" Verdana";
+ if(sel){const w=ctx.measureText(n.l).width;ctx.fillStyle=TH.selbar;ctx.beginPath();roundRect(n.cxp-w/2-5,ly-10,w+10,15,2);ctx.fill();ctx.fillStyle="#eaf2ff";}
+ else ctx.fillStyle=n.role==="leaf"?"#8c97a7":(n.role==="master"?"#e7edf4":"#cbd5e1");
+ ctx.fillText(n.l,n.cxp,ly);
+ if(n.sub&&n.role!=="leaf"&&!sel){ctx.font="8.5px Courier New";ctx.fillStyle=n.role==="master"?TH.sub:"#69727f";ctx.fillText(n.sub,n.cxp,ly+(n.role==="master"?13:11));}
+ ctx.globalAlpha=1;}
+function roundRect(x,y,w,h,r){ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);}
+function drawLattice(t){const ox=reduce?0:Math.sin(t*0.04)*14;ctx.strokeStyle="rgba("+TH.link+",0.035)";ctx.lineWidth=0.5;const bx=W*0.72,by=H*0.1,wd=W*0.26,ht=H*0.4;for(let i=0;i<=18;i++){const f=i/18;ctx.beginPath();ctx.moveTo(bx+wd*f+ox,by);ctx.lineTo(bx+wd*f-wd*0.5+ox,by+ht);ctx.stroke();ctx.beginPath();ctx.moveTo(bx+wd*f+ox,by);ctx.lineTo(bx+wd*f+wd*0.5+ox,by+ht);ctx.stroke();}}
+requestAnimationFrame(draw);
+// ---- interaction ----
+function pick(mx,my){let best=null,bd=1e9;N.forEach(n=>{const dx=mx-n.cxp,dy=my-n.cyp,d=Math.sqrt(dx*dx+dy*dy);const hit=Math.max(n.r+5,9);if(d<hit&&d<bd){bd=d;best=n;}});return best;}
+let dragging=null,moved=false,down=null,dsx=0,dsy=0;
+function evXY(e){const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];}
+cv.addEventListener("pointermove",e=>{const p=evXY(e),mx=p[0],my=p[1];if(down){if(!moved&&(Math.abs(mx-dsx)>6||Math.abs(my-dsy)>6))moved=true;if(moved){down.hx=mx;down.hy=my;down.sx=mx;down.sy=my;}return;}const n=pick(mx,my);const id=n?n.id:null;if(id!==hoverId){hoverId=id;cv.style.cursor=n&&(n.click||n.menu)?"pointer":(n?"default":"grab");}});
+cv.addEventListener("pointerdown",e=>{const p=evXY(e);down=pick(p[0],p[1]);dragging=down;moved=false;dsx=p[0];dsy=p[1];if(down&&cv.setPointerCapture){try{cv.setPointerCapture(e.pointerId);}catch(_){}}});
+window.addEventListener("pointerup",()=>{if(down&&!moved){down.menu?showMenu():(down.click?showNode(down):0);}dragging=null;down=null;});
+// ---- drawer ----
+const drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim");
+function openD(){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");scrim.classList.add("on");cv.classList.add("recede");TH=THEMES.amber;}
+function closeD(){drawer.classList.remove("open");drawer.setAttribute("aria-hidden","true");scrim.classList.remove("on");cv.classList.remove("recede");TH=THEMES[baseTheme];}
+document.getElementById("closeBtn").onclick=closeD;scrim.onclick=closeD;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeD();});document.getElementById("menuBtn").onclick=function(){location.href="menu.html";};
+function cf(c){return c==="CF-2025-001"?"CF-2025-001-replit-database-deletion.md":c==="CF-2026-002"?"CF-2026-002-openclaw-inbox-deletion.md":"CF-2026-003-openclaw-matplotlib-influence-operation.md";}
+function showNode(n){document.getElementById("dKind").textContent=(n.ext?"external resource":LBL[n.t])+(n.cs?" · "+n.cs:"");document.getElementById("dTitle").textContent=n.l;document.getElementById("dMeta").textContent=n.sub||"";
+ let h="<p>"+n.b+"</p>";const rel=adj[n.id].filter(x=>x.o!=="hub"&&byId[x.o].t!=="ambient"&&x.verb!=="linked");
+ if(rel.length){h+='<div class="relh">relations</div>';rel.forEach(x=>{h+='<div class="rel"><span class="verb">'+x.verb+'</span><span class="who">'+byId[x.o].l+'</span></div>';});}
+ if(n.ext){h+='<div class="sech">resource</div><a class="go" href="'+n.href+'" target="_blank" rel="noopener">Open '+n.l+' ↗</a>';}
+ else if(n.href){h+='<div class="sech">page</div><a class="go" href="'+n.href+'">Open '+n.l+' →</a>';}
+ else if(n.cs){h+='<div class="sech">case file</div><a class="go" href="https://github.com/AI-Investigations/resources/blob/main/case-files/'+cf(n.cs)+'" target="_blank" rel="noopener">Open '+n.cs+' ↗</a>';}
+ h+='<div class="disc">Drawn from the public record. The chart stays behind, blurred, close to return to it.</div>';document.getElementById("dBody").innerHTML=h;openD();}
+function showMenu(){document.getElementById("dKind").textContent="entry point";document.getElementById("dTitle").textContent="Simplified menu";document.getElementById("dMeta").textContent="";
+ const items=[["Start here","menu.html","orientation"],["Scope map","menu.html#scope","the territory"],["Playbooks","menu.html#playbook","first hours · examine"],["Case files","menu.html#cases","public record"],["Frameworks","menu.html#frameworks","coverage gaps"],["Evidence checklist","menu.html#evidence","what's needed"],["Regulatory tracker","regulatory.html","deadlines"],["Tools & databases","menu.html#tools","the ecosystem"],["Contribute","menu.html#contribute","sourced, useful"]];
+ let h='<p>This opens the simplified text index of the site.</p><ul class="menu-list">';items.forEach(i=>h+='<li><a href="'+i[1]+'">'+i[0]+'<span class="ms">'+i[2]+'</span></a></li>');
+ h+='</ul><div class="disc">Every node is a real entity from the public case files and resource pages; the smaller outer nodes are real context (sources, frameworks, tools, regimes). The named vendors and people are in the underlying case files.</div>';document.getElementById("dBody").innerHTML=h;openD();}
+// ---- legend + theme switch ----
+function buildLegend(){let lg="";["agent","human","system","artifact","constraint","event","resource"].forEach(k=>{lg+='<div class="lr"><span class="dot" style="background:'+TH.types[k]+'"></span>'+LBL[k]+'</div>';});lg+='<div class="lr sep"><span class="dot" style="background:'+TH.types.ambient+'"></span>'+LBL.ambient+'</div>';document.getElementById("legend").innerHTML=lg;}
+const TKEYS=[["i2","i2"],["cool","Cool"],["amber","Amber"],["brand","Brand"]];
+function buildThemes(){const c=document.getElementById("themes");let h="";TKEYS.forEach(k=>h+='<button data-k="'+k[0]+'"'+(baseTheme===k[0]?' class="on"':'')+'>'+k[1]+'</button>');c.innerHTML=h;
+ c.querySelectorAll("button").forEach(b=>b.onclick=()=>{baseTheme=b.dataset.k;TH=THEMES[baseTheme];buildThemes();buildLegend();});}
+buildLegend();
 </script>
 </body>
 </html>

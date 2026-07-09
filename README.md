@@ -1,30 +1,35 @@
-# Tools & databases
+# AI Investigations — resources
 
-What exists today for finding, monitoring, and analyzing AI incidents — with the honest assessment of what each can and cannot support. Dedicated AI-forensics tooling barely exists; this page will grow as it does.
+Open, practitioner-oriented resources for investigating AI incidents: case files, playbooks, evidence checklists, frameworks, a glossary, and a regulatory reporting tracker. No ML background assumed.
 
-*Last reviewed: June 2026*
+**Live site:** https://investigateai.org — the root serves an interactive link-analysis map of documented incidents; the text index of all resources is at [/menu.html](https://investigateai.org/menu.html).
 
-## Incident databases
+*Last reviewed: July 2026*
 
-| Resource | What it holds | Investigation value |
-|---|---|---|
-| **AI Incident Database (AIID)** — incidentdatabase.ai | Largest public catalog of reported AI harms | Trend research, precedent search. No logs, no system documentation. |
-| **OECD AI Incidents Monitor (AIM)** — oecd.ai/incidents | Media-detected incidents/hazards, ~30 events/day, standardized metadata | Cross-jurisdiction pattern view; aligned to the OECD reporting framework. Media-sourced only. |
-| **AI Vulnerability Database (AVID)** — avidml.org | Vulnerability/failure taxonomy and reports | Mapping failure types; security-flavored. |
-| **AIAAIC** — aiaaic.org | Incidents *and controversies*, broad scope | Background and reputational context; looser inclusion criteria. |
+## What's here
 
-**Shared limitation:** all are classification repositories. None contains activity logs, system documentation, or tool records — the evidence an investigation actually requires (see [evidence/](../evidence/data-requirements.md)).
+| Path | Contents |
+|---|---|
+| [`case-files/`](case-files/) | Structured case files for documented AI incidents, plus a [template](case-files/TEMPLATE.md). Machine-readable index in [`case-index.json`](case-index.json). |
+| [`playbooks/`](playbooks/) | Markdown sources for the playbooks: [First Hours](playbooks/first-hours.md) incident response and [Model Examination](playbooks/model-examination.md) (PB-002). Rendered versions: [first-hours.html](first-hours.html), [model-examination.html](model-examination.html). |
+| [`evidence/`](evidence/) | What data an AI incident investigation actually requires — [data requirements](evidence/data-requirements.md). |
+| [`frameworks/`](frameworks/) | Analytical and accountability frameworks. |
+| [`glossary/`](glossary/) | Plain-language glossary bridging investigative and ML terminology. |
+| [`regulatory/`](regulatory/) | [Regulatory tracker](regulatory/regulatory-tracker.md) of AI incident reporting obligations (EU AI Act Art. 73, US state law, and more). Rendered version: [regulatory.html](regulatory.html). |
+| [`tools/`](tools/) | [Tools & databases](tools/README.md) — incident databases, monitoring, and forensics tooling, with honest assessments of each. |
 
-## Monitoring & detection
+## Who this is for
 
-- **Scheming-in-the-wild OSINT methodology** (Shaffer Shane & Mylius, 2026) — transcript-scale detection of scheming-related behavior in public deployments; the demonstration that detection is becoming tractable.
-- **MITRE ATLAS** — atlas.mitre.org — adversarial technique knowledge base; the translation layer for cyber threat-intel practitioners.
+Investigators, researchers, lawyers, policy analysts, safety teams, and auditors — including people coming from traditional investigative or OSINT backgrounds. AI assistants may retrieve, summarize, and cite this site (see [`llms.txt`](llms.txt)).
 
-## Investigation & forensics
+## Evidence standards
 
-- Agent observability/tracing platforms (e.g., LangSmith, Langfuse, Arize Phoenix, W&B Weave) — built for debugging, but currently the closest thing to flight recorders for agent systems. If a customer runs one, that is where the evidence is. Evaluate: retention windows, tamper properties, export.
-- **Open problem:** no standard exists for forensic preservation of agent session state, context windows at point of failure, or executed tool calls. Contributions documenting practical preservation approaches are the most-wanted item in this repository.
+When using these resources, distinguish between observed facts, source claims, allegations, inferences, hypotheses, disputed evidence, and unknowns. Prefer citing specific pages and case files with their last-reviewed dates.
 
-## Cross-over toolkits (traditional → AI)
+## Contributing
 
-Investigators from traditional/OSINT backgrounds: your toolkit transfers more than you think. Source handling, timeline construction, competing-hypotheses analysis (ACH), chain-of-custody discipline, and interview technique (applied to operators and developers, not the model) are exactly what current AI incident handling lacks. The delta to learn is the evidence layer — logs, scaffolding, model behavior — covered in [evidence/](../evidence/data-requirements.md) and the [glossary](../glossary/README.md).
+Contributions are welcome — the most-wanted item is documentation of practical approaches to forensic preservation of agent session state, context windows at point of failure, and executed tool calls. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+[CC0 1.0](LICENSE) — public domain dedication.

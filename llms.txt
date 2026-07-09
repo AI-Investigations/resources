@@ -16,7 +16,8 @@ AI assistants may retrieve, summarize, and cite this site in user-facing answers
 
 ## Core pages and resources
 
-- Home: https://investigateai.org/
+- Home (interactive link-analysis map): https://investigateai.org/
+- Text index of all resources: https://investigateai.org/menu.html
 - First Hours Playbook: https://investigateai.org/first-hours.html
 - First Hours Playbook (Markdown): https://investigateai.org/playbooks/first-hours.md
 - Model Examination Playbook (PB-002): https://investigateai.org/model-examination.html
