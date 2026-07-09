@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Investigations: Open resources for investigating AI incidents</title>
-<meta name="description" content="Resource repository for investigating AI incidents: investigatory frameworks, evidence checklists, and a regulatory tracker. In prograss incident case files">
+<title>AI Incident Investigation Lab — Open resources for investigating AI incidents</title>
+<meta name="description" content="An open repository of practitioner resources for investigating AI incidents: case files, frameworks, evidence checklists, and regulatory reporting deadlines.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="canonical" href="https://investigateai.org/menu.html">
-<meta property="og:title" content="AI Investigations: open resources for investigating AI incidents">
-<meta property="og:description" content="Resource repository for investigating AI incidents: investigatory frameworks, evidence checklists, and a regulatory tracker. In prograss incident case files">
+<meta property="og:title" content="AI Incident Investigation Lab — open resources for investigating AI incidents">
+<meta property="og:description" content="Case files, playbooks, evidence checklists, and regulatory reporting deadlines. A practitioner resource: no ML background assumed.">
 <meta property="og:url" content="https://investigateai.org/menu.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://investigateai.org/og-image.png">
@@ -194,7 +194,7 @@ h1,h2{scroll-margin-top:52px}
 <div class="masthead">
 <span class="site-name"><a href="#top">AI&nbsp;INVESTIGATIONS</a></span>
 <span class="tagline">Open resources for investigating AI incidents</span>
-<span class="updated">LAST REVIEWED: 2026-07-08</span>
+<span class="updated">LAST REVIEWED: 2026-07-09</span>
 <a class="mapbtn" href="index.html">← LINK MAP</a>
 </div>
 </header>
@@ -217,12 +217,18 @@ h1,h2{scroll-margin-top:52px}
 </ul>
 </nav>
 <main>
-<h1 id="start">AI incident investigation</h1>
-<p class="lede">When an AI incident occurs, whether caused by misalignment, misuse, or system failure, the immediate challenge is not only responding to the event but understanding what actually happened. What did the system do? Why did it happen? What evidence can be trusted? What lessons can be learned? And who is accountable?</p>
-<p>Today, AI incidents are reported and investigated inconsistently, if they are investigated at all. There is no established investigations discipline for AI, no shared methodology, no common evidentiary standard, and few mechanisms to ensure that lessons learned are systematically captured and applied. As AI systems become more capable and increasingly integrated into critical infrastructure, every missed investigation becomes a lost opportunity to identify emerging failure modes before they reappear at greater scale and consequence.</p>
-<p>This project is an attempt to help build that capability in the open.</p>
-<p>Unlike incident databases that primarily catalogue events and trends, this resource focuses on investigation itself. It brings together case files, evidence checklists, investigative frameworks, regulatory requirements, practical guidance, and analysis of where existing methodologies succeed or fail. The goal is to support the development of AI incident investigation as a distinct field of practice and to create a foundation that practitioners, researchers, policymakers, and investigators can build upon.</p>
-<p class="note">This is an independent resource, compiled from the public record and maintained openly. It is not legal, regulatory, or professional advice; entries are sourced and dated but may be incomplete or out of date, so verify against primary sources before relying on them.</p>
+<h1 id="start">AI Incident Investigation Lab</h1>
+<p class="lede">When an AI incident occurs, whether caused by misalignment, misuse, or system failure, the immediate challenge is not only responding to the event but also understanding what actually happened. What did the system do? When and why did it happen? What evidence can be collected? Who is accountable? And ultimately, what are the lessons that can be learned?</p>
+<p>This is v1 of a project aiming to:</p>
+<h3>1. Analyze incident data and conduct end-to-end investigations where the public record allows.</h3>
+<p>As in other domains, in order to know how effective risk mitigations are, we need to take a look at real-world data. One way to do this is by making proper use of the incident data we already have: not only logging incidents, but investigating them to identify the most likely root cause and develop lessons learned that will inform future mitigations.</p>
+<h3>2. Build an open resource repository.</h3>
+<p>Investigation methods, templates, case files, taxonomies, and curated references, collected in one place and free to use and adapt.</p>
+<h3>3. Forward looking: generate data points for policy and standards.</h3>
+<p>Over time, structured investigations generate the data points the field currently lacks: recurring failure modes, early-warning indicators, and evidence on which mitigations actually work. These are the inputs that future policy, standards, and safety cases will need.</p>
+<p>Currently, AI incidents are reported and investigated inconsistently, if they are investigated at all. Apart from the work of frontier AI labs, which happens mostly internally, there is no established investigation discipline for AI, no shared methodology or evidentiary standard, and few mechanisms to ensure that lessons learned are systematically captured and applied. As AI systems become more capable and increasingly integrated into critical infrastructure, every missed investigation becomes a lost opportunity to identify emerging failure modes before they reappear at greater scale and severity.</p>
+<p>Unlike incident databases that primarily catalog events and trends, this resource focuses on the investigation process. The goal is to support the development of AI incident investigation as a distinct field of practice and to create a foundation that investigators, researchers, and policymakers can build upon.</p>
+<p class="note mono">This is an independent resource, compiled from the public record and maintained openly, and it is not legal, regulatory, or professional advice. Corrections and contributions are welcome.</p>
 <h2 id="scope">Scope map <span class="sec-id">// the territory, by the AI system's role in the incident</span></h2>
 <div class="scope">
 <div class="role">
@@ -233,37 +239,32 @@ h1,h2{scroll-margin-top:52px}
 <div class="subcat sc-mis"><span class="sc-label">MISALIGNMENT</span>goal-directed divergence, possible concealment</div>
 </div>
 </div>
-<div class="r-tags"><span class="stamp red">CF-001 · CF-002 · CF-003</span><span class="stamp green">CURRENT DEPTH</span></div>
+<div class="r-tags"><span class="stamp red">CF-001 · CF-002 · CF-003</span></div>
 </div>
 <div class="role">
 <div class="r-head">2: AI AS INSTRUMENT</div>
 <div class="r-body"><b>Humans using AI to cause harm.</b>Fraud and social engineering at machine scale, deepfake-enabled crime, influence operations, AI-assisted intrusion. The adversary is human; the AI is the weapon.</div>
-<div class="r-tags"><span class="stamp amber">CASE FILES WANTED</span></div>
+<div class="r-tags"><span class="stamp amber">CASE FILES PENDING</span></div>
 </div>
 <div class="role">
 <div class="r-head">3: AI AS TARGET</div>
-<div class="r-body"><b>Attacks on AI systems.</b>Prompt injection, data poisoning, model theft, adversarial manipulation. The cyber on-ramp: MITRE ATLAS territory.</div>
-<div class="r-tags"><span class="stamp amber">CASE FILES WANTED</span></div>
+<div class="r-body"><b>Attacks on AI systems.</b>Prompt injection, data poisoning, model theft, adversarial manipulation. This is where AI investigation overlaps most with established cybersecurity practice, covered by frameworks such as MITRE ATLAS.</div>
+<div class="r-tags"><span class="stamp amber">CASE FILES PENDING</span></div>
 </div>
 </div>
 <p class="straddle">note: prompt injection straddles 2 &harr; 3. The AI is target and instrument at once. Boundary cases are normal; the taxonomy serves the investigation, not the reverse.</p>
-<div class="role planned">
-<span class="r-head">4: AI AS EVIDENCE</span>
-<span class="r-body">authentication of synthetic media, deepfake forensics, AI-generated content in legal proceedings &nbsp;·&nbsp; <span class="stamp gray">PLANNED SCOPE</span></span>
-</div>
-<div class="keyline"><strong>Why one workflow serves the whole map:</strong> an investigator rarely knows the category at the start: whether the agent acted, was used, or was attacked is usually the question, not the given. Classification is the investigation's <em>output</em>. The playbooks are therefore category-agnostic:</div>
+<div class="keyline"><strong>Why one workflow serves the whole map:</strong> at the start of an investigation, the category is usually not yet known. Establishing whether the AI system acted on its own, was misused by a human, or was itself attacked is part of the investigation. Classification is the investigation's <em>output</em>. The playbooks are therefore category-agnostic:</div>
 <div class="flow" role="img" aria-label="Investigation workflow: incident, first hours, preserve, examine, classify, report">
 <div class="stage"><span class="st-label">INCIDENT</span>something harmful happened, category unknown<span class="st-arrow">&#9656;</span></div>
-<div class="stage"><span class="st-label"><a href="first-hours.html">PB-001 FIRST HOURS</a></span>triage · contain without destroying evidence<span class="st-arrow">&#9656;</span></div>
+<div class="stage"><span class="st-label">PB-001 FIRST HOURS</span>triage · contain without destroying evidence<span class="st-arrow">&#9656;</span></div>
 <div class="stage"><span class="st-label">PRESERVE</span>by order of volatility · clocks start<span class="st-arrow">&#9656;</span></div>
-<div class="stage"><span class="st-label"><a href="model-examination.html">PB-002 EXAMINE</a></span>reproduce · ablate · lineup<span class="st-arrow">&#9656;</span></div>
+<div class="stage"><span class="st-label">PB-002 EXAMINE</span>reproduce · ablate · lineup<span class="st-arrow">&#9656;</span></div>
 <div class="stage"><span class="st-label">CLASSIFY H1&ndash;H5</span>hypotheses discriminated by evidence<span class="st-arrow">&#9656;</span></div>
 <div class="stage"><span class="st-label">REPORT</span>regulatory deadlines · findings · case file</div>
 </div>
-<p class="note">Current depth is in category 1 (agentic incidents). That is where the public record is and where the maintainer's expertise sits. Categories 2 and 3 are in scope and <a href="#contribute">open for contribution</a> to the same evidence standard.</p>
 <h2 id="playbook">Playbooks <span class="sec-id">// in progress</span></h2>
-<p><strong><a href="first-hours.html">First Hours: AI Incident Response</a></strong> (PB-001) and <strong><a href="model-examination.html">Examining the Subject: Forensically Sound Model Examination</a></strong> (PB-002).</p>
-<p class="note">These playbooks are currently being built and will be published here in full soon.</p>
+<p><strong>First Hours: AI Incident Response</strong> (PB-001), currently under review.</p>
+<p><strong>Examining the Subject: Forensically Sound Model Examination</strong> (PB-002), currently under review.</p>
 <h2 id="cases">Case files <span class="sec-id">// investigated incidents, public record only</span></h2>
 <p>Each file separates observation from inference, lists what a structured investigation would need to answer, and records what was actually investigated. The pattern across all entries so far: <strong>no formal investigation was conducted or published.</strong> Documenting that pattern is the point.</p>
 <div class="log">
