@@ -223,10 +223,12 @@ h1,h2{scroll-margin-top:52px}
 <h3>1. Analyze incident data and conduct end-to-end investigations where the public record allows.</h3>
 <p>As in other domains, in order to know how effective risk mitigations are, we need to take a look at real-world data. One way to do this is by making proper use of the incident data we already have: not only logging incidents, but investigating them to identify the most likely root cause and develop lessons learned that will inform future mitigations.</p>
 <h3>2. Build an open resource repository.</h3>
-<p>Investigation methods, templates, case files, taxonomies, and curated references, collected in one place and free to use and adapt.</p>
+<p>Other investigative fields matured through openly shared resources. This repository aims to do the same for AI, with resources such as investigation methodologies, templates, case files, and risk taxonomies, collected in one place and free to use.</p>
 <h3>3. Forward looking: generate data points for policy and standards.</h3>
 <p>Over time, structured investigations generate the data points the field currently lacks: recurring failure modes, early-warning indicators, and evidence on which mitigations actually work. These are the inputs that future policy, standards, and safety cases will need.</p>
+<h3>Why this matters</h3>
 <p>Currently, AI incidents are reported and investigated inconsistently, if they are investigated at all. Apart from the work of frontier AI labs, which happens mostly internally, there is no established investigation discipline for AI, no shared methodology or evidentiary standard, and few mechanisms to ensure that lessons learned are systematically captured and applied. As AI systems become more capable and increasingly integrated into critical infrastructure, every missed investigation becomes a lost opportunity to identify emerging failure modes before they reappear at greater scale and severity.</p>
+<h3>How this is different</h3>
 <p>Unlike incident databases that primarily catalog events and trends, this resource focuses on the investigation process. The goal is to support the development of AI incident investigation as a distinct field of practice and to create a foundation that investigators, researchers, and policymakers can build upon.</p>
 <p class="note mono">This is an independent resource, compiled from the public record and maintained openly, and it is not legal, regulatory, or professional advice. Corrections and contributions are welcome.</p>
 <h2 id="scope">Scope map <span class="sec-id">// the territory, by the AI system's role in the incident</span></h2>
@@ -309,15 +311,13 @@ h1,h2{scroll-margin-top:52px}
 <tr><td>MITRE ATLAS; GenAI-IRF (Jakoby, 2026)</td><td>Adversarial techniques; cyber-IR bridging</td><td>Agent-initiated behavior; investigation depth</td></tr>
 <tr><td>CERT insider-threat corpus (Cappelli et al., 2012); Shaw &amp; Sellers (2015)</td><td>The intentional/unintentional asymmetry: the closest existing model</td><td>AI systems; needs adaptation, which is the open problem</td></tr>
 </table></div>
-<h2 id="evidence">Evidence checklist <span class="sec-id">// what an investigation needs</span></h2>
+<h2 id="evidence">Evidence checklist <span class="sec-id">// what to capture and preserve</span></h2>
 <p>Three categories, adapted from Ezell et al. (2025) and the EC's Article 73 guidance. Working checklist with investigative cautions in the <a href="https://github.com/AI-Investigations/resources/blob/main/evidence/data-requirements.md">repository</a>.</p>
-<ul class="plain">
-<li><strong>1. Activity logs</strong>: prompts (user + system), reasoning traces / chain-of-thought, retrieved external content, per-step outputs, executed tool calls, guardrail outputs, timestamps and version identifiers.</li>
-<li><strong>2. System documentation</strong>: model/system cards, the <em>exact</em> version at incident time, runtime settings enabling reconstruction, change logs, persona/configuration files.</li>
-<li><strong>3. Tool records</strong>: every tool the agent used or attempted: what it grants access to, what the agent did with it, errors encountered.</li>
-</ul>
+<p><strong>1. Activity logs</strong>: prompts (user + system), reasoning traces / chain-of-thought, retrieved external content, per-step outputs, executed tool calls, guardrail outputs, timestamps and version identifiers.</p>
+<p><strong>2. System documentation</strong>: model/system cards, the <em>exact</em> version at incident time, runtime settings enabling reconstruction, change logs, persona/configuration files.</p>
+<p><strong>3. Tool records</strong>: every tool the agent used or attempted: what it grants access to, what the agent did with it, errors encountered.</p>
 <p>Three cautions that recur in the case files: the agent's statements about itself are <strong>artifacts, not testimony</strong>; establish whether the agent could write to its own record (CF-2025-001); and ask what context compaction silently destroyed (CF-2026-002).</p>
-<p class="note">Current reality: open incident databases hold none of this. The evidence either was never captured, sits inside one company, or is whatever the operator kept. Plan around that, and log it as a finding when you hit it.</p>
+<p>At present, open incident databases contain little of this evidence. In most cases it was never captured in the first place, remains internal to the provider, or is limited to what the operator retained. Investigations should plan around this constraint, and its occurrence should itself be recorded as a finding.</p>
 <h2 id="regulatory">Regulatory tracker <span class="sec-id">// reporting obligations &amp; deadlines</span></h2>
 <p>Who must report what, to whom, by when. This is a condensed tracker, not legal advice; the full version, with per-regime detail and sources, is on the <a href="regulatory.html">regulatory tracker page</a>.</p>
 <div class="tablewrap"><table>
@@ -349,16 +349,10 @@ h1,h2{scroll-margin-top:52px}
 <td>In effect</td>
 </tr>
 <tr>
-<td>Colorado AI Act (SB 24-205)</td>
-<td>Developers/deployers of high-risk AI; algorithmic-discrimination duties incl. disclosure to the Attorney General.</td>
+<td>State-level AI laws</td>
+<td>Disclosure, transparency, and governance duties for developers and deployers, varying by state (Colorado, Texas, and others); several regimes are in flux through amendment, litigation, or replacement.</td>
 <td>Per statute</td>
-<td><span class="deadline">Effective 30 Jun 2026</span></td>
-</tr>
-<tr>
-<td>Texas (TRAIGA)</td>
-<td>Responsible AI governance act.</td>
-<td>Per statute</td>
-<td>In effect (1 Jan 2026)</td>
+<td>Detailed on the <a href="regulatory.html">full tracker page</a></td>
 </tr>
 <tr><td class="tgrp" colspan="4">INTERNATIONAL</td></tr>
 <tr>
@@ -383,7 +377,7 @@ h1,h2{scroll-margin-top:52px}
 <li><a href="https://atlas.mitre.org">MITRE ATLAS</a>: adversarial technique knowledge base.</li>
 <li>Agent observability platforms (LangSmith, Langfuse, Arize Phoenix, W&amp;B Weave): built for debugging.</li>
 </ul>
-<p class="note">Open problem, and the most-wanted contribution: there is no standard for forensic preservation of agent session state, context windows at point of failure, or executed tool calls.</p>
+<p class="note">An open problem, and a priority for contribution: there is currently no standard for the forensic preservation of agent session state, context windows at the point of failure, or executed tool calls.</p>
 <h2 id="contribute">Contribute <span class="sec-id">// sourced, useful, investigation-focused</span></h2>
 <p>Case files (use the <a href="https://github.com/AI-Investigations/resources/blob/main/case-files/TEMPLATE.md">template</a>), corrections with sources, regulatory updates from primary legal texts, framework and tool entries with honest coverage assessments, and plain-language rewrites. Not welcome: marketing, speculation presented as fact, non-public material. Full standards in <a href="https://github.com/AI-Investigations/resources/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>. Corrections are the most valuable contribution of all.</p>
 </main>
