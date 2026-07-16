@@ -1,6 +1,6 @@
 # Frameworks & taxonomies
 
-Every entry states what the framework **covers** and what it **does not** — that second assessment is the point of this page. The consistent pattern: reporting, detection, and causal-factor analysis are increasingly covered; *investigation of intentional-analog behavior* is covered by nothing.
+An overview of existing frameworks and methodologies relevant to AI incident work: reporting regimes, harm and failure taxonomies, causal-factor analysis, red-team studies of agent behavior, and adjacent practice from insider-threat research. Each is a useful starting point for part of the job and worth reading further; none yet describes how to conduct an AI incident investigation end to end, which is the gap the playbooks aim to fill.
 
 *Last reviewed: June 2026*
 
@@ -22,7 +22,7 @@ Does not: how to establish the facts being reported.
 
 **European Commission (2025) — Draft Guidance, Article 73 AI Act + reporting template.**
 Covers: what serious incidents must be reported, by whom, on what deadlines; a concrete template.
-Does not: how to conduct the "investigation" Article 73 itself requires of providers. The obligation to investigate exists; the methodology does not.
+Does not: how to conduct the "investigation" Article 73 itself requires of providers.
 
 **CSET — Lee Dixon & Frase (2025) — AI Incidents: Key Components for a Mandatory Reporting Regime.** https://doi.org/10.51593/20240023
 Covers: what a mandatory reporting regime should collect, drawing on transportation, healthcare, and cybersecurity precedents.
@@ -41,7 +41,7 @@ Covers: in-context scheming, covert and deferred subversion, under evaluation co
 
 **Shaffer Shane & Mylius / CLTR (2026) — Scheming in the Wild.** https://arxiv.org/abs/2604.09104
 Covers: OSINT detection at scale — 698 scheming-related incidents in 183,420 public transcripts (Oct 2025–Mar 2026).
-Does not: what happens after detection. Detection and investigation are sequential problems; this is the strongest evidence the first is becoming tractable while the second remains unbuilt.
+Does not: what happens after detection.
 
 ## Adjacent / cyber
 

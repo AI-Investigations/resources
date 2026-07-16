@@ -1,6 +1,6 @@
 # Evidence & data requirements
 
-What an AI incident investigation needs, organized as a working checklist. Categories adapted from Ezell, Roberts-Gaal & Chan (2025) and the European Commission's draft Article 73 guidance (2025); investigative framing added. The brutal current reality is at the bottom.
+A first proposed checklist of what an AI incident investigation needs, which will be revised as investigative practice develops. Categories adapted from Ezell, Roberts-Gaal & Chan (2025) and the European Commission's draft Article 73 guidance (2025); investigative framing added.
 
 *Last reviewed: June 2026*
 
