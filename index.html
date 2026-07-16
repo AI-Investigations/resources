@@ -33,7 +33,7 @@ a{color:var(--human);text-decoration:none}a:hover{text-decoration:underline}
 canvas{position:absolute;inset:0;display:block;touch-action:none;transition:filter .4s ease}
 canvas.recede{filter:blur(2px) brightness(.5) saturate(1.2);transform:scale(1.04)}
 .hint{position:absolute;left:18px;bottom:16px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.5px;z-index:5;pointer-events:none;max-width:250px}
-.legend{position:absolute;right:16px;bottom:16px;background:rgba(10,15,24,.82);border:1px solid var(--rule);padding:10px 12px;z-index:5;font-family:var(--mono);font-size:10.5px;letter-spacing:.4px}
+.legend{position:absolute;right:16px;bottom:16px;background:rgba(10,15,24,.82);border:1px solid var(--rule);padding:10px 12px;z-index:5;font-family:var(--mono);font-size:10.5px;letter-spacing:.4px;pointer-events:none}
 .legend .lr{display:flex;align-items:center;gap:8px;margin:3px 0;color:var(--mute)}
 .legend .dot{width:9px;height:9px;border-radius:50%}
 .legend .sep{margin-top:7px;padding-top:7px;border-top:1px solid var(--rule);color:var(--faint)}
@@ -81,6 +81,7 @@ const THEMES={
 let TH=THEMES.brand,baseTheme="brand";
 const MAIN=[
 {id:"scope",t:"resource",cl:"lab",l:"Scope map",sub:"the territory",href:"menu.html#scope",norel:true,b:"How the site organizes AI incidents by the system's role: as the actor that caused harm, the instrument of a human actor, the target of an attack, or a source of evidence. A starting frame for deciding what kind of investigation is needed and which questions to ask first."},
+{id:"research",t:"resource",cl:"lab",l:"Published research",sub:"publications",href:"research.html",b:"A growing library of published research relevant to AI incident investigation: incident governance and reporting, analysis methods, and studies of agent behavior. Each entry links to the original publication."},
 {id:"firsthours",t:"resource",cl:"lab",l:"First hours",sub:"PB-001 · in draft",draft:true,b:"Operational playbook covering the first hours after an AI incident: how to contain the system without destroying evidence, what to capture first (for example session logs, tool records, and timestamps), and the escalation ladder from revoking credentials to killing the process. Currently being drafted."},
 {id:"examine",t:"resource",cl:"lab",l:"Examine",sub:"PB-002 · in draft",draft:true,b:"Operational playbook for examining an AI system after an incident: reproducing the behavior under controlled conditions, running counterfactual tests, and documenting outputs as evidence (for example scripted question sets and behavioral lineups). Currently being drafted."},
 {id:"cases",t:"resource",cl:"lab",l:"Case files",sub:"public record",href:"menu.html#cases",b:"Structured case files for documented incidents, built from the public record. Each file separates observation from inference and records what a full investigation would need to establish."},
@@ -88,7 +89,6 @@ const MAIN=[
 {id:"evidence",t:"resource",cl:"lab",l:"Evidence",sub:"what's needed",href:"menu.html#evidence",b:"What an investigation actually needs: activity logs, system documentation, tool records, and the cautions the case files keep proving. The agent's statements are artifacts, not testimony."},
 {id:"regulatory",t:"resource",cl:"reg",l:"Regulatory",sub:"deadlines",href:"regulatory.html",b:"A reference overview of AI incident reporting obligations: which organizations must report, which incidents qualify, the applicable deadlines, and the authorities that receive reports. Covers the EU AI Act (Article 73), United States state legislation, and international frameworks."},
 {id:"tools",t:"resource",cl:"lab",l:"Tools & data",sub:"ecosystem",href:"menu.html#tools",b:"The ecosystem of incident databases, monitoring and observability platforms, and forensic tooling: what each resource collects, which questions it can answer, and where it fits in an investigation."},
-{id:"research",t:"resource",cl:"lab",l:"Research",sub:"publications",href:"research.html",b:"A growing library of published research relevant to AI incident investigation: incident governance and reporting, analysis methods, and studies of agent behavior. Each entry links to the original publication."},
 {id:"updates",t:"resource",cl:"lab",l:"Updates",sub:"sign-up",href:"updates.html",b:"Register interest in the project and receive occasional updates when new playbooks, case files, and resources are published."}
 ];
 const CASE=[
@@ -181,8 +181,8 @@ function simulate(it){for(let s=0;s<it;s++){
  N.forEach(n=>{if(n.fixed)return;n.vx+=(cx-n.x)*0.00045;n.vy+=(cy-n.y)*0.00045;n.vx*=0.85;n.vy*=0.85;n.x+=n.vx;n.y+=n.vy;const m=14;n.x=Math.max(m,Math.min(W-m,n.x));n.y=Math.max(m,Math.min(H-14,n.y));});}}
 function buildLayout(){seedPos();simulate(680);
  let minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;N.forEach(n=>{if(n.fixed)return;minx=Math.min(minx,n.x);miny=Math.min(miny,n.y);maxx=Math.max(maxx,n.x);maxy=Math.max(maxy,n.y);});
- const op=W<760?0.05:-0.02,px=W*op,py=H*op;let sx=(W-2*px)/Math.max(1,maxx-minx),sy=(H-2*py)/Math.max(1,maxy-miny);sx=Math.max(0.6,Math.min(2.3,sx));sy=Math.max(0.6,Math.min(2.3,sy));
- N.forEach(n=>{if(n.fixed)return;n.x=px+(n.x-minx)*sx;n.y=py+(n.y-miny)*sy;});HUB.x=cx;HUB.y=cy;
+ const px=Math.max(26,W*0.03),pyT=Math.max(24,H*0.03),pyB=Math.max(52,H*0.055);let sx=(W-2*px)/Math.max(1,maxx-minx),sy=(H-pyT-pyB)/Math.max(1,maxy-miny);sx=Math.max(0.6,Math.min(2.3,sx));sy=Math.max(0.6,Math.min(2.3,sy));
+ N.forEach(n=>{if(n.fixed)return;n.x=px+(n.x-minx)*sx;n.y=pyT+(n.y-miny)*sy;});HUB.x=cx;HUB.y=cy;
  N.forEach(n=>{n.hx=n.x;n.hy=n.y;n.ph=rnd()*6.28;n.ph2=rnd()*6.28;n.amp=(n.role==="master"?0:n.role==="hub"?2.5:6)+rnd()*3;n.spd=0.25+rnd()*0.3;n.sx=cx+(n.hx-cx)*0.15+(rnd()-.5)*W;n.sy=cy+(n.hy-cy)*0.15+(rnd()-.5)*H;});}
 // ---- POI sea with corner fan-clusters (depth) ----
 const PF=[];for(let i=0;i<60;i++)PF.push({x:rnd()*W,y:rnd()*H,z:0.3+rnd()*0.7,vx:(rnd()-.5)*0.07,vy:(rnd()-.5)*0.07,s:0.4+rnd()*1.1});
