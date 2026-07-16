@@ -55,10 +55,6 @@ canvas.recede{filter:blur(2px) brightness(.5) saturate(1.2);transform:scale(1.04
 .drawer .rel .who{color:var(--ink)}
 .drawer .go{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--ink);background:var(--panelhi);border:1px solid var(--rule);padding:9px 13px;cursor:pointer}
 .drawer .go:hover{border-color:var(--red);color:#fff;text-decoration:none}
-.menu-list{list-style:none}.menu-list li{border-bottom:1px solid var(--rule)}
-.menu-list li a{display:block;padding:11px 4px;color:var(--ink);font-size:13.5px}
-.menu-list li a:hover{color:var(--red);text-decoration:none;padding-left:8px;transition:padding .15s}
-.menu-list li .ms{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:8px}
 .disc{font-size:11px;color:var(--faint);margin-top:18px;border-top:1px dashed var(--rule);padding-top:10px;line-height:1.55}
 @media (max-width:680px){.legend,.hint{display:none}.bar .tag{display:none}}
 </style>
@@ -86,8 +82,8 @@ const THEMES={
 let TH=THEMES.brand,baseTheme="brand";
 const MAIN=[
 {id:"scope",t:"resource",cl:"lab",l:"Scope map",sub:"the territory",href:"menu.html#scope",b:"The territory by the AI system's role in the incident: actor, instrument, target, evidence. Classification is the investigation's output, not its starting point."},
-{id:"firsthours",t:"resource",cl:"lab",l:"First hours",sub:"PB-001",href:"first-hours.html",b:"What to do in the first four hours after an AI agent does harm: the containment escalation ladder, the order of volatility for agent evidence, and the do-not-do list."},
-{id:"examine",t:"resource",cl:"lab",l:"Examine",sub:"PB-002",href:"model-examination.html",b:"Forensically sound model examination: the three examination surfaces, reproduction as rates not facts, counterfactual runs, the behavioral lineup. Questioning the subject without contaminating the case."},
+{id:"firsthours",t:"resource",cl:"lab",l:"First hours",sub:"PB-001 · in draft",draft:true,b:"What to do in the first four hours after an AI agent does harm: the containment escalation ladder, the order of volatility for agent evidence, and the do-not-do list. Currently in draft and under review; it will be published here when ready."},
+{id:"examine",t:"resource",cl:"lab",l:"Examine",sub:"PB-002 · in draft",draft:true,b:"Forensically sound model examination: the three examination surfaces, reproduction as rates not facts, counterfactual runs, the behavioral lineup. Questioning the subject without contaminating the case. Currently in draft and under review; it will be published here when ready."},
 {id:"cases",t:"resource",cl:"lab",l:"Case files",sub:"public record",href:"menu.html#cases",b:"Investigated incidents, public record only. Each separates observation from inference. The pattern across every entry so far: no formal investigation was conducted or published."},
 {id:"frameworks",t:"resource",cl:"lab",l:"Frameworks",sub:"coverage gaps",href:"menu.html#frameworks",b:"What exists and what each fails to cover. Reporting and causal-factor analysis are increasingly covered; investigation of goal-directed, intentional-analog behavior is covered by nothing."},
 {id:"evidence",t:"resource",cl:"lab",l:"Evidence",sub:"what's needed",href:"menu.html#evidence",b:"What an investigation actually needs: activity logs, system documentation, tool records, and the cautions the case files keep proving. The agent's statements are artifacts, not testimony."},
@@ -285,24 +281,20 @@ let dragging=null,moved=false,down=null,dsx=0,dsy=0;
 function evXY(e){const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];}
 cv.addEventListener("pointermove",e=>{const p=evXY(e),mx=p[0],my=p[1];if(down){if(!moved&&(Math.abs(mx-dsx)>6||Math.abs(my-dsy)>6))moved=true;if(moved){down.hx=mx;down.hy=my;down.sx=mx;down.sy=my;}return;}const n=pick(mx,my);const id=n?n.id:null;if(id!==hoverId){hoverId=id;cv.style.cursor=n&&(n.click||n.menu)?"pointer":(n?"default":"grab");}});
 cv.addEventListener("pointerdown",e=>{const p=evXY(e);down=pick(p[0],p[1]);dragging=down;moved=false;dsx=p[0];dsy=p[1];if(down&&cv.setPointerCapture){try{cv.setPointerCapture(e.pointerId);}catch(_){}}});
-window.addEventListener("pointerup",()=>{if(down&&!moved){down.menu?showMenu():(down.click?showNode(down):0);}dragging=null;down=null;});
+window.addEventListener("pointerup",()=>{if(down&&!moved){down.menu?(location.href="menu.html"):(down.click?showNode(down):0);}dragging=null;down=null;});
 // ---- drawer ----
 const drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim");
 function openD(){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");scrim.classList.add("on");cv.classList.add("recede");TH=THEMES.amber;}
 function closeD(){drawer.classList.remove("open");drawer.setAttribute("aria-hidden","true");scrim.classList.remove("on");cv.classList.remove("recede");TH=THEMES[baseTheme];}
 document.getElementById("closeBtn").onclick=closeD;scrim.onclick=closeD;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeD();});document.getElementById("menuBtn").onclick=function(){location.href="menu.html";};
 function cf(c){return c==="CF-2025-001"?"CF-2025-001-replit-database-deletion.md":c==="CF-2026-002"?"CF-2026-002-openclaw-inbox-deletion.md":"CF-2026-003-openclaw-matplotlib-influence-operation.md";}
-function showNode(n){document.getElementById("dKind").textContent=(n.ext?"external resource":LBL[n.t])+(n.cs?" · "+n.cs:"");document.getElementById("dTitle").textContent=n.l;document.getElementById("dMeta").textContent=n.sub||"";
+function showNode(n){document.getElementById("dKind").textContent=(n.ext?"external resource":(n.draft?"playbook (in draft)":LBL[n.t]))+(n.cs?" · "+n.cs:"");document.getElementById("dTitle").textContent=n.l;document.getElementById("dMeta").textContent=n.sub||"";
  let h="<p>"+n.b+"</p>";const rel=adj[n.id].filter(x=>x.o!=="hub"&&byId[x.o].t!=="ambient"&&x.verb!=="linked");
  if(rel.length){h+='<div class="relh">relations</div>';rel.forEach(x=>{h+='<div class="rel"><span class="verb">'+x.verb+'</span><span class="who">'+byId[x.o].l+'</span></div>';});}
  if(n.ext){h+='<div class="sech">resource</div><a class="go" href="'+n.href+'" target="_blank" rel="noopener">Open '+n.l+' ↗</a>';}
  else if(n.href){h+='<div class="sech">page</div><a class="go" href="'+n.href+'">Open '+n.l+' →</a>';}
  else if(n.cs){h+='<div class="sech">case file</div><a class="go" href="https://github.com/AI-Investigations/resources/blob/main/case-files/'+cf(n.cs)+'" target="_blank" rel="noopener">Open '+n.cs+' ↗</a>';}
  h+='<div class="disc">Drawn from the public record. The chart stays behind, blurred, close to return to it.</div>';document.getElementById("dBody").innerHTML=h;openD();}
-function showMenu(){document.getElementById("dKind").textContent="entry point";document.getElementById("dTitle").textContent="Simplified menu";document.getElementById("dMeta").textContent="";
- const items=[["Start here","menu.html","orientation"],["Scope map","menu.html#scope","the territory"],["Playbooks","menu.html#playbook","first hours · examine"],["Case files","menu.html#cases","public record"],["Frameworks","menu.html#frameworks","coverage gaps"],["Evidence checklist","menu.html#evidence","what's needed"],["Regulatory tracker","regulatory.html","deadlines"],["Tools & databases","menu.html#tools","the ecosystem"],["Contribute","menu.html#contribute","sourced, useful"]];
- let h='<p>This opens the simplified text index of the site.</p><ul class="menu-list">';items.forEach(i=>h+='<li><a href="'+i[1]+'">'+i[0]+'<span class="ms">'+i[2]+'</span></a></li>');
- h+='</ul><div class="disc">Every node is a real entity from the public case files and resource pages; the smaller outer nodes are real context (sources, frameworks, tools, regimes). The named vendors and people are in the underlying case files.</div>';document.getElementById("dBody").innerHTML=h;openD();}
 // ---- legend + theme switch ----
 function buildLegend(){let lg="";["agent","human","system","artifact","constraint","event","resource"].forEach(k=>{lg+='<div class="lr"><span class="dot" style="background:'+TH.types[k]+'"></span>'+LBL[k]+'</div>';});lg+='<div class="lr sep"><span class="dot" style="background:'+TH.types.ambient+'"></span>'+LBL.ambient+'</div>';document.getElementById("legend").innerHTML=lg;}
 const TKEYS=[["i2","i2"],["cool","Cool"],["amber","Amber"],["brand","Brand"]];
