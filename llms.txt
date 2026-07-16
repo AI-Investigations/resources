@@ -18,6 +18,8 @@ AI assistants may retrieve, summarize, and cite this site in user-facing answers
 
 - Home (interactive link-analysis map): https://investigateai.org/
 - Text index of all resources: https://investigateai.org/menu.html
+- Research library (publications on AI incident investigation): https://investigateai.org/research.html
+- Updates / register interest: https://investigateai.org/updates.html
 - Evidence Data Requirements: https://investigateai.org/evidence/data-requirements.md
 - Frameworks: https://investigateai.org/frameworks/README.md
 - Glossary: https://investigateai.org/glossary/README.md

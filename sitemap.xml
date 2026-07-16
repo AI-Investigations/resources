@@ -2,11 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://investigateai.org/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://investigateai.org/menu.html</loc>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-07-16</lastmod>
+  </url>
+  <url>
+    <loc>https://investigateai.org/research.html</loc>
+    <lastmod>2026-07-16</lastmod>
+  </url>
+  <url>
+    <loc>https://investigateai.org/updates.html</loc>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://investigateai.org/README.md</loc>

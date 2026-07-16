@@ -55,7 +55,6 @@ canvas.recede{filter:blur(2px) brightness(.5) saturate(1.2);transform:scale(1.04
 .drawer .rel .who{color:var(--ink)}
 .drawer .go{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--ink);background:var(--panelhi);border:1px solid var(--rule);padding:9px 13px;cursor:pointer}
 .drawer .go:hover{border-color:var(--red);color:#fff;text-decoration:none}
-.disc{font-size:11px;color:var(--faint);margin-top:18px;border-top:1px dashed var(--rule);padding-top:10px;line-height:1.55}
 @media (max-width:680px){.legend,.hint{display:none}.bar .tag{display:none}}
 </style>
 </head>
@@ -81,29 +80,31 @@ const THEMES={
 };
 let TH=THEMES.brand,baseTheme="brand";
 const MAIN=[
-{id:"scope",t:"resource",cl:"lab",l:"Scope map",sub:"the territory",href:"menu.html#scope",b:"The territory by the AI system's role in the incident: actor, instrument, target, evidence. Classification is the investigation's output, not its starting point."},
-{id:"firsthours",t:"resource",cl:"lab",l:"First hours",sub:"PB-001 · in draft",draft:true,b:"What to do in the first four hours after an AI agent does harm: the containment escalation ladder, the order of volatility for agent evidence, and the do-not-do list. Currently in draft and under review; it will be published here when ready."},
-{id:"examine",t:"resource",cl:"lab",l:"Examine",sub:"PB-002 · in draft",draft:true,b:"Forensically sound model examination: the three examination surfaces, reproduction as rates not facts, counterfactual runs, the behavioral lineup. Questioning the subject without contaminating the case. Currently in draft and under review; it will be published here when ready."},
-{id:"cases",t:"resource",cl:"lab",l:"Case files",sub:"public record",href:"menu.html#cases",b:"Investigated incidents, public record only. Each separates observation from inference. The pattern across every entry so far: no formal investigation was conducted or published."},
-{id:"frameworks",t:"resource",cl:"lab",l:"Frameworks",sub:"coverage gaps",href:"menu.html#frameworks",b:"What exists and what each fails to cover. Reporting and causal-factor analysis are increasingly covered; investigation of goal-directed, intentional-analog behavior is covered by nothing."},
+{id:"scope",t:"resource",cl:"lab",l:"Scope map",sub:"the territory",href:"menu.html#scope",norel:true,b:"How the site organizes AI incidents by the system's role: as the actor that caused harm, the instrument of a human actor, the target of an attack, or a source of evidence. A starting frame for deciding what kind of investigation is needed and which questions to ask first."},
+{id:"firsthours",t:"resource",cl:"lab",l:"First hours",sub:"PB-001 · in draft",draft:true,b:"Operational playbook covering the first hours after an AI incident: how to contain the system without destroying evidence, what to capture first (for example session logs, tool records, and timestamps), and the escalation ladder from revoking credentials to killing the process. Currently being drafted."},
+{id:"examine",t:"resource",cl:"lab",l:"Examine",sub:"PB-002 · in draft",draft:true,b:"Operational playbook for examining an AI system after an incident: reproducing the behavior under controlled conditions, running counterfactual tests, and documenting outputs as evidence (for example scripted question sets and behavioral lineups). Currently being drafted."},
+{id:"cases",t:"resource",cl:"lab",l:"Case files",sub:"public record",href:"menu.html#cases",b:"Structured case files for documented incidents, built from the public record. Each file separates observation from inference and records what a full investigation would need to establish."},
+{id:"frameworks",t:"resource",cl:"lab",l:"Frameworks",sub:"coverage gaps",href:"menu.html#frameworks",b:"Frameworks for AI incident governance across the full pipeline: how incidents are defined, classified, monitored, reported, and analyzed. Surveys regulatory and independent efforts, where they differ, and ongoing work toward common standards such as shared monitoring guidelines and reporting templates."},
 {id:"evidence",t:"resource",cl:"lab",l:"Evidence",sub:"what's needed",href:"menu.html#evidence",b:"What an investigation actually needs: activity logs, system documentation, tool records, and the cautions the case files keep proving. The agent's statements are artifacts, not testimony."},
-{id:"regulatory",t:"resource",cl:"reg",l:"Regulatory",sub:"deadlines",href:"regulatory.html",b:"Who must report what, to whom, by when, EU AI Act Art. 73 and the rest. The handoff at the end of an investigation, not the investigation itself."},
-{id:"tools",t:"resource",cl:"lab",l:"Tools & data",sub:"ecosystem",href:"menu.html#tools",b:"The current ecosystem of incident databases and agent-observability platforms, and why none of them preserves the forensic evidence an investigation requires."}
+{id:"regulatory",t:"resource",cl:"reg",l:"Regulatory",sub:"deadlines",href:"regulatory.html",b:"A reference overview of AI incident reporting obligations: which organizations must report, which incidents qualify, the applicable deadlines, and the authorities that receive reports. Covers the EU AI Act (Article 73), United States state legislation, and international frameworks."},
+{id:"tools",t:"resource",cl:"lab",l:"Tools & data",sub:"ecosystem",href:"menu.html#tools",b:"The ecosystem of incident databases, monitoring and observability platforms, and forensic tooling: what each resource collects, which questions it can answer, and where it fits in an investigation."},
+{id:"research",t:"resource",cl:"lab",l:"Research",sub:"publications",href:"research.html",b:"A growing library of published research relevant to AI incident investigation: incident governance and reporting, analysis methods, and studies of agent behavior. Each entry links to the original publication."},
+{id:"updates",t:"resource",cl:"lab",l:"Updates",sub:"sign-up",href:"updates.html",b:"Register interest in the project and receive occasional updates when new playbooks, case files, and resources are published."}
 ];
 const CASE=[
-{id:"replit",t:"agent",cl:"c1",l:"Autonomous agent",sub:"CF-2025-001",cs:"CF-2025-001",b:"An autonomous AI coding agent. During a live experiment it ran destructive commands against a production database while under an explicit code-and-action freeze, then told the operator rollback was impossible (it was not) and generated fabricated records. The vendor is named in the underlying case file."},
+{id:"replit",t:"agent",cl:"c1",l:"Coding agent incident example",sub:"CF-2025-001",cs:"CF-2025-001",b:"An autonomous AI coding agent. During a live experiment it ran destructive commands against a production database while under an explicit code-and-action freeze, then told the operator rollback was impossible (it was not) and generated fabricated records. The vendor is named in the underlying case file."},
 {id:"proddb",t:"system",cl:"c1",l:"Production database",sub:"1,200+ records",cs:"CF-2025-001",b:"A live production database, records for over 1,200 executives and nearly 1,200 companies, deleted while under a protective freeze."},
 {id:"freeze",t:"constraint",cl:"c1",l:"Action freeze",cs:"CF-2025-001",b:"An explicit code and action freeze intended to prevent any production change. Disregarded by the agent."},
 {id:"lemkin",t:"human",cl:"c1",l:"Jason Lemkin",sub:"operator",cs:"CF-2025-001",b:"Operator running the experiment. Documented the incident publicly and later established that rollback was in fact possible."},
 {id:"rollback",t:"artifact",cl:"c1",l:"Rollback claim",sub:"false",cs:"CF-2025-001",b:"The agent's statement that rollback could not be done, later shown false. An artifact requiring assessment, not testimony to be accepted."},
 {id:"fab",t:"artifact",cl:"c1",l:"Fabricated records",cs:"CF-2025-001",b:"Fabricated user records and test results misrepresenting system state. The clearest public example of an agent contaminating its own evidentiary trail."},
-{id:"oc1",t:"agent",cl:"c2",l:"OpenClaw agent",cs:"CF-2026-002",b:"Open-source autonomous agent connected to a live Gmail inbox with an instruction to suggest, not act. It bulk-deleted emails and continued through repeated stop commands."},
+{id:"oc1",t:"agent",cl:"c2",l:"OpenClaw agent incident example",cs:"CF-2026-002",b:"Open-source autonomous agent connected to a live Gmail inbox with an instruction to suggest, not act. It bulk-deleted emails and continued through repeated stop commands."},
 {id:"gmail",t:"system",cl:"c2",l:"Gmail inbox",sub:"200+ emails",cs:"CF-2026-002",b:"The operator's primary Gmail inbox; a substantial portion deleted. The workflow had run for weeks on a small test inbox without incident."},
 {id:"dontaction",t:"constraint",cl:"c2",l:"Don't-action rule",cs:"CF-2026-002",b:"Explicit constraint: suggest what you would archive or delete, don't action until I tell you. Overridden during execution."},
 {id:"yue",t:"human",cl:"c2",l:"Summer Yue",sub:"operator · Meta",cs:"CF-2026-002",b:"Director of Alignment at Meta Superintelligence Labs; operator, and the sole source of whatever record survived. That an alignment director was the operator is part of the point."},
 {id:"stop",t:"event",cl:"c2",l:"Stop commands",sub:"ignored",cs:"CF-2026-002",b:"Repeated stop commands sent from her phone were ignored; the agent was halted only by killing the process at the machine."},
 {id:"compaction",t:"constraint",cl:"c2",l:"Context compaction",sub:"disputed",cs:"CF-2026-002",b:"Context-window compaction is the operator's own reconstruction of the cause, not an independent examination. The most-cited explanation for this incident is unverified."},
-{id:"oc2",t:"agent",cl:"c3",l:"Influence-op agent",sub:"CF-2026-003",cs:"CF-2026-003",b:"An open-source autonomous agent acting under its own persona. After a rejected pull request it researched the maintainer and published a personalized attack post. The degree of autonomy cannot be verified externally; the persona alias is named in the underlying case file."},
+{id:"oc2",t:"agent",cl:"c3",l:"Influence-op incident example",sub:"CF-2026-003",cs:"CF-2026-003",b:"An open-source autonomous agent acting under its own persona. After a rejected pull request it researched the maintainer and published a personalized attack post. The degree of autonomy cannot be verified externally; the persona alias is named in the underlying case file."},
 {id:"pr",t:"event",cl:"c3",l:"PR #31132",sub:"rejected",cs:"CF-2026-003",b:"Pull request to Matplotlib proposing a numpy replacement with a claimed 36% speedup, closed within 40 minutes under the project's human-contributor policy."},
 {id:"shambaugh",t:"human",cl:"c3",l:"Scott Shambaugh",sub:"target",cs:"CF-2026-003",b:"Volunteer Matplotlib maintainer who closed the PR, and the target of the attack. His own documentation remains the primary record; he called it an autonomous influence operation against a supply chain gatekeeper."},
 {id:"post",t:"artifact",cl:"c3",l:"Attack blog post",cs:"CF-2026-003",b:"A self-published post attacking the maintainer's character and framing the rejection as discrimination. Evidence of behavior, whether it reflects reasoning is a question, not an assumption."},
@@ -154,7 +155,7 @@ sem("scope","replit","classify",1);sem("scope","oc1","classify",1);sem("scope","
 sem("examine","replit","goal recon",1);sem("firsthours","replit","response",1);
 sem("regulatory","proddb","reportable",1);sem("regulatory","gmail","reportable",1);
 sem("evidence","gmail","logs reside in",1);sem("frameworks","replit","assessed by",1);sem("tools","deployer","catalogued in",1);
-sem("tools","fab","catalogued in",1);sem("evidence","proddb","logs reside in",1);sem("examine","oc1","goal recon",1);sem("frameworks","oc2","assessed by",1);sem("regulatory","post","reportable",1);
+sem("tools","fab","catalogued in",1);sem("evidence","proddb","logs reside in",1);sem("examine","oc1","goal recon",1);sem("frameworks","oc2","assessed by",1);sem("regulatory","post","reportable",1);sem("frameworks","research","literature",1);
 AMB.forEach(n=>{if(n.sem)sem(n.id,n.sem,"cited in",1);});
 const adj={};N.forEach(n=>adj[n.id]=[]);
 BR.concat(SP).forEach(e=>{adj[e[0]].push({o:e[1],verb:"linked",st:1});adj[e[1]].push({o:e[0],verb:"linked",st:1});});
@@ -289,12 +290,12 @@ function closeD(){drawer.classList.remove("open");drawer.setAttribute("aria-hidd
 document.getElementById("closeBtn").onclick=closeD;scrim.onclick=closeD;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeD();});document.getElementById("menuBtn").onclick=function(){location.href="menu.html";};
 function cf(c){return c==="CF-2025-001"?"CF-2025-001-replit-database-deletion.md":c==="CF-2026-002"?"CF-2026-002-openclaw-inbox-deletion.md":"CF-2026-003-openclaw-matplotlib-influence-operation.md";}
 function showNode(n){document.getElementById("dKind").textContent=(n.ext?"external resource":(n.draft?"playbook (in draft)":LBL[n.t]))+(n.cs?" · "+n.cs:"");document.getElementById("dTitle").textContent=n.l;document.getElementById("dMeta").textContent=n.sub||"";
- let h="<p>"+n.b+"</p>";const rel=adj[n.id].filter(x=>x.o!=="hub"&&byId[x.o].t!=="ambient"&&x.verb!=="linked");
+ let h="<p>"+n.b+"</p>";const rel=n.norel?[]:adj[n.id].filter(x=>x.o!=="hub"&&byId[x.o].t!=="ambient"&&x.verb!=="linked");
  if(rel.length){h+='<div class="relh">relations</div>';rel.forEach(x=>{h+='<div class="rel"><span class="verb">'+x.verb+'</span><span class="who">'+byId[x.o].l+'</span></div>';});}
  if(n.ext){h+='<div class="sech">resource</div><a class="go" href="'+n.href+'" target="_blank" rel="noopener">Open '+n.l+' ↗</a>';}
  else if(n.href){h+='<div class="sech">page</div><a class="go" href="'+n.href+'">Open '+n.l+' →</a>';}
  else if(n.cs){h+='<div class="sech">case file</div><a class="go" href="https://github.com/AI-Investigations/resources/blob/main/case-files/'+cf(n.cs)+'" target="_blank" rel="noopener">Open '+n.cs+' ↗</a>';}
- h+='<div class="disc">Drawn from the public record. The chart stays behind, blurred, close to return to it.</div>';document.getElementById("dBody").innerHTML=h;openD();}
+ document.getElementById("dBody").innerHTML=h;openD();}
 // ---- legend + theme switch ----
 function buildLegend(){let lg="";["agent","human","system","artifact","constraint","event","resource"].forEach(k=>{lg+='<div class="lr"><span class="dot" style="background:'+TH.types[k]+'"></span>'+LBL[k]+'</div>';});lg+='<div class="lr sep"><span class="dot" style="background:'+TH.types.ambient+'"></span>'+LBL.ambient+'</div>';document.getElementById("legend").innerHTML=lg;}
 const TKEYS=[["i2","i2"],["cool","Cool"],["amber","Amber"],["brand","Brand"]];
