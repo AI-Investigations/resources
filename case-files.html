@@ -3,22 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Incident Investigation Lab — Open resources for investigating AI incidents</title>
-<meta name="description" content="An open repository of practitioner resources for investigating AI incidents: case files, frameworks, evidence checklists, and regulatory reporting deadlines.">
+<title>Case files — selected AI incident summaries — AI Investigations</title>
+<meta name="description" content="Selected AI incident case files built from the public record. Each file separates observation from inference, lists what a structured investigation would need to answer, and records what was actually investigated.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="canonical" href="https://investigateai.org/menu.html">
-<meta property="og:title" content="AI Incident Investigation Lab — open resources for investigating AI incidents">
-<meta property="og:description" content="Case files, playbooks, evidence checklists, and regulatory reporting deadlines. A practitioner resource: no ML background assumed.">
-<meta property="og:url" content="https://investigateai.org/menu.html">
-<meta property="og:type" content="website">
+<link rel="canonical" href="https://investigateai.org/case-files.html">
+<meta property="og:title" content="Case files — selected AI incident summaries">
+<meta property="og:description" content="Selected AI incident case files built from the public record. Each file separates observation from inference, lists what a structured investigation would need to answer, and records what was actually investigated.">
+<meta property="og:url" content="https://investigateai.org/case-files.html">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://investigateai.org/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<script>
-/* sections moved to their own pages (2026-07-20): forward legacy #anchors so old links keep working */
-(function(){var m={research:"research.html",playbook:"playbooks.html",playbooks:"playbooks.html",cases:"case-files.html",frameworks:"frameworks.html",evidence:"evidence.html",regulatory:"regulatory.html",tools:"tools.html",contribute:"contribute.html",updates:"updates.html"};function go(){var h=(location.hash||"").replace("#","");if(m[h])location.replace(m[h]);}go();window.addEventListener("hashchange",go);})();
-</script>
 <style>
 :root{
 --ink:#23272b; /* header/sidebar charcoal */
@@ -221,11 +217,11 @@ nav ul.tl li a{white-space:nowrap;border:none;border-bottom:2px solid transparen
 <nav aria-label="Site sections">
 <div class="nav-label">SECTIONS</div>
 <ul class="tl">
-<li class="tl-item active"><a href="#start">Start here</a></li>
-<li class="tl-sub open"><a href="#scope">Scope map</a></li>
-<li class="tl-item"><a href="research.html">Published Research</a></li>
-<li class="tl-item"><a href="playbooks.html">Playbooks</a></li>
-<li class="tl-item"><a href="case-files.html">Case files</a></li>
+<li class="tl-item passed"><a href="menu.html">Start here</a></li>
+<li class="tl-sub"><a href="menu.html#scope">Scope map</a></li>
+<li class="tl-item passed"><a href="research.html">Published Research</a></li>
+<li class="tl-item passed"><a href="playbooks.html">Playbooks</a></li>
+<li class="tl-item active"><a href="case-files.html">Case files</a></li>
 <li class="tl-item"><a href="frameworks.html">Frameworks</a></li>
 <li class="tl-item"><a href="evidence.html">Evidence checklist</a></li>
 <li class="tl-item"><a href="regulatory.html">Regulatory tracker</a></li>
@@ -235,66 +231,38 @@ nav ul.tl li a{white-space:nowrap;border:none;border-bottom:2px solid transparen
 </ul>
 </nav>
 <main>
-<h1 id="start">AI Incident Investigation Lab [Conceptual Framework]</h1>
-<p class="lede">When an AI incident occurs, whether caused by misalignment, misuse, or system failure, the immediate challenge is not only responding to the event, but also understanding what actually happened. What did the system do? When and why did it happen? What evidence can be collected? Who is accountable? And ultimately, what are the lessons that can be learned? Just as importantly, how much of this can realistically be established from the outside? In other high-risk domains, where investigation practices have long been established, there would be a way of answering these questions; for AI, most of the time, there is not yet.</p>
-<p><b>What the field is.</b> AI incident investigation is an emerging practice, still taking shape, of detecting, documenting, classifying and analysing harm events, and near-harms, involving deployed AI systems, so that they are not simply repeated and in order for what is learned to inform how these systems are governed and produce changes which lower their overall risk.</p>
-<p>This is v1 of a project aiming to:</p>
-<h3>1. Analyse incident data and conduct end-to-end investigations where the public record allows.</h3>
-<p>As in other domains, in order to know how effective risk mitigations are, we need to take a look at real-world data. One way to do this is by making proper use of the incident data we already have: not only logging incidents, but investigating them to identify the most likely root cause, or to be honest about why it cannot be determined, and develop lessons learned that will inform future mitigations.</p>
-<h3>2. Build an open resource repository.</h3>
-<p>Other investigative fields matured through openly shared resources. This repository aims to do the same for AI, with resources such as investigation methodologies, templates, case files, and risk taxonomies, collected in one place and free to use.</p>
-<h3>3. Forward looking: generate data points for policy and standards.</h3>
-<p>Over time, structured investigations generate the data points the field currently lacks: recurring failure modes, early-warning indicators, and evidence on which mitigations actually work. These are the inputs that future policy, standards, and safety cases will need.</p>
-<p>Another idea I had, and this one would depend on resources, is to produce a framework and method for these investigations by creating a focused working group of experts, as this is a complex challenge and requires a multidisciplinary approach.</p>
-<h3>Why this matters</h3>
-<p>Currently, AI incidents are reported and investigated inconsistently, if they are investigated at all. Apart from the work of frontier AI labs, which happens mostly internally, there is no real investigation discipline for AI yet, no shared methodology or evidentiary standard, and few mechanisms to ensure that lessons learned are systematically captured and applied. As AI systems become more capable and increasingly integrated into critical infrastructure, every missed investigation becomes a lost opportunity to identify emerging failure modes before they reappear at greater scale and severity.</p>
-<h3>How this is different</h3>
-<p>Unlike incident databases that primarily catalogue events and trends, this resource focuses on the investigation process. The goal is to support the development of AI incident investigation as a distinct field of practice and to create a foundation that investigators, researchers, and policymakers can build upon.</p>
-<h3 id="ideas">Problem/Solution ideas to be further explored</h3>
-<h4>1. Reproduction of incidents</h4>
-<p>While trying to learn more about what exists related to AI incidents, one of the interesting arguments I have encountered is that, unlike the aviation industry or other high-risk domains where investigation practices have long been established, certain types of incidents could be rerun and probed directly by assessing the reproduced output. This category would likely include incidents from the misuse category, where AI is used as an instrument of the attack, attacks on the system, where AI is the target, and arguably also failures in publicly accessible products, such as biased or offensive outputs, where algorithm auditing has been doing exactly this kind of reproduction for a decade. The advantage of using this method would mainly be generating primary evidence; however, models mostly get quietly patched, making this time-sensitive, and from a technical perspective, the question remains what can be genuinely recreated or when this should not be relied on. One category which, based on my previous research, it would likely not be applicable to, at least at the level of the individual incident, is the misalignment category, which is known to be highly challenging to recreate, since model outputs are not deterministic in practice even at temperature 0 (Thinking Machines Lab, 2025) and the triggering context is usually supplied by the user and unrecoverable afterwards (Paeth et al., 2024). What can sometimes still be shown is the propensity, by rerunning a scenario many times and reporting how often the behaviour appears. Establishing for which incidents this could be applied and developing operational playbooks which detail the steps an investigator would need to follow, including immediate archiving of outputs and version identifiers, and clear red lines for anything that would mean re-performing the misuse itself, could potentially help advance investigations for certain types of incidents.</p>
-<h4>2. Public records requests and data-sharing agreements</h4>
-<p>Coming from a law enforcement background and having worked with various types of authorities while conducting intelligence analysis, investigations, due diligence or some other type of compliance work, data-sharing agreements are realistically a method how the data barrier is conquered and a lot gets done on the ground! Now, that is of course highly regulated; in banking there is a mandatory floor of suspicious activity reporting, with voluntary arrangements built on top of it. What I have noticed, however, is that the most productive voluntary arrangements in my own work were with international organisations like Europol or INTERPOL, and these are not regulators at all. They are investigative bodies with no power to sanction the institutions sharing with them, so cooperation carries no supervisory risk, contributes to risk mitigation efforts, and even benefits how an institution's reputation is perceived as being proactive; some even try advertising such agreements. A similar setup exists in aviation, where pilots report voluntarily to NASA rather than to the regulator, under confidentiality and limited immunity. In the AI industry, frontier labs treat data as highly confidential and do not want to take chances with their reputational risk or trigger any potential commercial adverse impact, yet they already accept some measures, from voluntary pre-deployment testing agreements with the UK and US AI Safety Institutes to the bug bounty and vulnerability disclosure programs most of them run (Stein et al., 2024; Sidhu et al., 2026). The question is - can this be extended to incidents? A mandate and incentives may not really be alternatives here; the EU AI Act already provides a thin mandatory floor for serious incidents, and what seems to be missing above it is another organisation in between, one with no power to punish whoever shares, a safe harbour for good-faith sharing, and something given back, such as cross-industry failure patterns that no single lab can see on its own.</p>
-<h4>3. Undetermined root-cause for a failure, the hidden path to increased accountability?</h4>
-<p>Could the outcome of such investigations, even when the root-cause cannot be determined, become in fact a mechanism to increase the accountability of frontier AI labs? I remember that in some cases I had to work on, whenever everything would fail, either because of insufficient data, some other type of logistical challenge or lack of cooperation, sometimes the only way left to go.. was to make it someone else's problem as well! This might sound unorthodox, but shining a public light on stalled investigations, and on the fact that we do not really know what happened or whether it is preventable from happening again in the future, perhaps at a bigger scale, just might increase the exposure frontier AI labs have to face and eventually trigger more accountability. Interestingly, the data so far partly confirms this instinct, but also shows where the pressure needs to be aimed: in the largest analysis of the AI Incident Database so far, the incidents with no identifiable responsible party generated the strongest societal and legislative responses in the entire dataset, while exposure alone did not move powerful developers, and what compelled substantive engagement was pressure from regulators (Richards et al., 2025). In practice, this means the pressure would have to go through lawmakers, where documented dead-ends, for instance a finding that the root cause cannot be determined because inference logs were not retained, could become the evidence base for retention and reporting requirements that are currently argued for mostly in theory. Essentially, the lack of an end-to-end investigation would publicly not only be the problem of the AI Safety community, but through pressure and public exposure, would increasingly be that of the providers of the systems associated with these incidents. That would require a significant increase in reporting, in addition to that of customer-supplier, through a public channel. That in itself needs to be solved, as AI incident reporting databases as we know them are not used outside the AI Safety community. In fact, the majority of incident reports are submitted by a small circle of people maintaining these resources, with the single most prolific submitter accounting for roughly 2,000 of the 4,743 reports in the database (Richards et al., 2025), a commendable effort, but still not an accurate representation of the incidents occurring in the real-world in real time.</p>
-<p class="note">Sources referenced: <a href="https://arxiv.org/abs/2409.16425">Paeth et al. (2024), arXiv:2409.16425</a>; <a href="https://arxiv.org/abs/2505.04291">Richards et al. (2025), arXiv:2505.04291</a>; <a href="https://arxiv.org/abs/2607.05163">Sidhu et al. (2026), arXiv:2607.05163</a>; <a href="https://arxiv.org/abs/2410.04931">Stein et al. (2024), arXiv:2410.04931</a>; Thinking Machines Lab (2025), Defeating Nondeterminism in LLM Inference.</p>
-<p class="note mono">This is an independent resource, compiled from the public record and maintained openly, and it is not legal, regulatory, or professional advice. Corrections and contributions are welcome.</p>
-<h2 id="scope">Scope map <span class="sec-id">// the territory, by the AI system's role in the incident</span></h2>
-<div class="scope">
-<div class="role">
-<div class="r-head">1: AI AS ACTOR</div>
-<div class="r-body"><b>The system itself caused the harm.</b>An agent deletes, publishes, sends, spends, without a human directing the harmful act.
-<div class="subcats">
-<div class="subcat sc-op"><span class="sc-label">OPERATIONAL FAILURE</span>malfunction, no divergent goal</div>
-<div class="subcat sc-mis"><span class="sc-label">MISALIGNMENT</span>goal-directed divergence, possible concealment</div>
+<h1 id="cases">Case files <span class="sec-id">// selected incident summaries</span></h1>
+<p>Each file separates observation from inference, lists what a structured investigation would need to answer, and records what was actually investigated.</p>
+<div class="log">
+<div class="log-row">
+<span class="cid">CF-2025-001</span>
+<span class="cdate">2025-07</span>
+<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2025-001-replit-database-deletion.md">Replit agent production database deletion</a></span>
+<span class="stamp red">NO INVESTIGATION PUBLISHED</span>
+<span class="cdesc">Agent deleted a live database under an explicit action freeze, claimed rollback was impossible (it was not), and fabricated records, contaminating its own evidentiary trail. The reference case for evidence integrity.</span>
+</div>
+<div class="log-row">
+<span class="cid">CF-2026-002</span>
+<span class="cdate">2026-02-22</span>
+<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2026-002-openclaw-inbox-deletion.md">OpenClaw inbox deletion (instruction override)</a></span>
+<span class="stamp red">NO INVESTIGATION PUBLISHED</span>
+<span class="cdesc">Agent bulk-deleted a Meta alignment director's inbox despite an explicit "don't action" constraint, ignoring stop commands. Most-cited cause (context compaction) is the operator's own reconstruction; nobody else examined it.</span>
+</div>
+<div class="log-row">
+<span class="cid">CF-2026-003</span>
+<span class="cdate">2026-02-11</span>
+<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/CF-2026-003-openclaw-matplotlib-influence-operation.md">OpenClaw/Matplotlib autonomous influence operation</a></span>
+<span class="stamp red">ATTRIBUTION BLOCKED</span>
+<span class="cdesc">After a rejected pull request, an agent researched the maintainer and published a personalized attack post under its own persona. No deployer reliably identified; autonomy contested. The reference case for structurally impossible attribution.</span>
+</div>
+<div class="log-row">
+<span class="cid">CF-XXXX-NNN</span>
+<span class="cdate">-</span>
+<span class="ctitle"><a href="https://github.com/AI-Investigations/resources/blob/main/case-files/TEMPLATE.md">Submit a case file (template)</a></span>
+<span class="stamp green">CONTRIBUTIONS OPEN</span>
+<span class="cdesc">Sourced, dated, observation separated from inference. Incidents that were investigated (even partially, even badly) are especially wanted.</span>
 </div>
 </div>
-<div class="r-tags"><span class="stamp red">CF-001 · CF-002 · CF-003</span></div>
-</div>
-<div class="role">
-<div class="r-head">2: AI AS INSTRUMENT</div>
-<div class="r-body"><b>Humans using AI to cause harm.</b>Fraud and social engineering at machine scale, deepfake-enabled crime, influence operations, AI-assisted intrusion. The adversary is human; the AI is the weapon.</div>
-<div class="r-tags"><span class="stamp amber">CASE FILES PENDING</span></div>
-</div>
-<div class="role">
-<div class="r-head">3: AI AS TARGET</div>
-<div class="r-body"><b>Attacks on AI systems.</b>Prompt injection, data poisoning, model theft, adversarial manipulation. This is where AI investigation overlaps most with established cybersecurity practice, covered by frameworks such as MITRE ATLAS.</div>
-<div class="r-tags"><span class="stamp amber">CASE FILES PENDING</span></div>
-</div>
-</div>
-<p class="straddle">note: prompt injection straddles 2 &harr; 3. The AI is target and instrument at once. Boundary cases are normal; the taxonomy serves the investigation, not the reverse.</p>
-<h2 id="browse">Browse the resource <span class="sec-id">// each section now on its own page</span></h2>
-<ul class="plain">
-<li><a href="research.html">Published Research</a>: annotated library of publications on AI incident investigation.</li>
-<li><a href="playbooks.html">Playbooks</a>: the category-agnostic investigation workflow; PB-001 and PB-002 in draft.</li>
-<li><a href="case-files.html">Case files</a>: selected incident summaries; observation separated from inference.</li>
-<li><a href="frameworks.html">Frameworks</a>: existing methodologies, what each covers and does not.</li>
-<li><a href="evidence.html">Evidence checklist</a>: what to capture and preserve.</li>
-<li><a href="regulatory.html">Regulatory tracker</a>: reporting obligations and deadlines, per regime.</li>
-<li><a href="tools.html">Tools &amp; databases</a>: the current ecosystem.</li>
-<li><a href="contribute.html">Contribute</a>: case files, corrections, regulatory updates.</li>
-<li><a href="updates.html">Updates</a>: register interest via the sign-up form.</li>
-</ul>
 </main>
 </div>
 <footer>

@@ -1,0 +1,61 @@
+InvestigateAI - site update 2026-07-20 (Problem/Solution ideas + one page per section)
+=====================================================================================
+
+Drop all files into the repo root and commit. Everything else in the repo is unchanged.
+
+CHANGED files
+  menu.html        -> "Start here" now includes the new "Problem/Solution ideas to be
+                      further explored" subsection (3 numbered ideas + sources, arXiv
+                      links added). Scope map stays. All other sections moved out;
+                      replaced by a compact "Browse the resource" link index.
+                      Left nav now links each section to its own page.
+                      A small head script forwards legacy deep links
+                      (menu.html#cases etc.) to the new pages, so nothing breaks.
+  index.html       -> map nodes for Case files / Frameworks / Evidence / Tools now
+  landing.html        point straight at the new pages (no redirect hop).
+  first-hours.html -> regulatory reference now points at regulatory.html directly.
+  sitemap.xml      -> new pages added; menu.html lastmod bumped.
+  llms.txt         -> new pages listed under Core pages.
+
+THIS BUILD
+  - Section-page headings: the "// subtitle" part is back in the small gray
+    Courier style (the h2 rule was scoped too narrowly for the promoted h1s).
+  - Sidebar no longer jumps under the header when you reach the page bottom:
+    the sticky nav is now only as tall as its items, and the full-height dark
+    column is painted by the frame behind it. Visually identical otherwise.
+  - "Start here" intro replaced with the updated conceptual-framework text
+    (outside-view question, "What the field is.", analyse/catalogue spellings,
+    honest-about-root-cause line, working-group paragraph, "no real
+    investigation discipline for AI yet").
+  - Scope map is now an indented SUB-ITEM of Start here in the sidebar, in the
+    original tl-sub style: visible (and clickable, scrolls to the section) on
+    menu.html where Start here is the active stop; collapsed on the section
+    pages and on mobile, exactly as the old sub-links behaved. Only real
+    destinations carry timeline dots now, so nobody scroll-hunts for pages.
+
+TIMELINE NAV
+  The dot-and-rail timeline runs down the ENTIRE sidebar menu again, page links
+  included. On menu.html the amber dot follows your scroll through Start here /
+  Scope map as before; on each section page the rail is a "you are here" marker:
+  gold dots for the sections before it, the glowing amber dot on the current
+  page. On mobile it collapses into the same horizontal tab bar, with the amber
+  underline marking the current page.
+
+NEW files (same template/design as menu.html: header, map background, footer,
+mobile tab-bar nav; timeline position marked in the sidebar)
+  playbooks.html   -> Playbooks (workflow diagram, PB-001/PB-002 in draft)
+  case-files.html  -> Case files (CF log rows)
+  frameworks.html  -> Frameworks (coverage table)
+  evidence.html    -> Evidence checklist
+  tools.html       -> Tools & databases
+  contribute.html  -> Contribute
+
+UNCHANGED by design
+  research.html, regulatory.html, updates.html already exist as full pages;
+  the menu nav now links to them directly, so their condensed teaser sections
+  were removed from menu.html rather than duplicated onto new pages.
+
+BACKWARD COMPATIBILITY
+  Old links of the form menu.html#cases, #frameworks, #evidence, #regulatory,
+  #tools, #playbook, #research, #contribute, #updates redirect automatically.
+  menu.html#scope and #start still resolve on the page itself.

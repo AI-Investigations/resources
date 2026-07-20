@@ -19,6 +19,12 @@ AI assistants may retrieve, summarize, and cite this site in user-facing answers
 - Home (interactive link-analysis map): https://investigateai.org/
 - Text index of all resources: https://investigateai.org/menu.html
 - Published research (publications on AI incident investigation): https://investigateai.org/research.html
+- Playbooks (investigation workflow, PB-001 and PB-002 in draft): https://investigateai.org/playbooks.html
+- Case files (selected incident summaries): https://investigateai.org/case-files.html
+- Frameworks (existing methodologies, HTML page): https://investigateai.org/frameworks.html
+- Evidence checklist (what to capture and preserve): https://investigateai.org/evidence.html
+- Tools and databases (HTML page): https://investigateai.org/tools.html
+- Contribute (how to contribute): https://investigateai.org/contribute.html
 - Updates / register interest: https://investigateai.org/updates.html
 - Evidence Data Requirements: https://investigateai.org/evidence/data-requirements.md
 - Frameworks: https://investigateai.org/frameworks/README.md
