@@ -17,7 +17,51 @@ CHANGED files
   sitemap.xml      -> new pages added; menu.html lastmod bumped.
   llms.txt         -> new pages listed under Core pages.
 
-THIS BUILD
+THIS BUILD (instant navigation)
+  Menu clicks between the seven template pages (menu, playbooks, case-files,
+  frameworks, evidence, tools, contribute) no longer do a full page load.
+  Pages are prefetched on hover and the content + sidebar state are swapped
+  in place: instant in every browser, no flash, background canvas keeps
+  running. URL, title, timeline dots, and Back/Forward all behave normally;
+  anything unexpected falls back to a regular navigation. Research /
+  Regulatory / Updates (different templates) still load normally and are
+  hover-prerendered (Chrome/Edge) or hover-prefetched (other browsers).
+
+  SERVER SIDE (recommended, one-time): Cloudflare does NOT cache HTML by
+  default, so every uncached page view waits on the origin. Add a Cache Rule:
+  match "URI Path ends with .html" (+ the root path) -> Eligible for cache,
+  Edge TTL ~1-4h, and purge cache on each deploy. This removes the origin
+  round-trip for first hits and the three legacy pages.
+
+PREVIOUS (layout / affordance)
+  - Sticky footer: short section pages now stretch to the window height, so
+    the footer ribbon sits at the bottom of the screen instead of floating
+    mid-page; the white content column and the dark sidebar column both run
+    all the way down to meet it.
+  - Sidebar links: explicit pointer cursor plus underline-on-hover, so the
+    menu items read as clickable at a glance.
+
+PREVIOUS (performance / paint stability)
+  Background canvas (mapbg) overhauled on menu + the six section pages:
+  - completely frozen while the page is scrolling (resumes ~200ms after);
+  - throttled to ~30fps and capped at 1.25x resolution;
+  - drawing clipped and culled to the visible side gutters only;
+  - fully skipped when the tab is hidden or the window is <=1240px wide
+    (previously it kept animating even while display:none).
+  Sidebar: solid static full-height column with a small sticky inner list
+  (replaces the gradient hack; nothing repaints on scroll, bottom pinning
+  kept). Content column isolated on its own compositor layer (>=1241px).
+  Navigation: pages pre-render on hover via Speculation Rules (Chrome/Edge)
+  with a hover-prefetch fallback elsewhere, so menu clicks feel instant.
+
+PREVIOUS BUILD
+  - Fixed a scroll paint glitch (main text flashing blank on some GPUs): the
+    sidebar column is now a plain static full-height block and only the small
+    inner list of links is sticky. No gradients, nothing repainted on scroll.
+    The bottom-of-page pinning fix is preserved.
+  - Menu clicks feel instant again: pages are pre-rendered on hover via
+    Speculation Rules (Chrome/Edge), with a hover-prefetch fallback for other
+    browsers. Heavy pages (index.html map) are excluded from prerendering.
   - Section-page headings: the "// subtitle" part is back in the small gray
     Courier style (the h2 rule was scoped too narrowly for the promoted h1s).
   - Sidebar no longer jumps under the header when you reach the page bottom:

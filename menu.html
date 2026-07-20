@@ -15,6 +15,9 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://investigateai.org/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
+<script type="speculationrules">
+{"prerender":[{"urls":["research.html","regulatory.html","updates.html"],"eagerness":"eager"}]}
+</script>
 <script>
 /* sections moved to their own pages (2026-07-20): forward legacy #anchors so old links keep working */
 (function(){var m={research:"research.html",playbook:"playbooks.html",playbooks:"playbooks.html",cases:"case-files.html",frameworks:"frameworks.html",evidence:"evidence.html",regulatory:"regulatory.html",tools:"tools.html",contribute:"contribute.html",updates:"updates.html"};function go(){var h=(location.hash||"").replace("#","");if(m[h])location.replace(m[h]);}go();window.addEventListener("hashchange",go);})();
@@ -194,13 +197,25 @@ h1,h2{scroll-margin-top:52px}
 <style>
 h4{font-size:13px;margin:16px 0 3px}
 h1 .sec-id{font-family:"Courier New",Courier,monospace;font-size:12px;color:var(--meta);font-weight:normal;margin-left:8px}
-/* keep the sidebar pinned at the bottom of the page: the nav itself is only as
-   tall as its items (so the footer can never shove it under the header), and
-   the full-height dark column is painted by the frame instead */
+/* keep the sidebar pinned at the bottom of the page: the nav element is a
+   plain full-height column (solid paint, no sticky, no gradients) and only the
+   small inner block of links is sticky, so the footer can never shove the menu
+   under the header and nothing is repainted while scrolling */
 @media (min-width:761px){
-.frame{background:linear-gradient(to right,#0f1622 0,#0f1622 200px,transparent 200px)}
-nav{height:auto;max-height:calc(100vh - var(--header-h))}
+nav{position:static;align-self:stretch;height:auto;max-height:none;overflow:visible}
+.nav-inner{position:sticky;top:var(--header-h);max-height:calc(100vh - var(--header-h));overflow-y:auto}
 }
+/* paint the text column on its own compositor layer so scrolling never races
+   the background canvas (fixes rare blank flashes over the z-index:-1 canvas) */
+@media (min-width:1241px){main{transform:translateZ(0)}}
+/* sticky footer: short section pages stretch to the window, keeping the
+   ribbon pinned to the bottom instead of floating mid-screen */
+body{min-height:100vh;display:flex;flex-direction:column}
+.frame{flex:1 0 auto;width:100%}
+@media (min-width:761px){main{align-self:stretch}}
+/* unmistakable click affordance on the sidebar links */
+nav li a{cursor:pointer}
+nav li a:hover{text-decoration:underline}
 @media (max-width:760px){
 nav ul.tl li{flex:0 0 auto}
 nav ul.tl li a{white-space:nowrap;border:none;border-bottom:2px solid transparent;padding:9px 13px}
@@ -219,6 +234,7 @@ nav ul.tl li a{white-space:nowrap;border:none;border-bottom:2px solid transparen
 </header>
 <div class="frame" id="top">
 <nav aria-label="Site sections">
+<div class="nav-inner">
 <div class="nav-label">SECTIONS</div>
 <ul class="tl">
 <li class="tl-item active"><a href="#start">Start here</a></li>
@@ -233,6 +249,7 @@ nav ul.tl li a{white-space:nowrap;border:none;border-bottom:2px solid transparen
 <li class="tl-item"><a href="contribute.html">Contribute</a></li>
 <li class="tl-item"><a href="updates.html">Updates</a></li>
 </ul>
+</div>
 </nav>
 <main>
 <h1 id="start">AI Incident Investigation Lab [Conceptual Framework]</h1>
@@ -311,7 +328,7 @@ AI INVESTIGATIONS · open practitioner resources · content CC BY 4.0 unless not
   var links=[].slice.call(nav.querySelectorAll('a[href^="#"]')).filter(function(l){var li=l.closest('li');if(li&&li.classList.contains('tl-sub'))return false;var id=l.getAttribute('href').slice(1);return id&&document.getElementById(id);});
   if(links.length<2) return;
   var ul=links[0].closest('ul'); if(!ul) return;
-  ul.classList.add('tl');
+  ul.classList.add('tl'); ul.__spy=true;
   var items=[], byLi=new Map();
   links.forEach(function(l){ if(l.closest('ul')!==ul) return; var li=l.closest('li'); if(!li) return; li.classList.add('tl-item'); var it={li:li,a:l,sec:document.getElementById(l.getAttribute('href').slice(1)),children:[]}; items.push(it); byLi.set(li,it); });
   if(items.length<2) return;
@@ -384,23 +401,84 @@ AI INVESTIGATIONS · open practitioner resources · content CC BY 4.0 unless not
 </script>
 <script>
 /* static timeline rail: draws the dots' track and the gold progress up to the
-   li.tl-item.active entry on pages whose nav has no on-page anchors */
-(function(){
-  var ul=document.querySelector('nav ul'); if(!ul||ul.querySelector('.tl-track'))return;
+   li.tl-item.active entry. Exposed as window.__mbRail so it can be rebuilt
+   after the instant-navigation content swap. */
+window.__mbRail=function(){
+  var ul=document.querySelector('nav ul'); if(!ul||ul.__spy)return;
+  var old=ul.querySelectorAll('.tl-track,.tl-progress');
+  [].forEach.call(old,function(x){x.parentNode.removeChild(x);});
   var lis=[].slice.call(ul.querySelectorAll('li.tl-item')); if(lis.length<2)return;
   ul.classList.add('tl');
   var track=document.createElement('span');track.className='tl-track';
   var prog=document.createElement('span');prog.className='tl-progress';
   ul.appendChild(track);ul.appendChild(prog);
   function c(li){return li.offsetTop+li.offsetHeight/2;}
-  function lay(){
-    var f=c(lis[0]),l=c(lis[lis.length-1]);
-    track.style.top=f+'px';track.style.height=Math.max(0,l-f)+'px';
-    prog.style.top=f+'px';
-    var act=ul.querySelector('li.tl-item.active');
-    prog.style.height=act?Math.max(0,c(act)-f)+'px':'0px';
+  var f=c(lis[0]),l=c(lis[lis.length-1]);
+  track.style.top=f+'px';track.style.height=Math.max(0,l-f)+'px';
+  prog.style.top=f+'px';
+  var act=ul.querySelector('li.tl-item.active');
+  prog.style.height=act?Math.max(0,c(act)-f)+'px':'0px';
+};
+(function(){var r=function(){window.__mbRail();};r();window.addEventListener('resize',r);window.addEventListener('load',r);})();
+</script>
+<script>
+/* instant navigation between the template pages: prefetch on hover, then swap
+   <main> and the sidebar state in place instead of a full page load. Falls
+   back to normal navigation on any error. */
+(function(){
+  var SWAP={'menu.html':1,'playbooks.html':1,'case-files.html':1,'frameworks.html':1,'evidence.html':1,'tools.html':1,'contribute.html':1};
+  var cache={};
+  function getPage(f){
+    if(!cache[f])cache[f]=fetch(f,{credentials:'same-origin'}).then(function(r){if(!r.ok)throw 0;return r.text();});
+    return cache[f];
   }
-  lay();window.addEventListener('resize',lay);window.addEventListener('load',lay);
+  function cur(){return (location.pathname.split('/').pop())||'index.html';}
+  function apply(html,f,hash,push){
+    var doc=new DOMParser().parseFromString(html,'text/html');
+    var nm=doc.querySelector('main'),nu=doc.querySelector('nav ul');
+    var om=document.querySelector('main'),ou=document.querySelector('nav ul');
+    if(!nm||!nu||!om||!ou)throw 0;
+    om.innerHTML=nm.innerHTML;
+    ou.innerHTML=nu.innerHTML;
+    document.title=doc.title;
+    if(push)history.pushState({mb:1},'',f+(hash||''));
+    if(window.__mbRail)window.__mbRail();
+    var t=hash&&document.getElementById(hash.slice(1));
+    if(t){t.scrollIntoView();}else{window.scrollTo(0,0);}
+  }
+  document.addEventListener('click',function(e){
+    if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+    var a=e.target&&e.target.closest?e.target.closest('a'):null; if(!a)return;
+    var href=a.getAttribute('href')||'';
+    var m=href.match(/^([a-z][a-z-]*\.html)(#[A-Za-z0-9_-]+)?$/); if(!m||!SWAP[m[1]])return;
+    if(m[1]===cur()){ if(!m[2]){e.preventDefault();window.scrollTo(0,0);} return; }
+    e.preventDefault();
+    getPage(m[1]).then(function(t){apply(t,m[1],m[2],true);})
+      .catch(function(){delete cache[m[1]];location.href=href;});
+  });
+  document.addEventListener('mouseover',function(e){
+    var a=e.target&&e.target.closest?e.target.closest('a'):null; if(!a)return;
+    var m=(a.getAttribute('href')||'').match(/^([a-z][a-z-]*\.html)(#[A-Za-z0-9_-]+)?$/);
+    if(m&&SWAP[m[1]]&&m[1]!==cur()&&!cache[m[1]])getPage(m[1]).catch(function(){delete cache[m[1]];});
+  },{passive:true});
+  window.addEventListener('popstate',function(){
+    var f=cur();
+    if(SWAP[f]){getPage(f).then(function(t){apply(t,f,location.hash,false);}).catch(function(){location.reload();});}
+  });
+})();
+</script>
+<script>
+/* hover prefetch fallback for browsers without speculation rules */
+(function(){
+  if(window.HTMLScriptElement&&HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules'))return;
+  var seen={};
+  document.addEventListener('mouseover',function(e){
+    var t=e.target; var a=t&&t.closest?t.closest('a[href$=".html"]'):null;
+    if(!a)return; var h=a.getAttribute('href');
+    if(!h||seen[h]||!/^(research|regulatory|updates)\.html$/.test(h))return;
+    seen[h]=1; var l=document.createElement('link'); l.rel='prefetch'; l.href=a.href;
+    document.head.appendChild(l);
+  },{passive:true});
 })();
 </script>
 <!-- MAPBG-INLINED -->
@@ -447,12 +525,23 @@ AI INVESTIGATIONS · open practitioner resources · content CC BY 4.0 unless not
     for(var s=0;s<seaN;s++)SEA.push({x:rnd()*W,y:rnd()*H,r:0.5+rnd()*1.7,ph:rnd()*6.28,amp:2+rnd()*4,spd:0.15+rnd()*0.3});
     N.forEach(function(n){n.bx=n.x;n.by=n.y;});SEA.forEach(function(p){p.bx=p.x;p.by=p.y;});
   }
-  function size(){W=window.innerWidth;H=window.innerHeight;dpr=Math.min(2,window.devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+"px";cv.style.height=H+"px";ctx.setTransform(dpr,0,0,dpr,0,0);build();}
+  function size(){W=window.innerWidth;H=window.innerHeight;dpr=Math.min(1.25,window.devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+"px";cv.style.height=H+"px";ctx.setTransform(dpr,0,0,dpr,0,0);build();}
   window.addEventListener("resize",function(){clearTimeout(window.__mbt);window.__mbt=setTimeout(size,200);});
   var t0=(window.performance&&performance.now())||Date.now();
   function osc(n,t){n.cx=n.bx+(reduce?0:Math.sin(t*n.spd+n.ph)*n.amp);n.cy=n.by+(reduce?0:Math.cos(t*n.spd*0.9+n.ph)*n.amp);}
+  var scrolling=0,lastDraw=-1e9;
+  window.addEventListener("scroll",function(){scrolling=((window.performance&&performance.now)?performance.now():Date.now())+180;},{passive:true});
+  var narrowMq=window.matchMedia?window.matchMedia("(max-width:1240px)"):null;
+  function vis(x){return x<gutter+80||x>W-gutter-80;}
   function frame(now){
+    if(!reduce)requestAnimationFrame(frame);
+    if(document.hidden)return;                       /* tab in background */
+    if(narrowMq&&narrowMq.matches)return;            /* canvas is display:none at this width */
+    if(now<scrolling)return;                         /* hold perfectly still while the page scrolls */
+    if(now-lastDraw<33)return;                       /* ~30fps is plenty for ambient drift */
+    lastDraw=now;
     var t=(now-t0)/1000;ctx.clearRect(0,0,W,H);
+    ctx.save();ctx.beginPath();ctx.rect(0,0,gutter+40,H);ctx.rect(W-gutter-40,0,gutter+40,H);ctx.clip(); /* only the side gutters are ever visible */
     ctx.globalCompositeOperation="lighter";
     // warm/cool wash on the gutters so the sides never read as flat black
     var lw=ctx.createLinearGradient(0,0,gutter,0);lw.addColorStop(0,"rgba(160,95,42,0.14)");lw.addColorStop(1,"rgba(160,95,42,0)");ctx.fillStyle=lw;ctx.fillRect(0,0,gutter,H);
@@ -460,11 +549,11 @@ AI INVESTIGATIONS · open practitioner resources · content CC BY 4.0 unless not
     var g1=ctx.createRadialGradient(gutter*0.5,H*0.7,0,gutter*0.5,H*0.7,Math.max(W,H)*0.45);g1.addColorStop(0,"rgba(214,128,48,0.10)");g1.addColorStop(1,"rgba(214,128,48,0)");ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
     var g2=ctx.createRadialGradient(W-gutter*0.5,H*0.25,0,W-gutter*0.5,H*0.25,Math.max(W,H)*0.4);g2.addColorStop(0,"rgba(95,145,185,0.09)");g2.addColorStop(1,"rgba(95,145,185,0)");ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
     ctx.globalCompositeOperation="source-over";
-    SEA.forEach(function(p){p.cx=p.bx+(reduce?0:Math.sin(t*p.spd+p.ph)*p.amp);p.cy=p.by+(reduce?0:Math.cos(t*p.spd*0.9+p.ph)*p.amp);ctx.beginPath();ctx.arc(p.cx,p.cy,p.r,0,6.29);ctx.fillStyle="rgba(228,168,95,0.30)";ctx.fill();});
+    SEA.forEach(function(p){p.cx=p.bx+(reduce?0:Math.sin(t*p.spd+p.ph)*p.amp);p.cy=p.by+(reduce?0:Math.cos(t*p.spd*0.9+p.ph)*p.amp);if(!vis(p.cx))return;ctx.beginPath();ctx.arc(p.cx,p.cy,p.r,0,6.29);ctx.fillStyle="rgba(228,168,95,0.30)";ctx.fill();});
     N.forEach(function(n){osc(n,t);});
-    L.forEach(function(e){ctx.beginPath();ctx.moveTo(N[e[0]].cx,N[e[0]].cy);ctx.lineTo(N[e[1]].cx,N[e[1]].cy);ctx.strokeStyle="rgba(222,178,112,0.22)";ctx.lineWidth=0.8;ctx.stroke();});
-    N.forEach(function(n){ctx.beginPath();ctx.arc(n.cx,n.cy,n.r,0,6.29);ctx.fillStyle="#0c0e12";ctx.fill();ctx.lineWidth=1.1;ctx.strokeStyle=n.hub?"rgba(248,190,100,0.85)":"rgba(234,174,94,0.58)";ctx.stroke();});
-    if(!reduce)requestAnimationFrame(frame);
+    L.forEach(function(e){if(!vis(N[e[0]].cx)&&!vis(N[e[1]].cx))return;ctx.beginPath();ctx.moveTo(N[e[0]].cx,N[e[0]].cy);ctx.lineTo(N[e[1]].cx,N[e[1]].cy);ctx.strokeStyle="rgba(222,178,112,0.22)";ctx.lineWidth=0.8;ctx.stroke();});
+    N.forEach(function(n){if(!vis(n.cx))return;ctx.beginPath();ctx.arc(n.cx,n.cy,n.r,0,6.29);ctx.fillStyle="#0c0e12";ctx.fill();ctx.lineWidth=1.1;ctx.strokeStyle=n.hub?"rgba(248,190,100,0.85)":"rgba(234,174,94,0.58)";ctx.stroke();});
+    ctx.restore();
   }
   function start(){size();requestAnimationFrame(frame);}
   if(document.body)start();else document.addEventListener("DOMContentLoaded",start);
